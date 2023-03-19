@@ -24,6 +24,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\TraineeController;
 use App\Http\Controllers\TrainingCenterController;
+use App\Http\Controllers\ProjectController;
 
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/', function () {return redirect('sign-in');});
@@ -70,6 +71,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('create-training-center', [TrainingCenterController::class, 'createTrainingCenter'])->name('create.training.center');
 	Route::get('create-training-center-success', [TrainingCenterController::class, 'createTrainingCenterSuccess'])->name('create.training.center.success');
 	Route::post('delete-training-center/{id}', [TrainingCenterController::class, 'deleteTrainingCenter'])->name('delete.training.center');
+
+    //PROJECTS ROUTES
+	Route::get('projects', [ProjectController::class, 'getAll'])->name('projects');
+	Route::post('project', [ProjectController::class, 'createProject'])->name('create.project');
+    Route::get('create-project-success', [ProjectController::class, 'createProjectSuccess'])->name('create.project.success');
+    Route::get('delete-project/{id}', [ProjectController::class, 'deleteProject'])->middleware('super.admin')->name('delete.project');
+	Route::post('update-project/{id}', [ProjectController::class, 'updateProject'])->name('update.project');
+    Route::get('update-project-success', [ProjectController::class, 'updateProjectSuccess'])->name('update.project.success');
 
     Route::post('sign-out', [AuthController::class, 'singOut'])->name('logout');
 });

@@ -19,6 +19,8 @@ class Project extends Model
         'name',
         'short',
         'description',
+        'created_by',
+        'updated_by'
     ];
 
     /**
