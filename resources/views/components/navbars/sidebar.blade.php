@@ -52,6 +52,7 @@
                 </a>
             </li>
             @endif
+
             @if(auth()->user()->isRoleSuperAdmin())
             <li class="nav-item mt-3">
                 <a class="nav-link text-dark {{ $activePage == 'users' ? ' active bg-gradient-secondary' : '' }} "
@@ -62,7 +63,18 @@
                     <span class="nav-link-text text-m text-bold ms-1" style="font-size:1rem;">User Management</span>
                 </a>
             </li>
+
+            <li class="nav-item mt-3">
+                <a class="nav-link text-dark {{ $activePage == 'projects' ? ' active bg-gradient-secondary' : '' }} "
+                    href="">
+                    <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">people</i>
+                    </div>
+                    <span class="nav-link-text text-m text-bold ms-1" style="font-size:1rem;">Projects</span>
+                </a>
+            </li>
             @endif
+
             <li class="nav-item mt-3">
                 <a class="nav-link text-dark {{ $activePage == 'profile' ? 'active bg-gradient-secondary' : '' }} "
                     href="{{ route('profile') }}">
