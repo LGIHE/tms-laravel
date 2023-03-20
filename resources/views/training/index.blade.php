@@ -10,7 +10,7 @@
                 <div class="col-12">
                     <div class="card my-4">
                         <div class=" me-3 my-3 text-end">
-                            <a class="btn bg-gradient-dark mb-0" data-bs-toggle="modal" data-bs-target="#newTrainingModal" style="margin-right: 15px;">
+                            <a class="btn bg-gradient-dark mb-0" href="{{ route('get.create.training') }}" style="margin-right: 15px;">
                                 <i class="material-icons text-sm">add</i>&nbsp;&nbsp;Add Training
                             </a>
                         </div>
@@ -33,76 +33,68 @@
                                     <table class="table align-items-center mb-0" id="table">
                                         <thead>
                                             <tr>
-                                                <th class="text-secondary text-xxl font-weight-bolder px-4">Theme</th>
-                                                <th class="text-secondary text-xxl font-weight-bolder">Subject</th>
-                                                <th class="text-secondary text-xxl font-weight-bolder">Topic</th>
-                                                <th class="text-secondary text-xxl font-weight-bolder">Class</th>
-                                                <th class="text-secondary text-xxl font-weight-bolder">Learners</th>
-                                                <th class="text-secondary text-xxl font-weight-bolder">Duration</th>
-                                                <th class="text-secondary text-xxl font-weight-bolder">Status</th>
-                                                <th class="text-secondary text-xxl font-weight-bolder">Public</th>
-                                                <th class="text-secondary text-xxl font-weight-bolder">Owner</th>
-                                                <th class="text-secondary text-xxl font-weight-bolder">School</th>
+                                                <th class="text-secondary text-xxl font-weight-bolder px-4">Name</th>
+                                                <th class="text-secondary text-xxl font-weight-bolder">Description</th>
+                                                <th class="text-secondary text-xxl font-weight-bolder">Facilitator</th>
+                                                <th class="text-secondary text-xxl font-weight-bolder">Training Center</th>
+                                                <th class="text-secondary text-xxl font-weight-bolder">Project</th>
+                                                <th class="text-secondary text-xxl font-weight-bolder">From</th>
+                                                <th class="text-secondary text-xxl font-weight-bolder">To</th>
                                                 <th class="text-secondary"></th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach ($lessonPlans as $lessonPlan)
+                                        @foreach ($trainings as $training)
                                             <tr>
                                                 <td>
                                                     <div class="d-flex flex-column justify-content-center px-2">
-                                                        <h6 class="mb-0 text-m">{{ $lessonPlan->theme }}</h6>
+                                                        <h6 class="mb-0 text-m">{{ $training->name }}</h6>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="d-flex flex-column justify-content-center">
-                                                        <p class="text-m text-dark font-weight-bold mb-0">{{ $lessonPlan->subjectName }}</p>
+                                                        <p class="text-m text-dark font-weight-bold mb-0">{{ $training->description }}</p>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="d-flex flex-column justify-content-center">
-                                                        <p class="text-m text-dark font-weight-bold mb-0">{{ $lessonPlan->topic }}</p>
+                                                        <span class="text-dark text-m font-weight-bold">
+                                                            @foreach ($facilitators as $facilitator)
+                                                                @if($facilitator->id == $training->facilitator) {{ $facilitator->name }} @endif
+                                                            @endforeach
+                                                        </span>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="d-flex flex-column justify-content-center">
-                                                        <span class="text-dark text-m font-weight-bold">{{ $lessonPlan->class }}</span>
+                                                        <span class="text-dark text-m font-weight-bold">
+                                                            @foreach ($centers as $center)
+                                                                @if($center->id == $training->training_center) {{ $center->name }} @endif
+                                                            @endforeach
+                                                        </span>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="d-flex flex-column justify-content-center">
-                                                        <span class="text-dark text-m font-weight-bold">{{ $lessonPlan->learners_no }}</span>
+                                                        <span class="text-dark text-m font-weight-bold">
+                                                            @foreach ($projects as $project)
+                                                                @if($project->id == $training->project) {{ $project->name }} @endif
+                                                            @endforeach
+                                                        </span>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="d-flex flex-column justify-content-center">
-                                                        <p class="text-m text-dark font-weight-bold mb-0">
-                                                        {{ \App\Models\LessonStep::where(['lesson_plan' => $lessonPlan->id])->sum('duration') }}`
-                                                        </p>
+                                                        <span class="text-dark text-m font-weight-bold">{{ $training->start_date }}</span>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="d-flex flex-column justify-content-center">
-                                                        <p class="text-m text-dark font-weight-bold mb-0">{{ ucfirst(trans($lessonPlan->status)) }}</p>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <span class="text-dark text-m font-weight-bold">@if($lessonPlan->visibility == 1) {{ 'Yes' }} @else {{ 'No' }} @endif</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <span class="text-dark text-m font-weight-bold">{{ $lessonPlan->ownerName }}</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <span class="text-dark text-m font-weight-bold">{{ $lessonPlan->schoolName }}</span>
+                                                        <span class="text-dark text-m font-weight-bold">{{ $training->end_date }}</span>
                                                     </div>
                                                 </td>
                                                 <td class="align-middle not-export-col">
-                                                    <a rel="tooltip" class="" id="open-update" data-value="{{ $lessonPlan->id }}" style="cursor:pointer;">
+                                                    <a rel="tooltip" class="" id="open-update" data-value="{{ $training->id }}" style="cursor:pointer;">
                                                         <i class="material-icons" style="font-size:25px;margin-right:20px;">visibility</i>
                                                         <div class="ripple-container"></div>
                                                     </a>
@@ -112,7 +104,7 @@
                                             <!-- School Update Modal -->
                                             <!--  -->
                                             <!-- Confirm School Delete modal -->
-                                            <div class="modal fade" id="deleteModal-{{ $lessonPlan->id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                            <div class="modal fade" id="deleteModal-{{ $training->id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-sm" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
@@ -121,11 +113,11 @@
                                                         </div>
                                                         <div class="modal-body" id="smallBody">
                                                             <div class="text-center">
-                                                                <span class="">Are you sure you want to Delete this School?</span>
+                                                                <span class="">Are you sure you want to Delete this Training?</span>
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer align-items-center">
-                                                            <button type="button" class="btn btn-success" id="del-btn" data-value="{{ route('delete.lesson.plan', $lessonPlan->id) }}">Confirm</button>
+                                                            <button type="button" class="btn btn-success" id="del-btn" data-value="{{ route('delete.training', $training->id) }}">Confirm</button>
                                                             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
                                                         </div>
                                                     </div>
@@ -149,9 +141,3 @@
 </x-layout>
 
 
-
-<script>
-
-</script>
-
-@include('training.create');

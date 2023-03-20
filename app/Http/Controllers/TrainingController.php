@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Project;
 use App\Models\User;
 use App\Models\Trainee;
 use App\Models\Training;
@@ -11,12 +12,49 @@ class TrainingController extends Controller
 {
     public function getAll(){
 
-        $trainings = Training::join('users', 'trainings.facilitator', '=', 'users.id')
-                            ->join('training_centers', 'trainings.training_center', '=', 'training_centers.id')
-                            ->select('trainings.*', 'users.name as facilitatorName', 'training_centers.name as trainingCenter')
-                            ->orderBy('trainings.created_at', 'asc')
-                            ->get();
+        $trainings = Training::all();
+        $facilitators = User::all()->where('role', 'Facilitator');
+        $centers = TrainingCenter::all();
+        $projects = Project::all();
 
-        return view('training.index', compact('trainings'));
+        return view('training.index', compact('trainings', 'facilitators', 'centers', 'projects'));
+    }
+
+    public function getCreate(){
+        $facilitators = User::all()->where('role', 'Facilitator');
+        $centers = TrainingCenter::all();
+        $projects = Project::all();
+
+        return view('training.create', compact('facilitators', 'centers', 'projects'));
+    }
+
+    public function createTraining(){
+
+        $attributes = request()->validate([
+            'name' => 'required',
+            'description' => 'nullable',
+            'facilitator' => 'required',
+            'training_center' => 'required',
+            'project' => 'required',
+            'start_date' => 'required',
+            'start_time' => 'required',
+            'end_date' => 'required',
+            'end_time' => 'required',
+        ]);
+
+        $attributes['created_by'] = auth()->user()->id;
+        Training::create($attributes);
+
+        return response()->json(['status' => 'success']);
+    }
+
+    public function createTrainingSuccess(){
+        return redirect()->route('trainings')->with('status', 'The training has been added successfully.');
+    }
+
+    public function deleteTraining(){
+        Training::find(request()->id)->delete();
+
+        return redirect()->route('training')->with('status', 'The training has been deleted successfully.');
     }
 }

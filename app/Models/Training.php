@@ -21,8 +21,8 @@ class Training extends Model
         'training_center',
         'project',
         'start_date',
-        'end_date',
         'start_time',
+        'end_date',
         'end_time',
         'created_by',
         'updated_by'

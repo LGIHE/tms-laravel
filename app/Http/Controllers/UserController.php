@@ -34,13 +34,9 @@ class UserController extends Controller
             'location' => 'max:255',
             'role' => 'required',
             'password' => 'required|min:5|max:255',
-            'school' => 'required|numeric',
-            'subject_1' => 'required_if:role,==,Teacher',
-            'subject_2' => 'nullable',
-            'subject_3' => 'nullable',
         ]);
 
-        $attributes['type'] = $attributes['role'] == 'Teacher' ? 'teacher' : 'admin';
+        $attributes['type'] = $attributes['role'] == 'Trainee' ? 'trainee' : 'admin';
         $attributes['email_verified_at'] = Carbon::now()->toDateTimeString();
 
         // return response()->json($attributes);
