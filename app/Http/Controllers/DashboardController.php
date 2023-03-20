@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\TrainingCenter;
@@ -15,10 +16,11 @@ class DashboardController extends Controller
         $facilitators = User::all()->where('role', 'Facilitator');
         $centers = TrainingCenter::all();
         $trainings = Training::all();
-        $trainees = Trainee::all()->where('role', 'Trainee');
+        $trainees = Trainee::all();
+        $projects = Project::all();
 
         // an admin
-        return view('dashboard.admin', compact('facilitators', 'centers', 'trainings', 'trainees'));
+        return view('dashboard.admin', compact('facilitators', 'centers', 'trainings', 'trainees', 'projects'));
 
         // if (auth()->user()->isAdmin()) {
         //     $teachers = User::all()->where('role', 'Teacher');

@@ -21,7 +21,7 @@
                             </div>
                             <div class="text-end pt-1">
                                 <h5 class="mb-0">Trainees</h5>
-                                <h4 class="mb-0">2</h4>
+                                <h4 class="mb-0">{{ count($trainees) }}</h4>
                             </div>
                         </div>
                         <div class="card-footer p-2"></div>
@@ -37,7 +37,7 @@
                             </div>
                             <div class="text-end pt-1">
                                 <h5 class="mb-0">Trainings</h5>
-                                <h4 class="mb-0">2</h4>
+                                <h4 class="mb-0">{{ count($trainings) }}</h4>
                             </div>
                         </div>
                         <div class="card-footer p-2"></div>
@@ -53,13 +53,14 @@
                             </div>
                             <div class="text-end pt-1">
                                 <h5 class="mb-0">Facilitators</h5>
-                                <h4 class="mb-0">2</h4>
+                                <h4 class="mb-0">{{ count($facilitators) }}</h4>
                             </div>
                         </div>
                         <div class="card-footer p-2"></div>
                     </div>
                 </div>
-                <div class="col-xl-3 col-sm-6 dash-block" onclick="window.location.href='{{ route('training.centers') }}'">
+                <div class="col-xl-3 col-sm-6 dash-block"
+                    onclick="window.location.href='{{ route('training.centers') }}'">
                     <div class="card">
                         <div class="card-header p-3 pt-2">
                             <div
@@ -68,7 +69,7 @@
                             </div>
                             <div class="text-end pt-1">
                                 <h5 class="mb-0">Centers</h5>
-                                <h4 class="mb-0">2</h4>
+                                <h4 class="mb-0">{{ count($centers) }}</h4>
                             </div>
                         </div>
                         <div class="card-footer p-2"></div>
@@ -96,45 +97,75 @@
                             <table class="table align-items-center mb-0" id="table">
                                 <thead>
                                     <tr>
-                                        <th class="text-uppercase text-secondary text-s font-weight-bolder">Training</th>
-                                        <th class="text-uppercase text-secondary text-s font-weight-bolder">Center</th>
-                                        <th class="text-uppercase text-secondary text-s font-weight-bolder">Facilitator</th>
-                                        <th class="text-uppercase text-secondary text-s font-weight-bolder">Trainees</th>
-                                        <th class="text-uppercase text-secondary text-s font-weight-bolder">Attendence</th>
+                                        <th class="text-secondary text-xxl font-weight-bolder px-4">Name</th>
+                                        <th class="text-secondary text-xxl font-weight-bolder">Description</th>
+                                        <th class="text-secondary text-xxl font-weight-bolder">Facilitator</th>
+                                        <th class="text-secondary text-xxl font-weight-bolder">Training Center</th>
+                                        <th class="text-secondary text-xxl font-weight-bolder">Project</th>
+                                        <th class="text-secondary text-xxl font-weight-bolder">From</th>
+                                        <th class="text-secondary text-xxl font-weight-bolder">To</th>
+                                        <th class="text-uppercase text-secondary text-s font-weight-bolder">Attendence
+                                        </th>
+                                        <th class="text-secondary"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($trainings as $training)
                                     <tr>
                                         <td>
-                                            <div class="px-2 py-1">
-                                                <div class="justify-content-center">
-                                                    <h6 class="mb-0 text-sm">Material XD Version</h6>
-                                                </div>
+                                            <div class="d-flex flex-column justify-content-center px-2">
+                                                <h6 class="mb-0 text-m">{{ $training->name }}</h6>
                                             </div>
                                         </td>
                                         <td>
-                                            <div class="px-2 py-1">
-                                                <div class="justify-content-center">
-                                                    <h6 class="mb-0 text-sm">Material XD Version</h6>
-                                                </div>
+                                            <div class="d-flex flex-column justify-content-center">
+                                                <p class="text-m text-dark font-weight-bold mb-0">{{
+                                                    $training->description }}</p>
                                             </div>
                                         </td>
                                         <td>
-                                            <div class="px-2 py-1">
-                                                <div class="justify-content-center">
-                                                    <h6 class="mb-0 text-sm">Material XD Version</h6>
-                                                </div>
+                                            <div class="d-flex flex-column justify-content-center">
+                                                <span class="text-dark text-m font-weight-bold">
+                                                    @foreach ($facilitators as $facilitator)
+                                                    @if($facilitator->id == $training->facilitator) {{
+                                                    $facilitator->name }} @endif
+                                                    @endforeach
+                                                </span>
                                             </div>
                                         </td>
                                         <td>
-                                            <div class="px-2 py-1">
-                                                <div class="justify-content-center">
-                                                    <h6 class="mb-0 text-sm">Material XD Version</h6>
-                                                </div>
+                                            <div class="d-flex flex-column justify-content-center">
+                                                <span class="text-dark text-m font-weight-bold">
+                                                    @foreach ($centers as $center)
+                                                    @if($center->id == $training->training_center) {{ $center->name }}
+                                                    @endif
+                                                    @endforeach
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex flex-column justify-content-center">
+                                                <span class="text-dark text-m font-weight-bold">
+                                                    @foreach ($projects as $project)
+                                                    @if($project->id == $training->project) {{ $project->name }} @endif
+                                                    @endforeach
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex flex-column justify-content-center">
+                                                <span class="text-dark text-m font-weight-bold">{{ $training->start_date
+                                                    }}</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex flex-column justify-content-center">
+                                                <span class="text-dark text-m font-weight-bold">{{ $training->end_date
+                                                    }}</span>
                                             </div>
                                         </td>
                                         <td class="align-middle">
-                                            <div class="progress-wrapper w-75 mx-auto">
+                                            <div class="progress-wrapper">
                                                 <div class="progress-info">
                                                     <div class="progress-percentage">
                                                         <span class="text-xs font-weight-bold">60%</span>
@@ -147,7 +178,44 @@
                                                 </div>
                                             </div>
                                         </td>
+                                        <td class="align-middle not-export-col">
+                                            <a rel="tooltip" class="" id="open-update" data-value="{{ $training->id }}"
+                                                style="cursor:pointer;">
+                                                <i class="material-icons"
+                                                    style="font-size:25px;margin-right:20px;">visibility</i>
+                                                <div class="ripple-container"></div>
+                                            </a>
+                                        </td>
                                     </tr>
+
+                                    <!-- School Update Modal -->
+                                    <!--  -->
+                                    <!-- Confirm School Delete modal -->
+                                    <div class="modal fade" id="deleteModal-{{ $training->id }}" tabindex="-1"
+                                        role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-sm" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Confirm</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body" id="smallBody">
+                                                    <div class="text-center">
+                                                        <span class="">Are you sure you want to Delete this
+                                                            Training?</span>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer align-items-center">
+                                                    <button type="button" class="btn btn-success" id="del-btn"
+                                                        data-value="{{ route('delete.training', $training->id) }}">Confirm</button>
+                                                    <button type="button" class="btn btn-danger"
+                                                        data-bs-dismiss="modal">Cancel</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -158,9 +226,9 @@
     </main>
     </div>
     @push('js')
-        <script src="{{ asset('assets') }}/js/plugins/chartjs.min.js"></script>
-        <script>
-            var ctx = document.getElementById("chart-bars").getContext("2d");
+    <script src="{{ asset('assets') }}/js/plugins/chartjs.min.js"></script>
+    <script>
+        var ctx = document.getElementById("chart-bars").getContext("2d");
 
             new Chart(ctx, {
                 type: "bar",
@@ -405,6 +473,6 @@
                     },
                 },
             });
-        </script>
+    </script>
     @endpush
 </x-layout>
