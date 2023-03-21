@@ -64,6 +64,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     //LESSON PLAN ROUTES
 	Route::get('trainings', [TrainingController::class, 'getAll'])->name('trainings');
+	Route::get('training/{id}', [TrainingController::class, 'getTraining'])->name('training');
 	Route::get('create-training', [TrainingController::class, 'getCreate'])->name('get.create.training');
 	Route::post('training', [TrainingController::class, 'createTraining'])->name('create.training');
     Route::get('create-training-success', [TrainingController::class, 'createTrainingSuccess'])->name('create.training.success');

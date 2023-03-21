@@ -29,6 +29,7 @@ class TraineeController extends Controller
             'address' => 'required|max:255',
         ]);
 
+        $attributes['training'] = request()->training;
         $attributes['created_by'] = auth()->user()->id;
 
         Trainee::create($attributes);
@@ -51,15 +52,16 @@ class TraineeController extends Controller
             'address' => 'required|max:255',
         ]);
 
+        $attributes['training'] = request()->training;
         $attributes['updated_by'] = auth()->user()->id;
 
-        $trainee = Trainee::find(request()->id)->update($attributes);
+        Trainee::find(request()->id)->update($attributes);
 
-        return response()->json(['id', request()->id]);
+        return response()->json(['id' => request()->training]);
     }
 
     public function updateTraineeSuccess(){
-        return redirect()->route('trainees')->with('status', 'The trainee has been updated successfully.');
+        return redirect()->route('training', request()->id)->with('status', 'The trainee has been updated successfully.');
     }
 
     public function deleteTrainee(){

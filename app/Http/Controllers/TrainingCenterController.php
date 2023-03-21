@@ -12,12 +12,6 @@ class TrainingCenterController extends Controller
         return view('training-center.index', compact('centers'));
     }
 
-    public function getTrainingCenter(){
-        $trainee = TrainingCenter::find(request()->id);
-
-        return view('trainee.update', compact('trainee'));
-    }
-
     public function createTrainingCenter()
     {
         $attributes = request()->validate([

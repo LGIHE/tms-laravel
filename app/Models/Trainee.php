@@ -15,6 +15,7 @@ class Trainee extends Model
      * @var string[]
      */
     protected $fillable = [
+        'training',
         'name',
         'email',
         'gender',

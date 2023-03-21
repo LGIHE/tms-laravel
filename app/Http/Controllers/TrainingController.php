@@ -11,7 +11,6 @@ use App\Models\TrainingCenter;
 class TrainingController extends Controller
 {
     public function getAll(){
-
         $trainings = Training::all();
         $facilitators = User::all()->where('role', 'Facilitator');
         $centers = TrainingCenter::all();
@@ -50,6 +49,16 @@ class TrainingController extends Controller
 
     public function createTrainingSuccess(){
         return redirect()->route('trainings')->with('status', 'The training has been added successfully.');
+    }
+
+    public function getTraining(){
+        $training = Training::find(request()->id);
+        $centers = TrainingCenter::all();
+        $projects = TrainingCenter::all();
+        $facilitators = User::all()->where('role', 'Facilitator');
+        $trainees = Trainee::all()->where('training', request()->id);
+
+        return view('training.view', compact('training', 'centers', 'projects', 'trainees', 'facilitators'));
     }
 
     public function deleteTraining(){
