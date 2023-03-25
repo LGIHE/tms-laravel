@@ -101,9 +101,7 @@
                                                 </td>
                                             </tr>
 
-                                            <!-- School Update Modal -->
-                                            <!--  -->
-                                            <!-- Confirm School Delete modal -->
+                                            <!-- Confirm Training Delete modal -->
                                             <div class="modal fade" id="deleteModal-{{ $training->id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-sm" role="document">
                                                     <div class="modal-content">

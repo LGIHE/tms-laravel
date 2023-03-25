@@ -57,7 +57,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('trainees', [TraineeController::class, 'getTrainees'])->middleware('admin')->name('trainees');
     Route::get('trainee/{id}', [TraineeController::class, 'getTrainee'])->middleware('admin')->name('get.trainee');
     Route::post('create-trainee', [TraineeController::class, 'createTrainee'])->middleware('admin')->name('create.trainee');
-    Route::get('create-trainee-success', [TraineeController::class, 'createTraineeSuccess'])->middleware('admin')->name('create.trainee.success');
+    Route::get('create-trainee-success/{id}', [TraineeController::class, 'createTraineeSuccess'])->middleware('admin')->name('create.trainee.success');
     Route::get('delete-trainee/{id}', [TraineeController::class, 'deleteTrainee'])->middleware('admin')->name('delete.trainee');
 	Route::post('update-trainee/{id}', [TraineeController::class, 'updateTrainee'])->name('update.trainee');
 	Route::get('update-trainee-success/{id}', [TraineeController::class, 'updateTraineeSuccess'])->name('update.trainee.success');

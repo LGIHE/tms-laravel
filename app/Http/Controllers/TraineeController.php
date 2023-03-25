@@ -34,11 +34,11 @@ class TraineeController extends Controller
 
         Trainee::create($attributes);
 
-        return redirect()->route('trainees')->with('status', 'The trainee has been added successfully.');
+        return response()->json(['id' => request()->training]);
     }
 
     public function createTraineeSuccess(){
-        return redirect()->route('trainees')->with('status', 'The trainee has been added successfully.');
+        return redirect()->route('training', request()->id)->with('status', 'The trainee has been added successfully.');
     }
 
     public function updateTrainee()
@@ -65,8 +65,9 @@ class TraineeController extends Controller
     }
 
     public function deleteTrainee(){
-        Trainee::find(request()->id)->delete();
+        $trainee = Trainee::find(request()->id);
+        $trainee->delete();
 
-        return redirect()->route('trainees')->with('status', 'The trainee has been deleted successfully.');
+        return redirect()->route('training', $trainee->training)->with('status', 'The trainee has been deleted successfully.');
     }
 }

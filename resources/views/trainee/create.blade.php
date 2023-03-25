@@ -97,10 +97,12 @@ $(function () {
             },
             url: "{{ route('create.trainee') }}",
             data: formData,
-            success: () => {
+            success: (response) => {
                 $(".fa-spinner").remove();
                 $(".btn-submit").prop("disabled", false);
-                window.location.assign("{{ route('create.trainee.success') }}");
+                let url = '{{route("create.trainee.success",":id")}}';
+                url = url.replace(':id', response.id);
+                window.location.assign(url);
             },
             error: (response) => {
                 $(".fa-spinner").remove();

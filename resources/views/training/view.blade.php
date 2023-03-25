@@ -206,6 +206,7 @@
                                                     </td>
                                                 </tr>
 
+                                                <!-- Trainee Update modal -->
                                                 <div class="modal fade" id="updateTraineeModal-{{ $trainee->id }}"
                                                     data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
                                                     aria-labelledby="updateTraineeModal" aria-hidden="true">
@@ -302,7 +303,7 @@
                                                     </div>
                                                 </div>
 
-                                                <!-- Confirm School Delete modal -->
+                                                <!-- Confirm Trainee Delete modal -->
                                                 <div class="modal fade" id="deleteModal-{{ $trainee->id }}"
                                                     tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
                                                     aria-hidden="true">
@@ -352,6 +353,12 @@
 </x-layout>
 
 <script>
+
+    $(document).on('click', '#del-btn', function(event) {
+        event.preventDefault();
+        let href = $(this).data('value');
+        window.location.assign(href);
+    });
 
     $(document).on('click', '.btn-update-trainee', function (e) {
         e.preventDefault();
@@ -409,4 +416,6 @@
     });
 </script>
 
-@include('trainee.create')
+@include('trainee.create', [
+    'training' => $training
+])
