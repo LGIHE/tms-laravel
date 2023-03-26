@@ -69,7 +69,7 @@
                         <div class="card-header pb-0 p-2 pt-0">
                             <div class="row mb-5">
                                 <div class="me-3 my-3 text-end">
-                                    <a class="btn bg-gradient-success mb-0 end" id="edit-lesson-plan"
+                                    <a class="btn bg-gradient-success mb-0 end" id="open-update"
                                         data-value="{{ $training->id }}">
                                         <i class="material-icons text-sm">edit</i>&nbsp;&nbsp;Edit
                                     </a>
@@ -358,6 +358,13 @@
         event.preventDefault();
         let href = $(this).data('value');
         window.location.assign(href);
+    });
+
+    $(document).on('click','#open-update',function(){
+        var training_id = $(this).data("value");
+        var url = '{{route("update.training",":id")}}';
+        url = url.replace(':id', training_id);
+        window.location.assign(url);
     });
 
     $(document).on('click', '.btn-update-trainee', function (e) {

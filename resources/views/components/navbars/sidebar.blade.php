@@ -32,7 +32,7 @@
                 </a>
             </li>
             @if(auth()->user()->isAdmin())
-            <li class="nav-item mt-3">
+            {{-- <li class="nav-item mt-3">
                 <a class="nav-link text-dark {{ $activePage == 'trainees' ? ' active bg-gradient-secondary' : '' }} "
                     href="{{ route('trainees') }}">
                     <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
@@ -40,7 +40,7 @@
                     </div>
                     <span class="nav-link-text text-m text-bold ms-1" style="font-size:1rem;">Trainees</span>
                 </a>
-            </li>
+            </li> --}}
 
             <li class="nav-item mt-3">
                 <a class="nav-link text-dark {{ $activePage == 'training-centers' ? ' active bg-gradient-secondary' : '' }} "

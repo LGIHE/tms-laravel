@@ -10,23 +10,12 @@
 
                 <div class="card card-plain h-100">
                     <div class="card-body p-3">
-                        @if (session('status'))
-                        <div class="row">
-                            <div class="alert alert-success alert-dismissible text-white" role="alert">
-                                <span class="text-sm">{{ Session::get('status') }}</span>
-                                <button type="button" class="btn-close text-lg py-3 opacity-10"
-                                    data-bs-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                        </div>
-                        @endif
                         <div class="tab-content">
                             <div class="tab-pane fade active show" id="bio-form">
                                 <div class="card-header pb-0 p-3">
                                     <div class="row">
                                         <div class="col-md-8 d-flex align-items-center">
-                                            <h6 class="mb-3">Training Information</h6>
+                                            <h6 class="mb-3">Update Training Information</h6>
                                         </div>
                                     </div>
                                 </div>

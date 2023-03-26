@@ -68,6 +68,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('create-training', [TrainingController::class, 'getCreate'])->name('get.create.training');
 	Route::post('training', [TrainingController::class, 'createTraining'])->name('create.training');
     Route::get('create-training-success', [TrainingController::class, 'createTrainingSuccess'])->name('create.training.success');
+	Route::get('update-training/{id}', [TrainingController::class, 'getUpdateTraining'])->name('update.training');
 	Route::post('delete-training/{id}', [TrainingController::class, 'deleteTraining'])->name('delete.training');
 
     //TRAINING CENTER ROUTES
