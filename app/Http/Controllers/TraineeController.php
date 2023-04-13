@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Trainee;
+use App\Models\Training;
 
 class TraineeController extends Controller
 {
     public function getTrainees(){
         $trainees = Trainee::all();
+        $trainings = Training::all();
 
-        return view('trainee.index', compact('trainees'));
+        return view('trainee.index', compact('trainees', 'trainings'));
     }
 
     public function getTrainee(){

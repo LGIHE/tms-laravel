@@ -51,6 +51,7 @@
                                             <th class="text-secondary text-xxl font-weight-bolder">Contact</th>
                                             <th class="text-secondary text-xxl font-weight-bolder">Address</th>
                                             <th class="text-secondary text-xxl font-weight-bolder">Email</th>
+                                            <th class="text-secondary text-xxl font-weight-bolder">Training</th>
                                             <th class="text-secondary"></th>
                                         </tr>
                                     </thead>
@@ -86,6 +87,17 @@
                                             <td>
                                                 <div class="d-flex flex-column justify-content-center">
                                                     <p class="text-m text-dark font-weight-bold mb-0">{{ $trainee->email }}</p>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <p class="text-m text-dark font-weight-bold mb-0">
+                                                        @foreach ($trainings as $training)
+                                                            @if ($training->id == $trainee->training)
+                                                                {{ $training->name }}
+                                                            @endif
+                                                        @endforeach
+                                                    </p>
                                                 </div>
                                             </td>
                                             <td class="not-export-col">
