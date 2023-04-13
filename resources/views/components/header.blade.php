@@ -31,9 +31,6 @@
     <link href="https://cdn.datatables.net/responsive/2.4.0/css/responsive.dataTables.min.css">
 
     <style>
-        #open-update {
-            max-width: 50px!important;
-        }
 
         .align-middle .btn {
             padding: 0.8rem!important;
