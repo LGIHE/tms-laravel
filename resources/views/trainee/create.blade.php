@@ -21,7 +21,7 @@
             <div class="modal-body">
                 <form method='POST' action='#' id="addTraineeForm">
                     @csrf
-                    <input type="hidden" name="training" value="{{ $training->id }}">
+                    <input type="hidden" name="training" value="{{ $training }}">
                     <div class="row">
 
                         <div class="mb-3 col-md-6">

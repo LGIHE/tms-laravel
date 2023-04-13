@@ -267,4 +267,6 @@
     });
 </script>
 
-@include('trainee.create')
+@include('trainee.create', [
+    'training' => $trainee->training
+])
