@@ -277,6 +277,13 @@
                             <p class='text-danger font-weight-bold inputerror' id="addressError"></p>
                         </div>
 
+                        <div class="mbsc-col-sm-8 mbsc-col-md-4 mb-4">
+                            <div class="mbsc-form-group">
+                                <div class="mbsc-form-group-title">Days Attended</div>
+                                <div id="multi-day"></div>
+                            </div>
+                        </div>
+
                     </div>
                 </form>
             </div>
