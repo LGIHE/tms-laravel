@@ -27,10 +27,13 @@ class TraineeController extends Controller
             'email' => 'nullable|email|max:255|unique:trainees,email',
             'gender' => 'required',
             'age' => 'required',
+            'category' => 'required',
+            'nationality' => 'required',
             'phone' => 'required|min:10',
             'address' => 'required|max:255',
         ]);
 
+        $attributes['attendance'] = json_decode(request()->attendance, true);
         $attributes['training'] = request()->training;
         $attributes['created_by'] = auth()->user()->id;
 
@@ -50,10 +53,14 @@ class TraineeController extends Controller
             'email' => 'nullable|email|max:255',
             'gender' => 'required',
             'age' => 'required',
+            'category' => 'required',
+            'nationality' => 'required',
             'phone' => 'required|min:10',
             'address' => 'required|max:255',
+            'attendance' => 'required',
         ]);
 
+        $attributes['attendance'] = json_decode(request()->attendance, true);
         $attributes['training'] = request()->training;
         $attributes['updated_by'] = auth()->user()->id;
 

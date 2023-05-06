@@ -20,8 +20,11 @@ class Trainee extends Model
         'email',
         'gender',
         'age',
+        'category',
+        'nationality',
         'phone',
         'address',
+        'attendance',
         'created_by',
         'updated_by',
     ];

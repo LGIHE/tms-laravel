@@ -22,7 +22,7 @@
             <div class="modal-body">
                 <form method='POST' action='#' id="addTraineeForm">
                     @csrf
-                    <input type="hidden" name="training" value="{{ $training }}">
+                    <input type="hidden" name="training" value="{{ $training->id }}">
                     <div class="row">
 
                         <div class="mb-3 col-md-6">
@@ -277,12 +277,14 @@
                             <p class='text-danger font-weight-bold inputerror' id="addressError"></p>
                         </div>
 
-                        <div class="mbsc-col-sm-8 mbsc-col-md-4 mb-4">
+                        {{-- <div class="mbsc-col-sm-8 mbsc-col-md-4 mb-4">
                             <div class="mbsc-form-group">
                                 <div class="mbsc-form-group-title">Days Attended</div>
                                 <div id="multi-day"></div>
                             </div>
-                        </div>
+                        </div> --}}
+
+                        <input type="text" id="multi-day" name="attendance">
 
                     </div>
                 </form>
