@@ -33,7 +33,8 @@ class TraineeController extends Controller
             'address' => 'required|max:255',
         ]);
 
-        $attributes['attendance'] = json_decode(request()->attendance, true);
+        $attendance = explode(',', request()->attendance);
+        $attributes['attendance'] = json_encode($attendance);
         $attributes['training'] = request()->training;
         $attributes['created_by'] = auth()->user()->id;
 
