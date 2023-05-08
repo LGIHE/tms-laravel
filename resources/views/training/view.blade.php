@@ -142,6 +142,7 @@
                                                     <th class="text-secondary text-xxl font-weight-bolder">Contact</th>
                                                     <th class="text-secondary text-xxl font-weight-bolder">Address</th>
                                                     <th class="text-secondary text-xxl font-weight-bolder">Email</th>
+                                                    <th class="text-secondary text-xxl font-weight-bolder">Days Attended</th>
                                                     <th class="text-secondary"></th>
                                                 </tr>
                                             </thead>
@@ -183,6 +184,15 @@
                                                         <div class="d-flex flex-column justify-content-center">
                                                             <p class="text-m text-dark font-weight-bold mb-0">{{
                                                                 $trainee->email }}</p>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex flex-column justify-content-center">
+                                                            <p class="text-m text-dark font-weight-bold mb-0">
+                                                                @if ($trainee->attendance != null)
+                                                                    {{ count(explode(",", $trainee->attendance )) }}
+                                                                @else 0 @endif
+                                                            </p>
                                                         </div>
                                                     </td>
                                                     <td class="not-export-col">
