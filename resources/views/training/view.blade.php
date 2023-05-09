@@ -196,13 +196,13 @@
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        {{-- <div class="d-flex flex-column justify-content-center">
+                                                        <div class="d-flex flex-column justify-content-center">
                                                             <p class="text-m text-dark font-weight-bold mb-0">
                                                                 @if ($trainee->attendance != null)
                                                                     {{ count(explode(",", $trainee->attendance )) }}
                                                                 @else 0 @endif
                                                             </p>
-                                                        </div> --}}
+                                                        </div>
                                                     </td>
                                                     <td class="not-export-col">
                                                         <a rel="tooltip" class="btn btn-link p-0 m-0" role="btn"
