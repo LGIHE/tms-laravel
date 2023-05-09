@@ -122,9 +122,6 @@
                             <li class="nav-item">
                                 <a class="nav-link active" data-bs-toggle="tab" href="#steps-tab">Trainees</a>
                             </li>
-                            {{-- <li class="nav-item">
-                                <a class="nav-link" data-bs-toggle="tab" href="#annexes-tab">Annexes</a>
-                            </li> --}}
                         </ul>
 
                         <div class="tab-content mt-2">
@@ -187,13 +184,13 @@
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <div class="d-flex flex-column justify-content-center">
+                                                        {{-- <div class="d-flex flex-column justify-content-center">
                                                             <p class="text-m text-dark font-weight-bold mb-0">
                                                                 @if ($trainee->attendance != null)
                                                                     {{ count(explode(",", $trainee->attendance )) }}
                                                                 @else 0 @endif
                                                             </p>
-                                                        </div>
+                                                        </div> --}}
                                                     </td>
                                                     <td class="not-export-col">
                                                         <a rel="tooltip" class="btn btn-link p-0 m-0" role="btn"
@@ -281,6 +278,29 @@
                                                                         </div>
 
                                                                         <div class="mb-3 col-md-6">
+                                                                            <label class="form-label">Category</label>
+                                                                            <select class="form-select" name="category" aria-label="">
+                                                                                <option value="" selected>Select Category</option>
+                                                                                <option value="Teacher" {{ $trainee->category == "Teacher" ? "selected" : '' }}>Teacher</option>
+                                                                                <option value="Youth" {{ $trainee->category == "Youth" ? "selected" : '' }}>Youth</option>
+                                                                                <option value="School Leader" {{ $trainee->category == "School Leader" ? "selected" : '' }}>School Leader</option>
+                                                                                <option value="Community Leader" {{ $trainee->category == "Community Leader" ? "selected" : '' }}>Community Leader</option>
+                                                                            </select>
+                                                                            <p class='text-danger font-weight-bold inputerror' id="categoryError"></p>
+                                                                        </div>
+
+                                                                        <div class="mb-3 col-md-6">
+                                                                            <label class="form-label">Nationality</label>
+                                                                            <select class="form-select" name="nationality" aria-label="">
+                                                                                <option value="" selected>Select Nationality</option>
+                                                                                @foreach ($nationalities as $nationality)
+                                                                                    <option value="{{ $nationality->nationality }}" {{ $trainee->nationality == $nationality->nationality ? "selected" : '' }}>{{ $nationality->nationality }}</option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                            <p class='text-danger font-weight-bold inputerror' id="nationalityError"></p>
+                                                                        </div>
+
+                                                                        <div class="mb-3 col-md-6">
                                                                             <label class="form-label">Phone</label>
                                                                             <input type="text" name="phone"
                                                                                 class="form-control border border-2 p-2"
@@ -296,6 +316,9 @@
                                                                             <p class='text-danger font-weight-bold inputerror'
                                                                                 id="addressError"></p>
                                                                         </div>
+
+                                                                        <p class='text-danger font-weight-bold inputerror' id="attendanceError"></p>
+                                                                        <input type="text" class="multi-day-update" name="attendance" value="{{ $trainee->attendance }}" readonly>
 
                                                                     </div>
                                                                 </form>
@@ -363,6 +386,15 @@
 </x-layout>
 
 <script>
+
+    $(function() {
+        $('.multi-day-update').mobiscroll().datepicker({
+            controls: ['calendar'],
+            display: 'inline',
+            selectMultiple: true,
+            markedDates: {!! json_encode($trainee->attendance) !!}
+        });
+    });
 
     $(document).on('click', '#del-btn', function(event) {
         event.preventDefault();

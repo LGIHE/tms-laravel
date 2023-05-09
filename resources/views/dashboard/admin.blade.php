@@ -179,7 +179,7 @@
                                             </div>
                                         </td>
                                         <td class="align-middle not-export-col">
-                                            <a rel="tooltip" class="" id="open-update" data-value="{{ $training->id }}"
+                                            <a rel="tooltip" class="" id="view-taining" data-value="{{ $training->id }}"
                                                 style="cursor:pointer;">
                                                 <i class="material-icons"
                                                     style="font-size:25px;margin-right:20px;">visibility</i>
@@ -476,3 +476,12 @@
     </script>
     @endpush
 </x-layout>
+
+<script>
+    $(document).on('click','#view-training',function(){
+        var training_id = $(this).data("value");
+        var url = '{{route("training",":id")}}';
+        url = url.replace(':id', training_id);
+        window.location.assign(url);
+    });
+</script>

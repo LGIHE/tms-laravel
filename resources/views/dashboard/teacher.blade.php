@@ -137,26 +137,7 @@
                                     </a>
                                 </td>
                                 </tr>
-                                    <!-- Confirm Lesson Plan Delete modal -->
-                                    <div class="modal fade" id="deleteModal-{{ $lessonPlan->id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-sm" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">Confirm</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body" id="smallBody">
-                                                    <div class="text-center">
-                                                        <span class="">Are you sure you want to Delete this School?</span>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer align-items-center">
-                                                    <button type="button" class="btn btn-success" id="del-btn" data-value="{{ route('delete.lesson.plan', $lessonPlan->id) }}">Confirm</button>
-                                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+
                                     @endforeach
                                 </tbody>
                             </table>
