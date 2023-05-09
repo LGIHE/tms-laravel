@@ -51,6 +51,8 @@
                                             <th class="text-secondary text-xxl font-weight-bolder px-0">Contact Person</th>
                                             <th class="text-secondary text-xxl font-weight-bolder px-0">Contact Phone</th>
                                             <th class="text-secondary text-xxl font-weight-bolder px-0">Email</th>
+                                            <th class="text-secondary text-xxl font-weight-bolder px-0">Country</th>
+                                            <th class="text-secondary text-xxl font-weight-bolder px-0">Address</th>
                                             <th class="text-secondary"></th>
                                         </tr>
                                     </thead>
@@ -86,6 +88,16 @@
                                             <td>
                                                 <div class="d-flex flex-column justify-content-center">
                                                     <p class="text-m text-dark font-weight-bold mb-0">{{ $center->email }}</p>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <p class="text-m text-dark font-weight-bold mb-0">{{ $center->country }}</p>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <p class="text-m text-dark font-weight-bold mb-0">{{ $center->district }}, {{ $center->city }}</p>
                                                 </div>
                                             </td>
                                             <td class="not-export-col">
