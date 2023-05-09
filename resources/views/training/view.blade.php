@@ -97,14 +97,26 @@
                                 </div>
                                 <div class="col-md-4 d-flex">
                                     <p class="text-dark font-weight-bold">Project:</p>&nbsp;
-                                    <p class="text-dark">{{ $training->project }}</p>
+                                    <p class="text-dark">
+                                        @foreach ( $projects as $project )
+                                            @if ($project->id == $training->project)
+                                                {{ $project->name }}
+                                            @endif
+                                        @endforeach
+                                    </p>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-4 d-flex">
                                     <p class="text-dark font-weight-bold">Training Center:</p>&nbsp;
-                                    <p class="text-dark">{{ $training->training_center }}</p>
+                                    <p class="text-dark">
+                                        @foreach ( $centers as $center )
+                                            @if ($center->id == $training->training_center)
+                                                {{ $center->name }}
+                                            @endif
+                                        @endforeach
+                                    </p>
                                 </div>
                                 <div class="col-md-4 d-flex">
                                     <p class="text-dark font-weight-bold">Start Date:</p>&nbsp;
