@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Countries;
 use App\Models\TrainingCenter;
 
 class TrainingCenterController extends Controller
 {
     public function getAll(){
         $centers = TrainingCenter::all();
+        $countries = Countries::all();
 
-        return view('training-center.index', compact('centers'));
+        return view('training-center.index', compact('centers', 'countries'));
     }
 
     public function createTrainingCenter()
@@ -17,7 +19,6 @@ class TrainingCenterController extends Controller
         $attributes = request()->validate([
             'name' => 'required|max:255',
             'email' => 'nullable|email|max:255',
-            'phone' => 'required|min:10',
             'type' => 'required',
             'capacity' => 'nullable|numeric',
             'contact_phone' => 'required|min:10',
@@ -43,7 +44,6 @@ class TrainingCenterController extends Controller
         $attributes = request()->validate([
             'name' => 'required|max:255',
             'email' => 'nullable|email|max:255',
-            'phone' => 'required|min:10',
             'type' => 'required',
             'capacity' => 'nullable|numeric',
             'contact_phone' => 'required|min:10',

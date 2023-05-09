@@ -69,8 +69,8 @@
                             <label class="form-label">Nationality</label>
                             <select class="form-select" name="nationality" aria-label="">
                                 <option value="" selected>Select Nationality</option>
-                                @foreach ($nationalities as $nationality)
-                                    <option value="{{ $nationality->nationality }}">{{ $nationality->nationality }}</option>
+                                @foreach ($countries as $country)
+                                    <option value="{{ $country->nationality }}">{{ $country->nationality }}</option>
                                 @endforeach
                             </select>
                             <p class='text-danger font-weight-bold inputerror' id="nationalityError"></p>

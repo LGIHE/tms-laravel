@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Nationalities;
+use App\Models\Countries;
 use App\Models\Project;
 use App\Models\User;
 use App\Models\Trainee;
@@ -58,9 +58,9 @@ class TrainingController extends Controller
         $projects = Project::all();
         $facilitators = User::all()->where('role', 'Facilitator');
         $trainees = Trainee::all()->where('training', request()->id);
-        $nationalities = Nationalities::all();
+        $countries = Countries::all();
 
-        return view('training.view', compact('training', 'centers', 'projects', 'trainees', 'facilitators', 'nationalities'));
+        return view('training.view', compact('training', 'centers', 'projects', 'trainees', 'facilitators', 'countries'));
     }
 
     public function deleteTraining(){

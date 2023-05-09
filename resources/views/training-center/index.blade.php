@@ -89,7 +89,7 @@
                                                 </div>
                                             </td>
                                             <td class="not-export-col">
-                                                <a rel="tooltip" class="btn btn-link p-0 m-0" role="btn" data-bs-toggle="modal" data-bs-target="#updateTraineeModal-{{$center->id}}">
+                                                <a rel="tooltip" class="btn btn-link p-0 m-0" role="btn" data-bs-toggle="modal" data-bs-target="#updateTrainingCenterFormModal-{{$center->id}}">
                                                     <i class="material-icons" style="font-size:1.4rem;">edit</i>
                                                     <div class="ripple-container"></div>
                                                 </a>
@@ -103,57 +103,82 @@
                                             </td>
                                         </tr>
 
-                                        <div class="modal fade" id="updateTraineeModal-{{ $center->id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="updateTraineeModal" aria-hidden="true">
+                                        <div class="modal fade" id="updateTrainingCenterFormModal-{{ $center->id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="updateTraineeModal" aria-hidden="true">
                                             <div class="modal-dialog modal-lg">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h1 class="modal-title fs-5" id="updateTraineeModalLabel">Add New Trainee</h1>
+                                                        <h1 class="modal-title fs-5" id="updateTrainingCenterFormModalLabel">Update Training Center</h1>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
 
                                                     <div class="modal-body">
-                                                        <form method='POST' action='#' id="updateTraineeForm">
+                                                        <form method='POST' action='#' id="updateTrainingCenterForm">
                                                             @csrf
                                                             <div class="row">
 
-                                                                <div class="mb-3 col-md-6">
+                                                                <div class="mb-3 col-md-4">
                                                                     <label class="form-label">Name</label>
-                                                                    <input type="text" name="name" class="form-control border border-2 p-2" value="{{ $center->name }}">
+                                                                    <input type="text" name="name" value="{{ $center->name }}" class="form-control border border-2 p-2">
                                                                     <p class='text-danger font-weight-bold inputerror' id="nameError"></p>
                                                                 </div>
 
-                                                                <div class="mb-3 col-md-6">
+                                                                <div class="mb-3 col-md-4">
+                                                                    <label class="form-label">Type</label>
+                                                                    <select class="form-select" name="type" aria-label="">
+                                                                        <option value="" selected>Select Type</option>
+                                                                        <option value="School" {{ $center->type == "School" ? "selected" : '' }}>School</option>
+                                                                        <option value="Institute" {{ $center->type == "Institute" ? "selected" : '' }}>Institute</option>
+                                                                        <option value="Farm" {{ $center->type == "Farm" ? "selected" : '' }}>Farm</option>
+                                                                        <option value="Conference Hall" {{ $center->type == "Conference Hall" ? "selected" : '' }}>Conference Hall</option>
+                                                                    </select>
+                                                                    <p class='text-danger font-weight-bold inputerror' id="typeError"></p>
+                                                                </div>
+
+                                                                <div class="mb-3 col-md-4">
+                                                                    <label class="form-label">Capacity</label>
+                                                                    <input type="text" name="capacity" value="{{ $center->capacity }}" class="form-control border border-2 p-2">
+                                                                    <p class='text-danger font-weight-bold inputerror' id="capacityError"></p>
+                                                                </div>
+
+                                                                <div class="mb-3 col-md-4">
                                                                     <label class="form-label">Email address</label>
-                                                                    <input type="email" name="email" class="form-control border border-2 p-2" value="{{ $center->email }}">
+                                                                    <input type="email" name="email" value="{{ $center->email }}" class="form-control border border-2 p-2">
                                                                     <p class='text-danger font-weight-bold inputerror' id="emailError"></p>
                                                                 </div>
 
-                                                                <div class="mb-3 col-md-6">
-                                                                    <label class="form-label">Gender</label>
-                                                                    <select class="form-select" name="gender" aria-label="">
-                                                                        <option value="" selected>Select Gender</option>
-                                                                        <option value="Male" {{ $center->gender == "Male" ? "selected" : '' }}>Male</option>
-                                                                        <option value="Female" {{ $center->gender == "Female" ? "selected" : '' }}>Female</option>
+                                                                <div class="mb-3 col-md-4">
+                                                                    <label class="form-label">Contact Person</label>
+                                                                    <input type="text" name="contact_person" value="{{ $center->contact_person }}" class="form-control border border-2 p-2">
+                                                                    <p class='text-danger font-weight-bold inputerror' id="contact_personError"></p>
+                                                                </div>
+
+                                                                <div class="mb-3 col-md-4">
+                                                                    <label class="form-label">Contact Person Phone</label>
+                                                                    <input type="text" name="contact_phone" value="{{ $center->contact_phone }}" class="form-control border border-2 p-2">
+                                                                    <p class='text-danger font-weight-bold inputerror' id="contact_phoneError"></p>
+                                                                </div>
+
+                                                                <div class="mb-3 col-md-4">
+                                                                    <label class="form-label">Country</label>
+                                                                    <select class="form-select" name="country" aria-label="">
+                                                                        <option value="" selected>Select Country</option>
+                                                                        @foreach ($countries as $country)
+                                                                            <option value="{{ $country->code }}" @if ($center->country == $country->code) {{ 'selected' }} @endif>{{ $country->name }}</option>
+                                                                        @endforeach
                                                                     </select>
-                                                                    <p class='text-danger font-weight-bold inputerror' id="genderError"></p>
+                                                                    <p class='text-danger font-weight-bold inputerror' id="countryError"></p>
                                                                 </div>
 
-                                                                <div class="mb-3 col-md-6">
-                                                                    <label class="form-label">Age</label>
-                                                                    <input type="number" name="age" class="form-control border border-2 p-2" value="{{ $center->age }}">
-                                                                    <p class='text-danger font-weight-bold inputerror' id="ageError"></p>
+                                                                <div class="mb-3 col-md-4">
+                                                                    <label class="form-label">District</label>
+                                                                    <input type="text" name="district" value="{{ $center->district }}" class="form-control border border-2 p-2">
+                                                                    <p class='text-danger font-weight-bold inputerror' id="districtError"></p>
                                                                 </div>
 
-                                                                <div class="mb-3 col-md-6">
-                                                                    <label class="form-label">Phone</label>
-                                                                    <input type="text" name="phone" class="form-control border border-2 p-2" value="{{ $center->phone }}">
-                                                                    <p class='text-danger font-weight-bold inputerror' id="phoneError"></p>
-                                                                </div>
-
-                                                                <div class="mb-3 col-md-6">
-                                                                    <label class="form-label">Address</label>
-                                                                    <textarea name="address" class="form-control border border-2 p-2">{{ $center->address }}</textarea>
-                                                                    <p class='text-danger font-weight-bold inputerror' id="addressError"></p>
+                                                                <div class="mb-3 col-md-4">
+                                                                    <label class="form-label">City</label>
+                                                                    <input type="text" name="city" value="{{ $center->city }}" class="form-control border border-2 p-2">
+                                                                    <p class='text-danger font-weight-bold inputerror' id="cityError"></p>
                                                                 </div>
 
                                                             </div>
@@ -225,12 +250,12 @@
         e.preventDefault();
 
         let id = $(this).data('id');
-        let route = '{{route("update.trainee",":id")}}';
+        let route = '{{route("update.training.center",":id")}}';
         route = route.replace(':id', id);
 
-        let formData = $('#updateTraineeForm').serializeArray();
+        let formData = $('#updateTrainingCenterForm').serializeArray();
         $(".inputerror").text("");
-        $("#updateTraineeForm input").removeClass("is-invalid");
+        $("#updateTrainingCenterForm input").removeClass("is-invalid");
 
         $("#loader").prepend('<i class="fa fa-spinner fa-spin"></i>');
         $(".btn-submit").attr("disabled", 'disabled');
@@ -245,7 +270,7 @@
             success: (response) => {
                 $(".fa-spinner").remove();
                 $(".btn-submit").prop("disabled", false);
-                let url = '{{route("update.trainee.success",":id")}}';
+                let url = '{{route("update.training.center.success",":id")}}';
                 url = url.replace(':id', response.id);
                 window.location.assign(url);
             },

@@ -75,6 +75,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('training-centers', [TrainingCenterController::class, 'getAll'])->name('training.centers');
     Route::post('create-training-center', [TrainingCenterController::class, 'createTrainingCenter'])->name('create.training.center');
 	Route::get('create-training-center-success', [TrainingCenterController::class, 'createTrainingCenterSuccess'])->name('create.training.center.success');
+    Route::post('update-training-center/{id}', [TrainingCenterController::class, 'updateTrainingCenter'])->name('update.training.center');
+	Route::get('update-training-center-success', [TrainingCenterController::class, 'updateTrainingCenterSuccess'])->name('update.training.center.success');
 	Route::post('delete-training-center/{id}', [TrainingCenterController::class, 'deleteTrainingCenter'])->name('delete.training.center');
 
     //PROJECTS ROUTES

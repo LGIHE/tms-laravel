@@ -36,7 +36,7 @@
                                 <option value="School">School</option>
                                 <option value="Institute">Institute</option>
                                 <option value="Farm">Farm</option>
-                                <option value="Female">Conference Hall</option>
+                                <option value="Conference Hall">Conference Hall</option>
                             </select>
                             <p class='text-danger font-weight-bold inputerror' id="typeError"></p>
                         </div>
@@ -45,12 +45,6 @@
                             <label class="form-label">Capacity</label>
                             <input type="text" name="capacity" class="form-control border border-2 p-2">
                             <p class='text-danger font-weight-bold inputerror' id="capacityError"></p>
-                        </div>
-
-                        <div class="mb-3 col-md-4">
-                            <label class="form-label">Phone</label>
-                            <input type="text" name="phone" class="form-control border border-2 p-2">
-                            <p class='text-danger font-weight-bold inputerror' id="phoneError"></p>
                         </div>
 
                         <div class="mb-3 col-md-4">
@@ -74,20 +68,17 @@
                         <div class="mb-3 col-md-4">
                             <label class="form-label">Country</label>
                             <select class="form-select" name="country" aria-label="">
-                                <option value="" selected>Select Gender</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
+                                <option value="" selected>Select Country</option>
+                                @foreach ($countries as $country)
+                                    <option value="{{ $country->code }}">{{ $country->name }}</option>
+                                @endforeach
                             </select>
                             <p class='text-danger font-weight-bold inputerror' id="countryError"></p>
                         </div>
 
                         <div class="mb-3 col-md-4">
                             <label class="form-label">District</label>
-                            <select class="form-select" name="district" aria-label="">
-                                <option value="" selected>Select Gender</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                            </select>
+                            <input type="text" name="district" class="form-control border border-2 p-2">
                             <p class='text-danger font-weight-bold inputerror' id="districtError"></p>
                         </div>
 
