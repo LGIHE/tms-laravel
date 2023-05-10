@@ -1,3 +1,4 @@
+
 <style>
     .dash-block {
         cursor: pointer;
@@ -86,8 +87,8 @@
                             <div class="col-lg-6 col-7">
                                 <h6>Trainings</h6>
                                 <p class="text-sm mb-0">
-                                    <i class="fa fa-check text-info" aria-hidden="true"></i>
-                                    <span class="font-weight-bold ms-1">30 done</span> this month
+                                    {{-- <i class="fa fa-check text-info" aria-hidden="true"></i>
+                                    <span class="font-weight-bold ms-1">30 done</span> this month --}}
                                 </p>
                             </div>
                         </div>
@@ -104,8 +105,8 @@
                                         <th class="text-secondary text-xxl font-weight-bolder">Project</th>
                                         <th class="text-secondary text-xxl font-weight-bolder">From</th>
                                         <th class="text-secondary text-xxl font-weight-bolder">To</th>
-                                        <th class="text-uppercase text-secondary text-s font-weight-bolder">Attendence
-                                        </th>
+                                        <th class="text-secondary text-xxl font-weight-bolder">Trainees</th>
+                                        <th class="text-uppercase text-secondary text-s font-weight-bolder">Attendence</th>
                                         <th class="text-secondary"></th>
                                     </tr>
                                 </thead>
@@ -147,33 +148,38 @@
                                             <div class="d-flex flex-column justify-content-center">
                                                 <span class="text-dark text-m font-weight-bold">
                                                     @foreach ($projects as $project)
-                                                    @if($project->id == $training->project) {{ $project->name }} @endif
+                                                        @if($project->id == $training->project) {{ $project->name }} @endif
                                                     @endforeach
                                                 </span>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="d-flex flex-column justify-content-center">
-                                                <span class="text-dark text-m font-weight-bold">{{ $training->start_date
-                                                    }}</span>
+                                                <span class="text-dark text-m font-weight-bold">{{ $training->start_date }}</span>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="d-flex flex-column justify-content-center">
-                                                <span class="text-dark text-m font-weight-bold">{{ $training->end_date
-                                                    }}</span>
+                                                <span class="text-dark text-m font-weight-bold">{{ $training->end_date }}</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex flex-column justify-content-center">
+                                                <span class="text-dark text-m font-weight-bold">
+                                                    {{ DB::table('trainees')->where('training', $training->id)->count() }}
+                                                </span>
                                             </div>
                                         </td>
                                         <td class="align-middle">
                                             <div class="progress-wrapper">
                                                 <div class="progress-info">
                                                     <div class="progress-percentage">
-                                                        <span class="text-xs font-weight-bold">60%</span>
+                                                        <span class="text-xs font-weight-bold">{{ App\Http\Controllers\DashboardController::getAttendanceForTraining($training->id, $training->start_date, $training->end_date) }}%</span>
                                                     </div>
                                                 </div>
                                                 <div class="progress">
-                                                    <div class="progress-bar bg-gradient-info w-60" role="progressbar"
-                                                        aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
+                                                    <div class="progress-bar bg-gradient-info w-{{ App\Http\Controllers\DashboardController::getValueRound(App\Http\Controllers\DashboardController::getAttendanceForTraining($training->id, $training->start_date, $training->end_date)) }}" role="progressbar"
+                                                        aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
                                                     </div>
                                                 </div>
                                             </div>
@@ -187,34 +193,6 @@
                                             </a>
                                         </td>
                                     </tr>
-
-                                    <!-- School Update Modal -->
-                                    <!--  -->
-                                    <!-- Confirm School Delete modal -->
-                                    <div class="modal fade" id="deleteModal-{{ $training->id }}" tabindex="-1"
-                                        role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-sm" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">Confirm</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body" id="smallBody">
-                                                    <div class="text-center">
-                                                        <span class="">Are you sure you want to Delete this
-                                                            Training?</span>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer align-items-center">
-                                                    <button type="button" class="btn btn-success" id="del-btn"
-                                                        data-value="{{ route('delete.training', $training->id) }}">Confirm</button>
-                                                    <button type="button" class="btn btn-danger"
-                                                        data-bs-dismiss="modal">Cancel</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                     @endforeach
                                 </tbody>
                             </table>
