@@ -80,52 +80,8 @@
 
                                         <div class="mb-3 col-md-6">
                                             <label class="form-label">Password</label><br>
-                                            <button type="button" class="btn bg-gradient-info">Change Password</button>
-                                        </div>
+                                            <button type="button" data-bs-toggle="modal" data-bs-target="#updatePasswordModal-{{ $user->id }}" class="btn bg-gradient-info">Change Password</button>
 
-                                        <div class="mb-3 col-md-6">
-                                            <label class="form-label">School</label>
-                                            <select class="form-select border border-2 p-2" name="school" aria-label="">
-                                                @foreach($schools as $school)
-                                                <option value="{!! $school->id !!}">{!! $school->name !!}</option>
-                                                @endforeach
-                                            </select>
-                                            <p class='text-danger font-weight-bold inputerror' id="schoolError"></p>
-                                        </div>
-
-                                        <div class="mb-3 col-md-3"></div>
-
-                                        <div class="mb-3 col-md-4">
-                                            <label class="form-label subject-1">Subject 1</label>
-                                            <select class="form-select border-2 p-2" name="subject_1" aria-label="">
-                                                <option value="" selected>Select Subject</option>
-                                                @foreach($subjects as $subject)
-                                                <option value="{!! $subject->id !!}" @if($subject->id == $user->subject_1) {{'selected'}} @endif>{!! $subject->name !!}</option>
-                                                @endforeach
-                                            </select>
-                                            <p class='text-danger font-weight-bold inputerror' id="subject_1Error"></p>
-                                        </div>
-
-                                        <div class="mb-3 col-md-4">
-                                            <label class="form-label subject-2">Subject 2</label>
-                                            <select class="form-select border-2 p-2" name="subject_2" aria-label="">
-                                                <option value="" selected>Select Subject</option>
-                                                @foreach($subjects as $subject)
-                                                <option value="{!! $subject->id !!}" @if($subject->id == $user->subject_2) {{'selected'}} @endif>{!! $subject->name !!}</option>
-                                                @endforeach
-                                            </select>
-                                            <p class='text-danger font-weight-bold inputerror' id="subject_2Error"></p>
-                                        </div>
-
-                                        <div class="mb-3 col-md-4">
-                                            <label class="form-label subject-3">Subject 3</label>
-                                            <select class="form-select" name="subject_3" aria-label="">
-                                                <option value="" selected>Select Subject</option>
-                                                @foreach($subjects as $subject)
-                                                <option value="{!! $subject->id !!}" @if($subject->id == $user->subject_3) {{'selected'}} @endif>{!! $subject->name !!}</option>
-                                                @endforeach
-                                            </select>
-                                            <p class='text-danger font-weight-bold inputerror' id="subject_3Error"></p>
                                         </div>
                                     </div>
                                     <button type="submit" class="btn bg-gradient-dark">Update User</button>
@@ -139,3 +95,81 @@
     </div>
 </x-layout>
 
+<div class="modal fade" id="updatePasswordModal-{{ $user->id }}" tabindex="-1" role="dialog" aria-labelledby="updatePasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Update User Password</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="smallBody">
+                <form method='POST' action="#" id="updatePasswordForm">
+                    @csrf
+                    <div class="mb-3 col-md-12">
+                        <label class="form-label">New Password</label>
+                        <input type="text" name="password" class="form-control border border-2 p-2">
+                        <p class='text-danger font-weight-bold inputerror' id="passwordError"></p>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer align-items-center">
+                <button type="button" class="btn btn-success btn-submit" id="update-pass-btn" data-value="{{ $user->id }}">Confirm <span id="loader"></span></button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(function () {
+
+        $('.btn-submit').on('click', function (e) {
+            e.preventDefault();
+
+            let formData = $('#updatePasswordForm').serializeArray();
+
+            let user_id = $(this).data("value");
+            let url = '{{route("update.user.password",":id")}}';
+            url = url.replace(':id', user_id);
+
+            $(".inputerror").text("");
+            $("#updatePasswordForm input").removeClass("is-invalid");
+            $("#updatePasswordForm select").removeClass("is-invalid");
+            $("#updatePasswordForm textarea").removeClass("is-invalid");
+
+            $("#loader").prepend('<i class="fa fa-spinner fa-spin"></i>');
+            $(".btn-submit").attr("disabled", 'disabled');
+
+            $.ajax({
+                method: "POST",
+                headers: {
+                    Accept: "application/json"
+                },
+                url: url,
+                data: formData,
+                success: (response) => {
+                    $(".fa-spinner").remove();
+                    $(".btn-submit").prop("disabled", false);
+                    let url = '{{route("update.user.password.success",":id")}}';
+                    url = url.replace(':id', response.id);
+                    window.location.assign(url);
+                },
+                error: (response) => {
+                    $(".fa-spinner").remove();
+                    $(".btn-submit").prop("disabled", false);
+
+                    if(response.status === 422) {
+                        let errors = response.responseJSON.errors;
+                        Object.keys(errors).forEach(function (key) {
+                            $("[name='" + key + "']").addClass("is-invalid");
+                            $("#" + key + "Error").text(errors[key][0]);
+                        });
+                    } else {
+                        // window.location.reload();
+                    }
+                }
+            })
+        });
+    })
+</script>

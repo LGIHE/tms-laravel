@@ -19,10 +19,8 @@ class UserController extends Controller
 
     public function getUser(){
         $user = User::find(request()->id);
-        $schools = School::all();
-        $subjects = Subject::all();
 
-        return view('user.update', compact('user', 'schools', 'subjects'));
+        return view('user.update', compact('user'));
     }
 
     public function createUser()
@@ -41,7 +39,7 @@ class UserController extends Controller
 
         // return response()->json($attributes);
 
-        $user = User::create($attributes);
+        User::create($attributes);
 
         return redirect()->route('users')->with('status', 'The user has been added successfully.');
     }
@@ -58,15 +56,14 @@ class UserController extends Controller
             'phone' => 'required|numeric|min:10',
             'location' => 'max:255',
             'role' => 'required',
-            // 'password' => 'required|min:5|max:255',
             'school' => 'required|numeric',
             'subject_1' => 'required_if:role,==,Teacher',
             'subject_2' => 'nullable',
             'subject_3' => 'nullable',
         ]);
 
-        #Update the School
-        $status = User::find(request()->id)->update($attributes);
+        #Update the User
+        User::find(request()->id)->update($attributes);
 
 
         return redirect()->route('get.user', request()->id)->with('status', 'The user has been updated successfully.');
@@ -77,6 +74,24 @@ class UserController extends Controller
         $status = User::find(request()->id)->delete();
 
         return redirect()->route('users')->with('status', 'The user has been deleted successfully.');
+    }
+
+    public function updatePassword()
+    {
+        $attributes = request()->validate([
+            'password' => 'required|min:5|max:255',
+        ]);
+
+        $attributes['updated_by'] = auth()->user()->id;
+
+        User::find(request()->id)->update($attributes);
+
+        return response()->json(['id' => request()->id]);
+    }
+
+    public function updatePasswordSuccess()
+    {
+        return redirect()->route('get.user', request()->id)->with('status', 'The user password has been updated successfully.');
     }
 
 }
