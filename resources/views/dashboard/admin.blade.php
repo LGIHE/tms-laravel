@@ -185,7 +185,7 @@
                                             </div>
                                         </td>
                                         <td class="align-middle not-export-col">
-                                            <a rel="tooltip" class="" id="view-taining" data-value="{{ $training->id }}"
+                                            <a rel="tooltip" class="" id="view-training" data-value="{{ $training->id }}"
                                                 style="cursor:pointer;">
                                                 <i class="material-icons"
                                                     style="font-size:25px;margin-right:20px;">visibility</i>
