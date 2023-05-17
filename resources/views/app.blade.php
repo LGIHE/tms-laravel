@@ -11,6 +11,10 @@
     <script src="{{ asset('assets') }}/js/plugins/perfect-scrollbar.min.js"></script>
     <script src="{{ asset('assets') }}/js/plugins/smooth-scrollbar.min.js"></script>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.min.js"></script>
 
@@ -30,7 +34,7 @@
     <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.4.0/js/dataTables.responsive.min.js">
     </script>
 
-    <script src="{{ asset('assets') }}/js/mobiscroll.jquery.min.js"></script>
+    <script src="{{ asset('assets') }}/js/jquery-ui.multidatespicker.js"></script>
 
     @stack('js')
     <script>
@@ -41,21 +45,6 @@
             }
             Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
         }
-    </script>
-
-    <script>
-        mobiscroll.setOptions({
-            theme: 'ios',
-            themeVariant: 'light'
-        });
-
-        $(function() {
-            $('#multi-day').mobiscroll().datepicker({
-                controls: ['calendar'],
-                display: 'inline',
-                selectMultiple: true
-            });
-        });
     </script>
 
     <script>

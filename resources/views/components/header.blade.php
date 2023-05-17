@@ -33,8 +33,8 @@
     <link href="https://cdn.datatables.net/fixedcolumns/4.2.1/css/fixedColumns.dataTables.min.css">
     <link href="https://cdn.datatables.net/responsive/2.4.0/css/responsive.dataTables.min.css">
 
+    <link href="{{ asset('assets') }}/css/jquery-ui.multidatespicker.css" rel="stylesheet" />
 
-    <link href="{{ asset('assets') }}/css/mobiscroll.jquery.min.css" rel="stylesheet" />
     <style>
         .align-middle .btn {
             padding: 0.8rem !important;

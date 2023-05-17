@@ -88,7 +88,7 @@
                             <p class='text-danger font-weight-bold inputerror' id="addressError"></p>
                         </div>
 
-                        <input type="text" id="multi-day" name="attendance" readonly>
+                        <input type="text" id="datepicker" name="attendance" readonly>
 
                     </div>
                 </form>
@@ -104,7 +104,12 @@
 </div>
 
 <script>
+
     $(function() {
+
+        $('#datepicker').multiDatesPicker({
+            dateFormat: 'dd/mm/yy',
+        });
 
         $('.btn-submit').on('click', function(e) {
             e.preventDefault();

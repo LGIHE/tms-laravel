@@ -31,6 +31,10 @@
     #addBtn:hover {
         background-color: #555;
     }
+
+    #ui-datepicker-div {
+        position: absolute!important;
+    }
 </style>
 
 <x-layout bodyClass="g-sidenav-show bg-gray-200">
@@ -330,7 +334,7 @@
                                                                         </div>
 
                                                                         <p class='text-danger font-weight-bold inputerror' id="attendanceError"></p>
-                                                                        <input type="text" class="multi-day-update" name="attendance" value="{{ $trainee->attendance }}" readonly>
+                                                                        <input type="text" class="datepicker-update" name="attendance" value="{{ $trainee->attendance }}" readonly>
 
                                                                     </div>
                                                                 </form>
@@ -399,14 +403,10 @@
 
 <script>
 
-    $(function() {
-        $('.multi-day-update').mobiscroll().datepicker({
-            controls: ['calendar'],
-            display: 'inline',
-            selectMultiple: true,
-            markedDates: {!! json_encode($trainee->attendance) !!}
-        });
+    $('.datepicker-update').multiDatesPicker({
+        dateFormat: 'dd/mm/yy',
     });
+
 
     $(document).on('click', '#del-btn', function(event) {
         event.preventDefault();
