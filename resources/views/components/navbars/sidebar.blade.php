@@ -63,7 +63,7 @@
                     <span class="nav-link-text text-m text-bold ms-1" style="font-size:1rem;">User Management</span>
                 </a>
             </li>
-
+            @endif
             <li class="nav-item mt-3">
                 <a class="nav-link text-dark {{ $activePage == 'projects' ? ' active bg-gradient-secondary' : '' }} "
                     href="{{ route('projects') }}">
@@ -73,7 +73,6 @@
                     <span class="nav-link-text text-m text-bold ms-1" style="font-size:1rem;">Projects</span>
                 </a>
             </li>
-            @endif
 
             <li class="nav-item mt-3">
                 <a class="nav-link text-dark {{ $activePage == 'profile' ? 'active bg-gradient-secondary' : '' }} "
