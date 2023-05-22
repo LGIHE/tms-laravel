@@ -26,10 +26,6 @@ class User extends Authenticatable
         'phone',
         'type',
         'role',
-        'school',
-        'subject_1',
-        'subject_2',
-        'subject_3',
         'password_confirmation'
     ];
 

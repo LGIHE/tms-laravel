@@ -56,10 +56,6 @@ class UserController extends Controller
             'phone' => 'required|numeric|min:10',
             'location' => 'max:255',
             'role' => 'required',
-            'school' => 'required|numeric',
-            'subject_1' => 'required_if:role,==,Teacher',
-            'subject_2' => 'nullable',
-            'subject_3' => 'nullable',
         ]);
 
         #Update the User
