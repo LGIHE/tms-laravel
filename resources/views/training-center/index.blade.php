@@ -1,3 +1,16 @@
+
+<style>
+
+    table.dataTable tbody th, table.dataTable tbody td {
+        padding: 8px 0px!important;
+    }
+
+    #table td:first-child {
+        word-wrap: break-word;
+        max-width: 150px;
+        padding-left: 10px!important;
+    }
+</style>
 <x-layout bodyClass="g-sidenav-show  bg-gray-200">
 
     <x-navbars.sidebar activePage="training-centers"></x-navbars.sidebar>
@@ -61,12 +74,12 @@
 
                                         <tr>
                                             <td>
-                                                <div class="d-flex flex-column justify-content-center px-3">
+                                                <div class="d-flex flex-column justify-content-center px-2">
                                                     <p class="text-m text-dark font-weight-bold mb-0">{{ $center->name }}</p>
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="d-flex flex-column justify-content-center">
+                                                <div class="d-flex flex-column justify-content-center px-0">
                                                     <p class="text-m text-dark font-weight-bold mb-0">{{ $center->type }}</p>
                                                 </div>
                                             </td>
