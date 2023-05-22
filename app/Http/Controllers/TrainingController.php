@@ -65,6 +65,7 @@ class TrainingController extends Controller
 
     public function deleteTraining(){
         Training::find(request()->id)->delete();
+        Trainee::all()->where('training', request()->id)->delete();
 
         return redirect()->route('training')->with('status', 'The training has been deleted successfully.');
     }

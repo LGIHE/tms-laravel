@@ -79,7 +79,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('create-training-center-success', [TrainingCenterController::class, 'createTrainingCenterSuccess'])->name('create.training.center.success');
     Route::post('update-training-center/{id}', [TrainingCenterController::class, 'updateTrainingCenter'])->name('update.training.center');
 	Route::get('update-training-center-success', [TrainingCenterController::class, 'updateTrainingCenterSuccess'])->name('update.training.center.success');
-	Route::post('delete-training-center/{id}', [TrainingCenterController::class, 'deleteTrainingCenter'])->name('delete.training.center');
+	Route::get('delete-training-center/{id}', [TrainingCenterController::class, 'deleteTrainingCenter'])->name('delete.training.center');
 
     //PROJECTS ROUTES
 	Route::get('projects', [ProjectController::class, 'getAll'])->name('projects');

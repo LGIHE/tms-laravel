@@ -228,7 +228,7 @@
                                                     </div>
                                                     <div class="modal-body" id="smallBody">
                                                         <div class="text-center">
-                                                            <span class="">Are you sure you want to Delete this Trainee?</span>
+                                                            <span class="">Are you sure you want to Delete this Traineing Center?</span>
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer align-items-center">
