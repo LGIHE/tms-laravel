@@ -38,7 +38,7 @@ class DashboardController extends Controller
                                 ->first()
                                 ->actual_attendance;
 
-        $attendance_percentage = (($total_attendees * $actualAttendance) / ($total_attendees * $total_days)) * 100;
+        $attendance_percentage = $total_attendees != 0 ? (($total_attendees * $actualAttendance) / ($total_attendees * $total_days)) * 100 : 0;
 
         return round($attendance_percentage, 0);
     }
