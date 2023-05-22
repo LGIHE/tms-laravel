@@ -26,6 +26,11 @@ use App\Http\Controllers\TraineeController;
 use App\Http\Controllers\TrainingCenterController;
 use App\Http\Controllers\ProjectController;
 
+Route::get('optimize', function () {
+    $output = Artisan::call('optimize');
+    return "<pre>$output</pre>";
+});
+
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/', function () {return redirect('sign-in');});
     // Route::get('sign-up', [RegisterController::class, 'create'])->name('register');
