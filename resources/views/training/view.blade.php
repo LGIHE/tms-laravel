@@ -132,6 +132,23 @@
                                 </div>
                             </div>
 
+                            <div class="row">
+                                <div class="col-md-4 d-flex">
+                                    <p class="text-dark font-weight-bold">Country:</p>&nbsp;
+                                    <p class="text-dark">
+                                        @foreach ($centers as $center)
+                                            @if ($center->id == $training->training_center)
+                                                @foreach ($countries as $country)
+                                                    @if ($country->code == $center->country)
+                                                        {{ $country->name }}
+                                                    @endif
+                                                @endforeach
+                                            @endif
+                                        @endforeach
+                                    </p>
+                                </div>
+                            </div>
+
                         </div>
 
                         <div class="row">
