@@ -82,17 +82,29 @@
                             <p class='text-danger font-weight-bold inputerror' id="phoneError"></p>
                         </div>
 
-                        <div class="mb-3 col-md-6">
+                        {{-- <div class="mb-3 col-md-6">
                             <label class="form-label">Address</label>
                             <textarea name="address" class="form-control border border-2 p-2"></textarea>
                             <p class='text-danger font-weight-bold inputerror' id="addressError"></p>
+                        </div> --}}
+
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">Institution/Organization</label>
+                            <input type="text" name="institution" class="form-control border border-2 p-2">
+                            <p class='text-danger font-weight-bold inputerror' id="institutionError"></p>
                         </div>
 
-                        <div class="mb-3 col-md-9">
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">Days Attended</label>
+                            <input type="number" name="days_attended" class="form-control border border-2 p-2">
+                            <p class='text-danger font-weight-bold inputerror' id="days_attendedError"></p>
+                        </div>
+
+                        {{-- <div class="mb-3 col-md-9">
                             <label class="form-label">Days Attended</label>
                             <input type="text" id="datepicker" name="attendance" class="form-control border border-2 p-2" readonly>
                             <p class='text-danger font-weight-bold inputerror' id="attendanceError"></p>
-                        </div>
+                        </div> --}}
 
                     </div>
                 </form>

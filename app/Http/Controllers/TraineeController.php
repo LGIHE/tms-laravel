@@ -26,14 +26,16 @@ class TraineeController extends Controller
             'name' => 'required|max:255',
             'gender' => 'required',
             'category' => 'required',
-            'address' => 'required|max:255',
-            'attendance' => 'required',
+            'days_attended' => 'required',
+            'institution' => 'required',
         ]);
 
         $attributes['email'] = request()->email;
         $attributes['age'] = request()->age;
+        $attributes['address'] = request()->address;
         $attributes['nationality'] = request()->nationality;
         $attributes['phone'] = request()->phone;
+        $attributes['attendance'] = request()->attendance;
         $attributes['training'] = request()->training;
         $attributes['created_by'] = auth()->user()->id;
 
@@ -51,15 +53,16 @@ class TraineeController extends Controller
         $attributes = request()->validate([
             'name' => 'required|max:255',
             'gender' => 'required',
-            'category' => 'required',
-            'address' => 'required|max:255',
-            'attendance' => 'required',
+            'days_attended' => 'required',
+            'institution' => 'required',
         ]);
 
         $attributes['email'] = request()->email;
         $attributes['age'] = request()->age;
+        $attributes['address'] = request()->address;
         $attributes['nationality'] = request()->nationality;
         $attributes['phone'] = request()->phone;
+        $attributes['attendance'] = request()->attendance;
         $attributes['training'] = request()->training;
         $attributes['updated_by'] = auth()->user()->id;
 

@@ -206,10 +206,16 @@
                                                     <td>
                                                         <div class="d-flex flex-column justify-content-center">
                                                             <span class="text-dark text-m font-weight-bold">{{
-                                                                $trainee->address }}</span>
+                                                                $trainee->institution }}</span>
                                                         </div>
                                                     </td>
                                                     <td>
+                                                        <div class="d-flex flex-column justify-content-center">
+                                                            <span class="text-dark text-m font-weight-bold">{{
+                                                                $trainee->days_attended }}</span>
+                                                        </div>
+                                                    </td>
+                                                    {{-- <td>
                                                         <div class="d-flex flex-column justify-content-center">
                                                             <p class="text-m text-dark font-weight-bold mb-0">
                                                                 @if ($trainee->attendance != null)
@@ -217,7 +223,7 @@
                                                                 @else 0 @endif
                                                             </p>
                                                         </div>
-                                                    </td>
+                                                    </td> --}}
                                                     <td class="not-export-col">
                                                         <a rel="tooltip" class="btn btn-link p-0 m-0" role="btn"
                                                             data-bs-toggle="modal"
@@ -335,16 +341,28 @@
                                                                                 id="phoneError"></p>
                                                                         </div>
 
-                                                                        <div class="mb-3 col-md-6">
+                                                                        {{-- <div class="mb-3 col-md-6">
                                                                             <label class="form-label">Address</label>
                                                                             <textarea name="address"
                                                                                 class="form-control border border-2 p-2">{{ $trainee->address }}</textarea>
                                                                             <p class='text-danger font-weight-bold inputerror'
                                                                                 id="addressError"></p>
+                                                                        </div> --}}
+
+                                                                        <div class="mb-3 col-md-6">
+                                                                            <label class="form-label">Institution/Organization</label>
+                                                                            <input type="text" name="institution" value="{{ $trainee->institution }}" class="form-control border border-2 p-2">
+                                                                            <p class='text-danger font-weight-bold inputerror' id="institutionError"></p>
                                                                         </div>
 
-                                                                        <p class='text-danger font-weight-bold inputerror' id="attendanceError"></p>
-                                                                        <input type="text" class="datepicker-update" name="attendance" value="{{ $trainee->attendance }}" readonly>
+                                                                        <div class="mb-3 col-md-6">
+                                                                            <label class="form-label">Days Attended</label>
+                                                                            <input type="number" name="days_attended" value="{{ $trainee->days_attended }}" class="form-control border border-2 p-2">
+                                                                            <p class='text-danger font-weight-bold inputerror' id="days_attendedError"></p>
+                                                                        </div>
+
+                                                                        {{-- <p class='text-danger font-weight-bold inputerror' id="attendanceError"></p>
+                                                                        <input type="text" class="datepicker-update" name="attendance" value="{{ $trainee->attendance }}" readonly> --}}
 
                                                                     </div>
                                                                 </form>

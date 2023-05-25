@@ -25,6 +25,8 @@ class Trainee extends Model
         'phone',
         'address',
         'attendance',
+        'days_attended',
+        'institution',
         'created_by',
         'updated_by',
     ];
