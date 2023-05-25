@@ -30,7 +30,7 @@
                                         </div>
 
                                         <div class="mb-3 col-md-3">
-                                            <label class="form-label">Facilitator</label>
+                                            <label class="form-label border border-2 p-2">Facilitator</label>
                                             <select class="form-select" name="facilitator" aria-label="">
                                                 <option value="" selected>Select Type</option>
                                                 @foreach($facilitators as $facilitator)
@@ -42,7 +42,7 @@
 
                                         <div class="mb-3 col-md-3">
                                             <label class="form-label">Training Center</label>
-                                            <select class="form-select" name="training_center" aria-label="">
+                                            <select class="form-select border border-2 p-2" name="training_center" aria-label="">
                                                 <option value="" selected>Select Type</option>
                                                 @foreach($centers as $center)
                                                 <option value="{!! $center->id !!}" {{ $center->id == $training->training_center ? "selected" : '' }}>{!! $center->name !!}</option>
@@ -53,7 +53,7 @@
 
                                         <div class="mb-3 col-md-2">
                                             <label class="form-label">Project</label>
-                                            <select class="form-select" name="project" aria-label="">
+                                            <select class="form-select border border-2 p-2" name="project" aria-label="">
                                                 <option value="" selected>Select Type</option>
                                                 @foreach($projects as $project)
                                                 <option value="{!! $project->id !!}" {{ $project->id == $training->project ? "selected" : '' }}>{!! $project->name !!}</option>

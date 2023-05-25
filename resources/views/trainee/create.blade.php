@@ -39,7 +39,7 @@
 
                         <div class="mb-3 col-md-6">
                             <label class="form-label">Gender</label>
-                            <select class="form-select" name="gender" aria-label="">
+                            <select class="form-select border border-2 p-2" name="gender" aria-label="">
                                 <option value="" selected>Select Gender</option>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
@@ -55,7 +55,7 @@
 
                         <div class="mb-3 col-md-6">
                             <label class="form-label">Category</label>
-                            <select class="form-select" name="category" aria-label="">
+                            <select class="form-select border border-2 p-2" name="category" aria-label="">
                                 <option value="" selected>Select Category</option>
                                 <option value="Teacher">Teacher</option>
                                 <option value="Youth">Youth</option>
@@ -67,7 +67,7 @@
 
                         <div class="mb-3 col-md-6">
                             <label class="form-label">Nationality</label>
-                            <select class="form-select" name="nationality" aria-label="">
+                            <select class="form-select border border-2 p-2" name="nationality" aria-label="">
                                 <option value="" selected>Select Nationality</option>
                                 @foreach ($countries as $country)
                                     <option value="{{ $country->nationality }}">{{ $country->nationality }}</option>

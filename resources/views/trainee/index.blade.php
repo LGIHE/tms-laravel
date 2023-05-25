@@ -142,7 +142,7 @@
 
                                                                 <div class="mb-3 col-md-6">
                                                                     <label class="form-label">Gender</label>
-                                                                    <select class="form-select" name="gender" aria-label="">
+                                                                    <select class="form-select border border-2 p-2" name="gender" aria-label="">
                                                                         <option value="" selected>Select Gender</option>
                                                                         <option value="Male" {{ $trainee->gender == "Male" ? "selected" : '' }}>Male</option>
                                                                         <option value="Female" {{ $trainee->gender == "Female" ? "selected" : '' }}>Female</option>

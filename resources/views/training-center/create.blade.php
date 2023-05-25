@@ -31,7 +31,7 @@
 
                         <div class="mb-3 col-md-4">
                             <label class="form-label">Type</label>
-                            <select class="form-select" name="type" aria-label="">
+                            <select class="form-select border border-2 p-2" name="type" aria-label="">
                                 <option value="" selected>Select Type</option>
                                 <option value="School">School</option>
                                 <option value="Institute">Institute</option>
@@ -67,7 +67,7 @@
 
                         <div class="mb-3 col-md-4">
                             <label class="form-label">Country</label>
-                            <select class="form-select" name="country" aria-label="">
+                            <select class="form-select border border-2 p-2" name="country" aria-label="">
                                 <option value="" selected>Select Country</option>
                                 @foreach ($countries as $country)
                                     <option value="{{ $country->code }}">{{ $country->name }}</option>
