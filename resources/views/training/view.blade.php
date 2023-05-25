@@ -416,7 +416,7 @@
 
     $(document).on('click','#open-update',function(){
         var training_id = $(this).data("value");
-        var url = '{{route("update.training",":id")}}';
+        var url = '{{route("get.update.training",":id")}}';
         url = url.replace(':id', training_id);
         window.location.assign(url);
     });

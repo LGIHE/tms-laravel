@@ -63,6 +63,41 @@ class TrainingController extends Controller
         return view('training.view', compact('training', 'centers', 'projects', 'trainees', 'facilitators', 'countries'));
     }
 
+    public function getUpdateTraining(){
+        $training = Training::find(request()->id);
+        $centers = TrainingCenter::all();
+        $projects = Project::all();
+        $facilitators = User::all()->where('role', 'Facilitator');
+        $trainees = Trainee::all()->where('training', request()->id);
+        $countries = Countries::all();
+
+        return view('training.update', compact('training', 'centers', 'projects', 'trainees', 'facilitators', 'countries'));
+    }
+
+    public function updateTraining(){
+
+        $attributes = request()->validate([
+            'name' => 'required',
+            'description' => 'nullable',
+            'facilitator' => 'required',
+            'training_center' => 'required',
+            'project' => 'required',
+            'start_date' => 'required',
+            'start_time' => 'required',
+            'end_date' => 'required',
+            'end_time' => 'required',
+        ]);
+
+        $attributes['updated_by'] = auth()->user()->id;
+        Training::find(request()->id)->update($attributes);
+
+        return response()->json(['id' => request()->id]);
+    }
+
+    public function updateTrainingSuccess(){
+        return redirect()->route('training', request()->id)->with('status', 'The training has been updated successfully.');
+    }
+
     public function deleteTraining(){
         Training::find(request()->id)->delete();
         Trainee::all()->where('training', request()->id)->delete();
