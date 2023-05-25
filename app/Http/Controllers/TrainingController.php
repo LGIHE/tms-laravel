@@ -40,6 +40,7 @@ class TrainingController extends Controller
             'start_time' => 'required',
             'end_date' => 'required',
             'end_time' => 'required',
+            'number_of_days' => 'required',
         ]);
 
         $attributes['created_by'] = auth()->user()->id;
@@ -86,6 +87,7 @@ class TrainingController extends Controller
             'start_time' => 'required',
             'end_date' => 'required',
             'end_time' => 'required',
+            'number_of_days' => 'required',
         ]);
 
         $attributes['updated_by'] = auth()->user()->id;

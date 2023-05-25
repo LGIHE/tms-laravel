@@ -24,6 +24,7 @@ class Training extends Model
         'start_time',
         'end_date',
         'end_time',
+        'number_of_days',
         'created_by',
         'updated_by'
     ];

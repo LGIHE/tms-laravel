@@ -30,8 +30,8 @@
                                         </div>
 
                                         <div class="mb-3 col-md-3">
-                                            <label class="form-label border border-2 p-2">Facilitator</label>
-                                            <select class="form-select" name="facilitator" aria-label="">
+                                            <label class="form-label">Facilitator</label>
+                                            <select class="form-select border border-2 p-2" name="facilitator" aria-label="">
                                                 <option value="" selected>Select Type</option>
                                                 @foreach($facilitators as $facilitator)
                                                 <option value="{!! $facilitator->id !!}" {{ $facilitator->id == $training->facilitator ? "selected" : '' }}>{!! $facilitator->name !!}</option>
@@ -87,8 +87,14 @@
                                         </div>
 
                                         <div class="mb-3 col-md-4">
+                                            <label class="form-label">Number of Days (Actual)</label>
+                                            <input type="number" name="number_of_days" value="{{ $training->number_of_days }}" class="form-control border border-2 p-2">
+                                            <p class='text-danger font-weight-bold inputerror' id="number_of_daysError"></p>
+                                        </div>
+
+                                        <div class="mb-3 col-md-4">
                                             <label class="form-label">Description</label>
-                                            <textarea name="description" value="{{ $training->description }}" class="form-control border border-2 p-2"></textarea>
+                                            <textarea name="description" class="form-control border border-2 p-2"> {{ $training->description }}</textarea>
                                             <p class='text-danger font-weight-bold inputerror' id="contact_personError"></p>
                                         </div>
 

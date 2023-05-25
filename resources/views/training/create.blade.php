@@ -98,6 +98,12 @@
                                         </div>
 
                                         <div class="mb-3 col-md-4">
+                                            <label class="form-label">Number of Days (Actual)</label>
+                                            <input type="number" name="number_of_days" class="form-control border border-2 p-2">
+                                            <p class='text-danger font-weight-bold inputerror' id="number_of_daysError"></p>
+                                        </div>
+
+                                        <div class="mb-3 col-md-4">
                                             <label class="form-label">Description</label>
                                             <textarea name="description" class="form-control border border-2 p-2"></textarea>
                                             <p class='text-danger font-weight-bold inputerror' id="contact_personError"></p>
