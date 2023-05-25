@@ -68,9 +68,19 @@
                 <a class="nav-link text-dark {{ $activePage == 'projects' ? ' active bg-gradient-secondary' : '' }} "
                     href="{{ route('projects') }}">
                     <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">people</i>
+                        <i class="material-icons opacity-10">polyline</i>
                     </div>
                     <span class="nav-link-text text-m text-bold ms-1" style="font-size:1rem;">Projects</span>
+                </a>
+            </li>
+
+            <li class="nav-item mt-3">
+                <a class="nav-link text-dark {{ $activePage == 'reports' ? ' active bg-gradient-secondary' : '' }} "
+                    href="{{ route('reports') }}">
+                    <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">folder</i>
+                    </div>
+                    <span class="nav-link-text text-m text-bold ms-1" style="font-size:1rem;">Reports</span>
                 </a>
             </li>
 

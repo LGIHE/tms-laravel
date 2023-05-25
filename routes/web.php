@@ -25,6 +25,7 @@ use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\TraineeController;
 use App\Http\Controllers\TrainingCenterController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\ReportsController;
 
 Route::get('optimize', function () {
     $output = Artisan::call('optimize');
@@ -95,6 +96,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('delete-project/{id}', [ProjectController::class, 'deleteProject'])->middleware('super.admin')->name('delete.project');
 	Route::post('update-project/{id}', [ProjectController::class, 'updateProject'])->name('update.project');
     Route::get('update-project-success', [ProjectController::class, 'updateProjectSuccess'])->name('update.project.success');
+
+    //REPORTS ROUTES
+	Route::get('reports', [ReportsController::class, 'index'])->name('reports');
 
     Route::post('sign-out', [AuthController::class, 'singOut'])->name('logout');
 });
