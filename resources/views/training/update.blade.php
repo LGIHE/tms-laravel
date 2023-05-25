@@ -25,7 +25,7 @@
 
                                         <div class="mb-3 col-md-4">
                                             <label class="form-label">Name</label>
-                                            <input type="text" name="name" class="form-control border border-2 p-2">
+                                            <input type="text" name="name" value="{{ $training->name }}" class="form-control border border-2 p-2">
                                             <p class='text-danger font-weight-bold inputerror' id="nameError"></p>
                                         </div>
 
@@ -34,7 +34,7 @@
                                             <select class="form-select" name="facilitator" aria-label="">
                                                 <option value="" selected>Select Type</option>
                                                 @foreach($facilitators as $facilitator)
-                                                <option value="{!! $facilitator->id !!}">{!! $facilitator->name !!}</option>
+                                                <option value="{!! $facilitator->id !!}" {{ $facilitator->id == $training->facilitator ? "selected" : '' }}>{!! $facilitator->name !!}</option>
                                                 @endforeach
                                             </select>
                                             <p class='text-danger font-weight-bold inputerror' id="facilitatorError"></p>
@@ -45,7 +45,7 @@
                                             <select class="form-select" name="training_center" aria-label="">
                                                 <option value="" selected>Select Type</option>
                                                 @foreach($centers as $center)
-                                                <option value="{!! $center->id !!}">{!! $center->name !!}</option>
+                                                <option value="{!! $center->id !!}" {{ $center->id == $training->training_center ? "selected" : '' }}>{!! $center->name !!}</option>
                                                 @endforeach
                                             </select>
                                             <p class='text-danger font-weight-bold inputerror' id="training_centerError"></p>
@@ -56,7 +56,7 @@
                                             <select class="form-select" name="project" aria-label="">
                                                 <option value="" selected>Select Type</option>
                                                 @foreach($projects as $project)
-                                                <option value="{!! $project->id !!}">{!! $project->name !!}</option>
+                                                <option value="{!! $project->id !!}" {{ $project->id == $training->project ? "selected" : '' }}>{!! $project->name !!}</option>
                                                 @endforeach
                                             </select>
                                             <p class='text-danger font-weight-bold inputerror' id="projectError"></p>
@@ -64,37 +64,37 @@
 
                                         <div class="mb-3 col-md-3">
                                             <label class="form-label">Start Date</label>
-                                            <input type="date" name="start_date" class="form-control border border-2 p-2">
+                                            <input type="date" name="start_date" value="{{ $training->start_date }}" class="form-control border border-2 p-2">
                                             <p class='text-danger font-weight-bold inputerror' id="start_dateError"></p>
                                         </div>
 
                                         <div class="mb-3 col-md-3">
                                             <label class="form-label">Start Time</label>
-                                            <input type="time" name="start_time" class="form-control border border-2 p-2">
+                                            <input type="time" name="start_time" value="{{ $training->start_time }}" class="form-control border border-2 p-2">
                                             <p class='text-danger font-weight-bold inputerror' id="start_timeError"></p>
                                         </div>
 
                                         <div class="mb-3 col-md-3">
                                             <label class="form-label">End Date</label>
-                                            <input type="date" name="end_date" class="form-control border border-2 p-2">
+                                            <input type="date" name="end_date" value="{{ $training->end_date }}" class="form-control border border-2 p-2">
                                             <p class='text-danger font-weight-bold inputerror' id="end_dateError"></p>
                                         </div>
 
                                         <div class="mb-3 col-md-3">
                                             <label class="form-label">End Time</label>
-                                            <input type="time" name="end_time" class="form-control border border-2 p-2">
+                                            <input type="time" name="end_time" value="{{ $training->end_time }}" class="form-control border border-2 p-2">
                                             <p class='text-danger font-weight-bold inputerror' id="end_timeError"></p>
                                         </div>
 
                                         <div class="mb-3 col-md-4">
                                             <label class="form-label">Description</label>
-                                            <textarea name="description" class="form-control border border-2 p-2"></textarea>
+                                            <textarea name="description" value="{{ $training->description }}" class="form-control border border-2 p-2"></textarea>
                                             <p class='text-danger font-weight-bold inputerror' id="contact_personError"></p>
                                         </div>
 
                                     </div>
 
-                                    <button type="submit" class="btn bg-gradient-dark btn-submit">Start Lesson Plan <span id="loader"></span></button>
+                                    <button type="submit" class="btn bg-gradient-dark btn-submit">Update Training <span id="loader"></span></button>
                                 </form>
                             </div>
                         </div>
