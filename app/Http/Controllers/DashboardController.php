@@ -27,18 +27,24 @@ class DashboardController extends Controller
 
     public static function getAttendanceForTraining($training, $startDate, $endDate)
     {
-        $total_attendees = Trainee::all()->where('training', $training)->count();
+        $total_days = Training::find($training)->number_of_days;
 
-        $start = Carbon::parse($startDate);
-        $end = Carbon::parse($endDate);
-        $total_days = $start->diffInDays($end);
-
+        $attendees = Trainee::all()->where('training', $training);
+        $total_attendees = $attendees->count();
         $actualAttendance = DB::table('trainees')
-                                ->select(DB::raw('SUM(LENGTH(attendance) - LENGTH(REPLACE(attendance, ",", "")) + 1) AS actual_attendance'))
-                                ->first()
-                                ->actual_attendance;
+                            ->where('training', $training)
+                            ->sum('days_attended');
 
-        $attendance_percentage = $total_attendees != 0 ? (($total_attendees * $actualAttendance) / ($total_attendees * $total_days)) * 100 : 0;
+        // $start = Carbon::parse($startDate);
+        // $end = Carbon::parse($endDate);
+        // $total_days = $start->diffInDays($end);
+
+        // $actualAttendance = DB::table('trainees')
+        //                         ->select(DB::raw('SUM(LENGTH(attendance) - LENGTH(REPLACE(attendance, ",", "")) + 1) AS actual_attendance'))
+        //                         ->first()
+        //                         ->actual_attendance;
+
+        $attendance_percentage = $total_attendees != 0 ? (($actualAttendance) / ($total_attendees * $total_days)) * 100 : 0;
 
         return round($attendance_percentage, 0);
     }
@@ -56,7 +62,7 @@ class DashboardController extends Controller
         else if($value > 30 && $value < 40){
             return 40;
         }
-        else if($value > 40 && $value < 250){
+        else if($value > 40 && $value < 50){
             return 50;
         }
         else if($value > 50 && $value < 60){
