@@ -24,16 +24,16 @@ class TraineeController extends Controller
     {
         $attributes = request()->validate([
             'name' => 'required|max:255',
-            'email' => 'nullable|email|max:255|unique:trainees,email',
             'gender' => 'required',
-            'age' => 'required',
             'category' => 'required',
-            'nationality' => 'required',
-            'phone' => 'required|min:10',
             'address' => 'required|max:255',
             'attendance' => 'required',
         ]);
 
+        $attributes['email'] = request()->email;
+        $attributes['age'] = request()->age;
+        $attributes['nationality'] = request()->nationality;
+        $attributes['phone'] = request()->phone;
         $attributes['training'] = request()->training;
         $attributes['created_by'] = auth()->user()->id;
 
@@ -50,16 +50,16 @@ class TraineeController extends Controller
     {
         $attributes = request()->validate([
             'name' => 'required|max:255',
-            'email' => 'nullable|email|max:255',
             'gender' => 'required',
-            'age' => 'required',
             'category' => 'required',
-            'nationality' => 'required',
-            'phone' => 'required|min:10',
             'address' => 'required|max:255',
             'attendance' => 'required',
         ]);
 
+        $attributes['email'] = request()->email;
+        $attributes['age'] = request()->age;
+        $attributes['nationality'] = request()->nationality;
+        $attributes['phone'] = request()->phone;
         $attributes['training'] = request()->training;
         $attributes['updated_by'] = auth()->user()->id;
 
