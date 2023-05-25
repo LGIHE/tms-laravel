@@ -88,7 +88,11 @@
                             <p class='text-danger font-weight-bold inputerror' id="addressError"></p>
                         </div>
 
-                        <input type="text" id="datepicker" name="attendance" readonly>
+                        <div class="mb-3 col-md-9">
+                            <label class="form-label">Days Attended</label>
+                            <input type="text" id="datepicker" name="attendance" class="form-control border border-2 p-2" readonly>
+                            <p class='text-danger font-weight-bold inputerror' id="attendanceError"></p>
+                        </div>
 
                     </div>
                 </form>

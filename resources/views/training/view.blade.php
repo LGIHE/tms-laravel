@@ -15,7 +15,7 @@
 
     #addBtn {
         position: fixed;
-        bottom: -8px;
+        bottom: 0px;
         right: 30px;
         z-index: 99;
         font-size: 20px;
@@ -134,7 +134,15 @@
 
                         </div>
 
-                        <ul class="nav nav-tabs mt-5">
+                        <div class="row">
+                            <div class="me-3 my-3 text-end">
+                                <a class="btn bg-gradient-success mb-0 end" data-bs-toggle="modal" data-bs-target="#newTraineeModal">
+                                    <i class="material-icons text-sm">add</i>&nbsp;&nbsp;Add Trainee
+                                </a>
+                            </div>
+                        </div>
+
+                        <ul class="nav nav-tabs">
                             <li class="nav-item">
                                 <a class="nav-link active" data-bs-toggle="tab" href="#steps-tab">Trainees</a>
                             </li>
@@ -383,14 +391,15 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <a class="btn bg-gradient-info btn-floating" id="addBtn" data-bs-toggle="modal" data-bs-target="#newTraineeModal">
-                                        <i class="fas fa-plus"></i>
-                                    </a>
                                     @else
                                     <div class="container text-center m-2 p-5">
                                         <span class="display-6 font-weight-bold">No Trainee Added Yet.</span>
                                     </div>
                                     @endif
+
+                                    {{-- <a class="btn bg-gradient-info btn-floating" id="addBtn" data-bs-toggle="modal" data-bs-target="#newTraineeModal">
+                                        <i class="fas fa-plus"></i>
+                                    </a> --}}
                                 </div>
                             </div>
                         </div>
