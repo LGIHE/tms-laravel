@@ -56,7 +56,7 @@ class TrainingController extends Controller
         $training = Training::find(request()->id);
         $centers = TrainingCenter::all();
         $projects = Project::all();
-        $facilitators = User::all()->where('role', 'Facilitator');
+        $facilitators = User::all();
         $trainees = Trainee::all()->where('training', request()->id);
         $countries = Countries::all();
 

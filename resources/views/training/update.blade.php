@@ -19,7 +19,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <form method='POST' action="#" id="addTraining">
+                                <form method='POST' action="#" id="updateTraining">
                                     @csrf
                                     <div class="row">
 
@@ -94,7 +94,7 @@
 
                                     </div>
 
-                                    <button type="submit" class="btn bg-gradient-dark btn-submit">Update Training <span id="loader"></span></button>
+                                    <button type="submit" class="btn bg-gradient-dark btn-submit" data-id="{{ $training->id }}">Update Training <span id="loader"></span></button>
                                 </form>
                             </div>
                         </div>
@@ -112,11 +112,15 @@ $(function () {
     $('.btn-submit').on('click', function (e) {
         e.preventDefault();
 
-        let formData = $('#addTraining').serializeArray();
+        let id = $(this).data('id');
+        let route = '{{route("update.training",":id")}}';
+        route = route.replace(':id', id);
+
+        let formData = $('#updateTraining').serializeArray();
         $(".inputerror").text("");
-        $("#addTraining input").removeClass("is-invalid");
-        $("#addTraining select").removeClass("is-invalid");
-        $("#addTraining textarea").removeClass("is-invalid");
+        $("#updateTraining input").removeClass("is-invalid");
+        $("#updateTraining select").removeClass("is-invalid");
+        $("#updateTraining textarea").removeClass("is-invalid");
 
         $("#loader").prepend('<i class="fa fa-spinner fa-spin"></i>');
         $(".btn-submit").attr("disabled", 'disabled');
@@ -126,7 +130,7 @@ $(function () {
             headers: {
                 Accept: "application/json"
             },
-            url: "{{ route('create.training') }}",
+            url: route,
             data: formData,
             success: (response) => {
                 $(".fa-spinner").remove();
