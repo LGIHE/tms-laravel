@@ -99,13 +99,13 @@
 
                                         <div class="mb-3 col-md-4">
                                             <label class="form-label">Description</label>
-                                            <textarea name="contact_person" class="form-control border border-2 p-2"></textarea>
+                                            <textarea name="description" class="form-control border border-2 p-2"></textarea>
                                             <p class='text-danger font-weight-bold inputerror' id="contact_personError"></p>
                                         </div>
 
                                     </div>
 
-                                    <button type="submit" class="btn bg-gradient-dark btn-submit">Start Lesson Plan <span id="loader"></span></button>
+                                    <button type="submit" class="btn bg-gradient-dark btn-submit">Create Training <span id="loader"></span></button>
                                 </form>
                             </div>
                         </div>

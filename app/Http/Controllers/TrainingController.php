@@ -13,7 +13,7 @@ class TrainingController extends Controller
 {
     public function getAll(){
         $trainings = Training::all();
-        $facilitators = User::all()->where('role', 'Facilitator');
+        $facilitators = User::all();
         $centers = TrainingCenter::all();
         $projects = Project::all();
 
@@ -21,7 +21,7 @@ class TrainingController extends Controller
     }
 
     public function getCreate(){
-        $facilitators = User::all()->where('role', 'Facilitator');
+        $facilitators = User::all();
         $centers = TrainingCenter::all();
         $projects = Project::all();
 

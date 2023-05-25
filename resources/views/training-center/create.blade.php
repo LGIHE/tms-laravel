@@ -94,7 +94,7 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-success btn-submit">Add Trainee <span id="loader"></span></button>
+                <button type="submit" class="btn btn-success btn-submit">Add Training Center <span id="loader"></span></button>
             </div>
         </div>
     </div>
