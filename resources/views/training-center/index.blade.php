@@ -105,7 +105,13 @@
                                             </td>
                                             <td>
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <p class="text-m text-dark font-weight-bold mb-0">{{ $center->country }}</p>
+                                                    <p class="text-m text-dark font-weight-bold mb-0">
+                                                        @foreach ($countries as $country)
+                                                            @if ($country->code == $center->country)
+                                                                {{ $country->name }}
+                                                            @endif
+                                                        @endforeach
+                                                    </p>
                                                 </div>
                                             </td>
                                             <td>
