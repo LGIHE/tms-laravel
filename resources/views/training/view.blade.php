@@ -173,13 +173,10 @@
                                         <table class="table table-sm hover mb-0" id="table">
                                             <thead>
                                                 <tr>
-                                                    <th class="text-secondary text-xxl font-weight-bolder px-4">Name
-                                                    </th>
+                                                    <th class="text-secondary text-xxl font-weight-bolder px-4">Name</th>
                                                     <th class="text-secondary text-xxl font-weight-bolder">Gender</th>
-                                                    <th class="text-secondary text-xxl font-weight-bolder">Age</th>
-                                                    <th class="text-secondary text-xxl font-weight-bolder">Contact</th>
-                                                    <th class="text-secondary text-xxl font-weight-bolder">Address</th>
-                                                    <th class="text-secondary text-xxl font-weight-bolder">Email</th>
+                                                    <th class="text-secondary text-xxl font-weight-bolder">Category</th>
+                                                    <th class="text-secondary text-xxl font-weight-bolder">Institution</th>
                                                     <th class="text-secondary text-xxl font-weight-bolder">Days Attended</th>
                                                     <th class="text-secondary"></th>
                                                 </tr>
@@ -203,25 +200,13 @@
                                                     <td>
                                                         <div class="d-flex flex-column justify-content-center">
                                                             <span class="text-dark text-m font-weight-bold">{{
-                                                                $trainee->age }}</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="d-flex flex-column justify-content-center">
-                                                            <span class="text-dark text-m font-weight-bold">{{
-                                                                $trainee->phone }}</span>
+                                                                $trainee->category }}</span>
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div class="d-flex flex-column justify-content-center">
                                                             <span class="text-dark text-m font-weight-bold">{{
                                                                 $trainee->address }}</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="d-flex flex-column justify-content-center">
-                                                            <p class="text-m text-dark font-weight-bold mb-0">{{
-                                                                $trainee->email }}</p>
                                                         </div>
                                                     </td>
                                                     <td>
