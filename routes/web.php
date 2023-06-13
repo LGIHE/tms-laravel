@@ -33,9 +33,7 @@ Route::get('optimize', function () {
 });
 
 Route::group(['middleware' => 'guest'], function () {
-    Route::get('/', function () {return redirect('sign-in');});
-    // Route::get('sign-up', [RegisterController::class, 'create'])->name('register');
-    // Route::post('sign-up', [RegisterController::class, 'store']);
+    Route::get('/', function () {return redirect('dashboard');});
     Route::get('sign-in', [AuthController::class, 'signInGet'])->name('login');
     Route::post('sign-in', [AuthController::class, 'signInPost']);
     Route::post('reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
