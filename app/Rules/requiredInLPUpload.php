@@ -4,7 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class requiredInLPUpload implements Rule
+class RequiredInLPUpload implements Rule
 {
     public $field;
 
@@ -37,6 +37,6 @@ class requiredInLPUpload implements Rule
      */
     public function message()
     {
-        return 'The ' . $this->field . ' is required';
+        return 'The ' . $this->field . ' is required for all trainees.';
     }
 }

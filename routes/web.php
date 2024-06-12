@@ -1,22 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
@@ -26,6 +10,18 @@ use App\Http\Controllers\TraineeController;
 use App\Http\Controllers\TrainingCenterController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ReportsController;
+use App\Http\Controllers\GoogleSheetsController; // Add this line
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application.
+| These routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
 
 Route::get('optimize', function () {
     $output = Artisan::call('optimize');
@@ -44,6 +40,7 @@ Route::group(['middleware' => 'guest'], function () {
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    // Route::get('/sheets', [GoogleSheetsController::class, 'getSheetDataFunc'])->name('sheets');
 
     //USER MANAGEMENT
     Route::post('create-user', [UserController::class, 'createUser'])->middleware('super.admin')->name('create.user');
@@ -67,6 +64,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('delete-trainee/{id}', [TraineeController::class, 'deleteTrainee'])->middleware('admin')->name('delete.trainee');
 	Route::post('update-trainee/{id}', [TraineeController::class, 'updateTrainee'])->name('update.trainee');
 	Route::get('update-trainee-success/{id}', [TraineeController::class, 'updateTraineeSuccess'])->name('update.trainee.success');
+    Route::get('upload-trainees/{id}', [TraineeController::class, 'getUploadTrainees'])->name('get.upload.trainees');
+    Route::post('upload-trainees', [TraineeController::class, 'uploadTrainees'])->name('upload.trainees');
 
     //LESSON PLAN ROUTES
 	Route::get('trainings', [TrainingController::class, 'getAll'])->name('trainings');
