@@ -76,7 +76,7 @@ class AuthController extends Controller
                     : back()->withErrors(['email' => [__($status)]]);
     }
 
-    public function singOut()
+    public function signOut()
     {
         auth()->logout();
 
