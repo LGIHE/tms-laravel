@@ -67,7 +67,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('upload-trainees/{id}', [TraineeController::class, 'getUploadTrainees'])->name('get.upload.trainees');
     Route::post('upload-trainees', [TraineeController::class, 'uploadTrainees'])->name('upload.trainees');
 
-    //LESSON PLAN ROUTES
+    //TRAINING ROUTES
 	Route::get('trainings', [TrainingController::class, 'getAll'])->name('trainings');
 	Route::get('training/{id}', [TrainingController::class, 'getTraining'])->name('training');
 	Route::get('create-training', [TrainingController::class, 'getCreate'])->name('get.create.training');

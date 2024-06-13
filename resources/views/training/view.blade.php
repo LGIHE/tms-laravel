@@ -156,7 +156,7 @@
                                 <a class="btn bg-gradient-success mb-0 end" data-bs-toggle="modal" data-bs-target="#newTraineeModal">
                                     <i class="material-icons text-sm">add</i>&nbsp;&nbsp;Add Trainee
                                 </a>
-                                <a class="btn bg-gradient-primary mb-0 end" id="upload-btn" data-value="{{ route('upload.trainees', $training->id) }}">
+                                <a class="btn bg-gradient-primary mb-0 end" id="upload-btn" data-value="{{ route('get.upload.trainees', $training->id) }}">
                                     <i class="material-icons text-sm">upload</i>&nbsp;&nbsp;Upload Trainees
                                 </a>
                             </div>
