@@ -1,5 +1,4 @@
 <x-layout bodyClass="g-sidenav-show  bg-gray-200">
-
     <x-navbars.sidebar activePage="projects"></x-navbars.sidebar>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <!-- Navbar -->
@@ -95,37 +94,37 @@
                                             <div class="modal-dialog modal-lg">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h1 class="modal-title fs-5" id="updateProjectModalLabel">Add New Project</h1>
+                                                        <h1 class="modal-title fs-5" id="updateProjectModalLabel">Update Project</h1>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
 
                                                     <div class="modal-body">
-                                                        <form method='POST' action='#' id="updateProjectForm">
+                                                        <form method='POST' action='#' id="updateProjectForm-{{ $project->id }}">
                                                             @csrf
                                                             <div class="row">
 
                                                                 <div class="mb-3 col-md-6">
                                                                     <label class="form-label">Name</label>
                                                                     <input type="text" name="name" class="form-control border border-2 p-2" value="{{ $project->name }}">
-                                                                    <p class='text-danger font-weight-bold inputerror' id="nameError"></p>
+                                                                    <p class='text-danger font-weight-bold inputerror' id="nameError-{{ $project->id }}"></p>
                                                                 </div>
 
                                                                 <div class="mb-3 col-md-6">
                                                                     <label class="form-label">Code</label>
                                                                     <input type="text" name="code" class="form-control border border-2 p-2" value="{{ $project->code }}">
-                                                                    <p class='text-danger font-weight-bold inputerror' id="codeError"></p>
+                                                                    <p class='text-danger font-weight-bold inputerror' id="codeError-{{ $project->id }}"></p>
                                                                 </div>
 
                                                                 <div class="mb-3 col-md-6">
                                                                     <label class="form-label">Short</label>
                                                                     <input type="text" name="short" class="form-control border border-2 p-2" value="{{ $project->short }}">
-                                                                    <p class='text-danger font-weight-bold inputerror' id="shortError"></p>
+                                                                    <p class='text-danger font-weight-bold inputerror' id="shortError-{{ $project->id }}"></p>
                                                                 </div>
 
                                                                 <div class="mb-3 col-md-6">
                                                                     <label class="form-label">Description</label>
                                                                     <input type="text" name="description" class="form-control border border-2 p-2" value="{{ $project->description }}">
-                                                                    <p class='text-danger font-weight-bold inputerror' id="descriptionError"></p>
+                                                                    <p class='text-danger font-weight-bold inputerror' id="descriptionError-{{ $project->id }}"></p>
                                                                 </div>
 
                                                             </div>
@@ -134,7 +133,7 @@
 
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                                        <button type="submit" class="btn btn-success btn-submit-update" data-id="{{ $project->id }}">Update Project <span id="loader"></span></button>
+                                                        <button type="submit" class="btn btn-success btn-submit-update" data-id="{{ $project->id }}">Update Project <span id="loader-{{ $project->id }}"></span></button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -163,6 +162,7 @@
 
                                         @endforeach
                                     </tbody>
+
                                 </table>
                             </div>
                             @else
@@ -179,11 +179,9 @@
 </x-layout>
 
 <script>
-
     $(document).on('click', '#del-btn', function(event) {
         event.preventDefault();
         let href = $(this).data('value');
-        // console.log(href);
         window.location.assign(href);
     });
 
@@ -197,7 +195,6 @@
     $(document).on('click', '.btn-submit-update', function (e) {
         e.preventDefault();
 
-
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('input[name="_token"]').attr('value')
@@ -208,12 +205,12 @@
         let route = '{{route("update.project",":id")}}';
         route = route.replace(':id', id);
 
-        let formData = $('#updateProjectForm').serializeArray();
+        let formData = $('#updateProjectForm-' + id).serializeArray();
         $(".inputerror").text("");
-        $("#updateProjectForm input").removeClass("is-invalid");
+        $("#updateProjectForm-" + id + " input").removeClass("is-invalid");
 
-        $("#loader").prepend('<i class="fa fa-spinner fa-spin"></i>');
-        $(".btn-submit").attr("disabled", 'disabled');
+        $("#loader-" + id).prepend('<i class="fa fa-spinner fa-spin"></i>');
+        $(".btn-submit-update").attr("disabled", 'disabled');
 
         $.ajax({
             method: "POST",
@@ -224,18 +221,18 @@
             data: formData,
             success: (response) => {
                 $(".fa-spinner").remove();
-                $(".btn-submit").prop("disabled", false);
+                $(".btn-submit-update").prop("disabled", false);
                 window.location.assign('{{route("update.project.success")}}');
             },
             error: (response) => {
                 $(".fa-spinner").remove();
-                $(".btn-submit").prop("disabled", false);
+                $(".btn-submit-update").prop("disabled", false);
 
                 if(response.status === 422) {
                     let errors = response.responseJSON.errors;
                     Object.keys(errors).forEach(function (key) {
                         $("[name='" + key + "']").addClass("is-invalid");
-                        $("#" + key + "Error").text(errors[key][0]);
+                        $("#" + key + "Error-" + id).text(errors[key][0]);
                     });
                 } else {
                     // window.location.reload();
