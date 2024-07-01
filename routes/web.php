@@ -23,6 +23,13 @@ use App\Http\Controllers\GoogleSheetsController; // Add this line
 |
 */
 
+Route::get('update', function(){
+    Artisan::call('optimize');
+    Artisan::call('optimize:clear');
+    Artisan::call('cache:clear');
+    return "<pre>Application Settings Updated</pre>";
+});
+
 Route::get('optimize', function () {
     $output = Artisan::call('optimize');
     return "<pre>$output</pre>";
