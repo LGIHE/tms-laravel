@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\User;
-use App\Models\Trainee;
-use App\Models\Training;
-use App\Models\TrainingCenter;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\RegistrationConfirmation;
 
 class UserController extends Controller
 {
@@ -37,9 +36,10 @@ class UserController extends Controller
         $attributes['type'] = $attributes['role'] == 'Trainee' ? 'trainee' : 'admin';
         $attributes['email_verified_at'] = Carbon::now()->toDateTimeString();
 
-        // return response()->json($attributes);
+        $user = User::create($attributes);
+        $user['pass'] = request()->password;
 
-        User::create($attributes);
+        Mail::to($user->email)->send(new RegistrationConfirmation($user));
 
         return redirect()->route('users')->with('status', 'The user has been added successfully.');
     }
