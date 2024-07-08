@@ -34,6 +34,7 @@
     <link href="https://cdn.datatables.net/responsive/2.4.0/css/responsive.dataTables.min.css">
 
     <link href="{{ asset('assets') }}/css/jquery-ui.multidatespicker.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
 
     <style>
         .align-middle .btn {

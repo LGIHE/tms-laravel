@@ -1,3 +1,21 @@
+<style>
+
+    .select2-container--default .select2-selection--single {
+        padding: 5px;
+        border: 1px solid #d2d6da !important;
+    }
+
+    .select2-container .select2-selection--single {
+        height: 42px !important;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        color: #7b809a !important;
+        font-size: 0.875rem !important;
+        font-weight: 400 !important;
+    }
+</style>
+
 <x-layout bodyClass="g-sidenav-show bg-gray-200">
 
     <x-navbars.sidebar activePage="trainings"></x-navbars.sidebar>
@@ -42,7 +60,7 @@
 
                                         <div class="mb-3 col-md-3">
                                             <label class="form-label">Facilitator</label>
-                                            <select class="form-select border border-2 p-2" name="facilitator" aria-label="">
+                                            <select id="facilitator-records" class="form-select  p-2" name="facilitator" aria-label="">
                                                 <option value="" selected>Select Facilitator</option>
                                                 @foreach($facilitators as $facilitator)
                                                 <option value="{!! $facilitator->id !!}">{!! $facilitator->name !!}</option>
@@ -53,7 +71,7 @@
 
                                         <div class="mb-3 col-md-3">
                                             <label class="form-label">Training Center</label>
-                                            <select class="form-select border border-2 p-2" name="training_center" aria-label="">
+                                            <select id="center-records"  class="form-select border-2 p-2" name="training_center" aria-label="">
                                                 <option value="" selected>Select Training Center</option>
                                                 @foreach($centers as $center)
                                                 <option value="{!! $center->id !!}">{!! $center->name !!}</option>
@@ -64,7 +82,7 @@
 
                                         <div class="mb-3 col-md-2">
                                             <label class="form-label">Project</label>
-                                            <select class="form-select border border-2 p-2" name="project" aria-label="">
+                                            <select id="project-records"  class="form-select border-2 p-2" name="project" aria-label="">
                                                 <option value="" selected>Select Project</option>
                                                 @foreach($projects as $project)
                                                 <option value="{!! $project->id !!}">{!! $project->name !!}</option>
@@ -123,6 +141,11 @@
 </x-layout>
 
 <script>
+    $(document).ready(function() {
+        $('#facilitator-records').select2();
+        $('#center-records').select2();
+        $('#project-records').select2();
+    });
 
 $(function () {
 
