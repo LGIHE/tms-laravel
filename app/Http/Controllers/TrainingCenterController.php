@@ -70,4 +70,25 @@ class TrainingCenterController extends Controller
 
         return redirect()->route('training.centers')->with('status', 'The training center has been deleted successfully.');
     }
+
+    public function addTrainingCenter()
+    {
+        $attributes = request()->validate([
+            'name' => 'required|max:255',
+            'email' => 'nullable|email|max:255',
+            'type' => 'required',
+            'capacity' => 'nullable|numeric',
+            'contact_phone' => 'required|min:10',
+            'contact_person' => 'required',
+            'country' => 'required',
+            'district' => 'required',
+            'city' => 'required',
+        ]);
+
+        $attributes['created_by'] = auth()->user()->id;
+
+        $trainingCenter = TrainingCenter::create($attributes);
+
+        return response()->json($trainingCenter);
+    }
 }

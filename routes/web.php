@@ -63,6 +63,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('profile', [ProfileController::class, 'updateBio']);
     Route::post('update-password', [ProfileController::class, 'updatePassword'])->name('update.password');
 
+    // FACILITATOR ROUTES
+    Route::post('add-facilitator', [UserController::class, 'addFacilitator'])->middleware('admin')->name('add.facilitator');
+
     //TRAINEES ROUTES
     Route::get('trainees', [TraineeController::class, 'getTrainees'])->middleware('admin')->name('trainees');
     Route::get('trainee/{id}', [TraineeController::class, 'getTrainee'])->middleware('admin')->name('get.trainee');
@@ -92,6 +95,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('update-training-center/{id}', [TrainingCenterController::class, 'updateTrainingCenter'])->name('update.training.center');
 	Route::get('update-training-center-success', [TrainingCenterController::class, 'updateTrainingCenterSuccess'])->name('update.training.center.success');
 	Route::get('delete-training-center/{id}', [TrainingCenterController::class, 'deleteTrainingCenter'])->name('delete.training.center');
+    Route::post('add-training-center', [TrainingCenterController::class, 'addTrainingCenter'])->name('add.training.center');
 
     //PROJECTS ROUTES
 	Route::get('projects', [ProjectController::class, 'getAll'])->name('projects');
@@ -105,4 +109,5 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('reports', [ReportsController::class, 'index'])->name('reports');
 
     Route::post('sign-out', [AuthController::class, 'singOut'])->name('logout');
+
 });

@@ -14,6 +14,21 @@
         font-size: 0.875rem !important;
         font-weight: 400 !important;
     }
+
+    .circular-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        border: none;
+        color: blue;
+    }
+    .circular-btn i {
+        font-size: 1.25rem;
+    }
 </style>
 
 <x-layout bodyClass="g-sidenav-show bg-gray-200">
@@ -60,23 +75,33 @@
 
                                         <div class="mb-3 col-md-3">
                                             <label class="form-label">Facilitator</label>
-                                            <select id="facilitator-records" class="form-select  p-2" name="facilitator" aria-label="">
-                                                <option value="" selected>Select Facilitator</option>
-                                                @foreach($facilitators as $facilitator)
-                                                <option value="{!! $facilitator->id !!}">{!! $facilitator->name !!}</option>
-                                                @endforeach
-                                            </select>
+                                            <div class="d-flex">
+                                                <select id="facilitator-records" class="form-select p-2" name="facilitator" aria-label="">
+                                                    <option value="" selected>Select Facilitator</option>
+                                                    @foreach($facilitators as $facilitator)
+                                                    <option value="{!! $facilitator->id !!}">{!! $facilitator->name !!}</option>
+                                                    @endforeach
+                                                </select>
+                                                <button type="button" class="ms-2 circular-btn" data-bs-toggle="modal" data-bs-target="#addFacilitatorModal">
+                                                    <i class="bi bi-plus"></i>
+                                                </button>
+                                            </div>
                                             <p class='text-danger font-weight-bold inputerror' id="facilitatorError"></p>
                                         </div>
 
                                         <div class="mb-3 col-md-3">
                                             <label class="form-label">Training Center</label>
-                                            <select id="center-records"  class="form-select border-2 p-2" name="training_center" aria-label="">
-                                                <option value="" selected>Select Training Center</option>
-                                                @foreach($centers as $center)
-                                                <option value="{!! $center->id !!}">{!! $center->name !!}</option>
-                                                @endforeach
-                                            </select>
+                                            <div class="d-flex">
+                                                <select id="center-records" class="form-select border-2 p-2" name="training_center" aria-label="">
+                                                    <option value="" selected>Select Training Center</option>
+                                                    @foreach($centers as $center)
+                                                    <option value="{!! $center->id !!}">{!! $center->name !!}</option>
+                                                    @endforeach
+                                                </select>
+                                                <button type="button" class="ms-2 circular-btn" data-bs-toggle="modal" data-bs-target="#addTrainingCenterModal">
+                                                    <i class="bi bi-plus"></i>
+                                                </button>
+                                            </div>
                                             <p class='text-danger font-weight-bold inputerror' id="training_centerError"></p>
                                         </div>
 
@@ -138,16 +163,14 @@
             </div>
         </div>
     </div>
+
 </x-layout>
 
 <script>
-    $(document).ready(function() {
-        $('#facilitator-records').select2();
-        $('#center-records').select2();
-        $('#project-records').select2();
-    });
-
-$(function () {
+$(document).ready(function() {
+    $('#facilitator-records').select2();
+    $('#center-records').select2();
+    $('#project-records').select2();
 
     $('.btn-submit').on('click', function (e) {
         e.preventDefault();
@@ -189,5 +212,8 @@ $(function () {
             }
         })
     });
-})
+});
 </script>
+
+@include('training.addFacilitator')
+@include('training.addCenter')

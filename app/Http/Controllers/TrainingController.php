@@ -24,8 +24,9 @@ class TrainingController extends Controller
         $facilitators = User::all();
         $centers = TrainingCenter::all();
         $projects = Project::all();
+        $countries = Countries::all();
 
-        return view('training.create', compact('facilitators', 'centers', 'projects'));
+        return view('training.create', compact('facilitators', 'centers', 'projects', 'countries'));
     }
 
     public function createTraining(){

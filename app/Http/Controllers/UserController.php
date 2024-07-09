@@ -90,4 +90,22 @@ class UserController extends Controller
         return redirect()->route('get.user', request()->id)->with('status', 'The user password has been updated successfully.');
     }
 
+    public function createFacilitator()
+    {
+        $attributes = request()->validate([
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:users,email',
+            'phone' => 'required|numeric|min:10',
+            'location' => 'max:255',
+            'role' => 'required',
+            'password' => 'required|min:5|max:255',
+        ]);
+
+        $attributes['type'] = $attributes['role'] == 'user';
+        $attributes['email_verified_at'] = Carbon::now()->toDateTimeString();
+
+        $facilitator = User::create($attributes);
+
+        return response()->json($facilitator);
+    }
 }

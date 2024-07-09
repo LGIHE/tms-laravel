@@ -35,6 +35,7 @@
 
     <link href="{{ asset('assets') }}/css/jquery-ui.multidatespicker.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css">
 
     <style>
         .align-middle .btn {
