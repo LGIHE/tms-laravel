@@ -95,7 +95,7 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-success btn-submit">Add Training Center <span id="loader"></span></button>
+                <button type="submit" id="submit-center-btn" class="btn btn-success btn-submit">Add Training Center <span id="loader"></span></button>
             </div>
         </div>
     </div>
@@ -105,7 +105,7 @@
 
 $(function () {
 
-    $('.btn-submit').on('click', function (e) {
+    $('#submit-center-btn').on('click', function (e) {
         e.preventDefault();
 
         let formData = $('#addTrainingCenterForm').serializeArray();
@@ -113,7 +113,7 @@ $(function () {
         $("#addTrainingCenterForm input").removeClass("is-invalid");
 
         $("#loader").prepend('<i class="fa fa-spinner fa-spin"></i>');
-        $(".btn-submit").attr("disabled", 'disabled');
+        $("#submit-center-btn").attr("disabled", 'disabled');
 
         $.ajax({
             method: "POST",
@@ -124,13 +124,13 @@ $(function () {
             data: formData,
             success: (response) => {
                 $(".fa-spinner").remove();
-                $(".btn-submit").prop("disabled", false);
+                $("#submit-center-btn").prop("disabled", false);
                 $('#addTrainingCenterModal').modal('hide');
                 $('#center-records').append(new Option(response.name, response.id, true, true)).trigger('change');
             },
             error: (response) => {
                 $(".fa-spinner").remove();
-                $(".btn-submit").prop("disabled", false);
+                $("#submit-center-btn").prop("disabled", false);
 
                 if(response.status === 422) {
                     let errors = response.responseJSON.errors;

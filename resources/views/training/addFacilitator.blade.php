@@ -68,7 +68,7 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button class="btn btn-success btn-submit">Add Facilitator <span id="loader"></span></button>
+                <button type="submit" id="submit-facilitator-btn" class="btn btn-success btn-submit">Add Facilitator <span id="loader"></span></button>
             </div>
         </div>
     </div>
@@ -77,7 +77,7 @@
 <script>
 
 // Add Facilitator Form Submission
-$('.btn-submit').on('click', function(e) {
+$('#submit-facilitator-btn').on('click', function(e) {
         e.preventDefault();
 
         let formData = $('#addFacilitatorForm').serializeArray();
@@ -85,7 +85,7 @@ $('.btn-submit').on('click', function(e) {
         $("#addFacilitatorForm input").removeClass("is-invalid");
 
         $("#loader").prepend('<i class="fa fa-spinner fa-spin"></i>');
-        $(".btn-submit").attr("disabled", 'disabled');
+        $("#submit-facilitator-btn").attr("disabled", 'disabled');
         // let formData = $(this).serialize();
 
         $.ajax({
@@ -95,13 +95,13 @@ $('.btn-submit').on('click', function(e) {
             data: formData,
             success: (response) => {
                 $(".fa-spinner").remove();
-                $(".btn-submit").prop("disabled", false);
+                $("#submit-facilitator-btn").prop("disabled", false);
                 $('#addFacilitatorModal').modal('hide');
                 $('#facilitator-records').append(new Option(response.name, response.id, true, true)).trigger('change');
             },
             error: (response) => {
                 $(".fa-spinner").remove();
-                $(".btn-submit").prop("disabled", false);
+                $("#submit-facilitator-btn").prop("disabled", false);
 
                 if(response.status === 422) {
                     let errors = response.responseJSON.errors;

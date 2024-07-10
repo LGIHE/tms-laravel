@@ -90,7 +90,7 @@ class UserController extends Controller
         return redirect()->route('get.user', request()->id)->with('status', 'The user password has been updated successfully.');
     }
 
-    public function createFacilitator()
+    public function addFacilitator()
     {
         $attributes = request()->validate([
             'name' => 'required|max:255',

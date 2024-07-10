@@ -17,7 +17,7 @@ class Training extends Model
     protected $fillable = [
         'name',
         'description',
-        'facilitator',
+        'facilitators',
         'training_center',
         'project',
         'start_date',

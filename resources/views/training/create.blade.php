@@ -76,8 +76,8 @@
                                         <div class="mb-3 col-md-3">
                                             <label class="form-label">Facilitator</label>
                                             <div class="d-flex">
-                                                <select id="facilitator-records" class="form-select p-2" name="facilitator" aria-label="">
-                                                    <option value="" selected>Select Facilitator</option>
+                                                <select id="facilitator-records" class="form-select p-2" name="facilitators[]" multiple aria-label="">
+                                                    {{-- <option value="" selected>Select Facilitator</option> --}}
                                                     @foreach($facilitators as $facilitator)
                                                     <option value="{!! $facilitator->id !!}">{!! $facilitator->name !!}</option>
                                                     @endforeach
@@ -86,7 +86,7 @@
                                                     <i class="bi bi-plus"></i>
                                                 </button>
                                             </div>
-                                            <p class='text-danger font-weight-bold inputerror' id="facilitatorError"></p>
+                                            <p class='text-danger font-weight-bold inputerror' id="facilitatorsError"></p>
                                         </div>
 
                                         <div class="mb-3 col-md-3">
@@ -149,12 +149,12 @@
                                         <div class="mb-3 col-md-4">
                                             <label class="form-label">Description</label>
                                             <textarea name="description" class="form-control border border-2 p-2"></textarea>
-                                            <p class='text-danger font-weight-bold inputerror' id="contact_personError"></p>
+                                            <p class='text-danger font-weight-bold inputerror' id="descriptionError"></p>
                                         </div>
 
                                     </div>
 
-                                    <button type="submit" class="btn bg-gradient-dark btn-submit">Create Training <span id="loader"></span></button>
+                                    <button type="submit" id="submit-training-btn" class="btn bg-gradient-dark btn-submit">Create Training <span id="loader"></span></button>
                                 </form>
                             </div>
                         </div>
@@ -172,7 +172,7 @@ $(document).ready(function() {
     $('#center-records').select2();
     $('#project-records').select2();
 
-    $('.btn-submit').on('click', function (e) {
+    $('#submit-training-btn').on('click', function (e) {
         e.preventDefault();
 
         let formData = $('#addTraining').serializeArray();
@@ -182,7 +182,7 @@ $(document).ready(function() {
         $("#addTraining textarea").removeClass("is-invalid");
 
         $("#loader").prepend('<i class="fa fa-spinner fa-spin"></i>');
-        $(".btn-submit").attr("disabled", 'disabled');
+        $("#submit-training-btn").attr("disabled", 'disabled');
 
         $.ajax({
             method: "POST",
@@ -193,12 +193,12 @@ $(document).ready(function() {
             data: formData,
             success: (response) => {
                 $(".fa-spinner").remove();
-                $(".btn-submit").prop("disabled", false);
+                $("#submit-training-btn").prop("disabled", false);
                 window.location.assign('{{route("create.training.success")}}');
             },
             error: (response) => {
                 $(".fa-spinner").remove();
-                $(".btn-submit").prop("disabled", false);
+                $("#submit-training-btn").prop("disabled", false);
 
                 if(response.status === 422) {
                     let errors = response.responseJSON.errors;

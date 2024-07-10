@@ -34,17 +34,19 @@ class TrainingController extends Controller
         $attributes = request()->validate([
             'name' => 'required',
             'description' => 'nullable',
-            'facilitator' => 'required',
-            'training_center' => 'required',
-            'project' => 'required',
-            'start_date' => 'required',
-            'start_time' => 'required',
-            'end_date' => 'required',
-            'end_time' => 'required',
-            'number_of_days' => 'required',
+            'facilitators' => 'required|array',
+            'facilitators.*' => 'exists:users,id',
+            'training_center' => 'required|exists:training_centers,id',
+            'project' => 'required|exists:projects,id',
+            'start_date' => 'required|date',
+            'start_time' => 'required|date_format:H:i',
+            'end_date' => 'required|date',
+            'end_time' => 'required|date_format:H:i',
+            'number_of_days' => 'required|integer',
         ]);
 
         $attributes['created_by'] = auth()->user()->id;
+        $attributes['facilitators'] = json_encode($attributes['facilitators']);
         Training::create($attributes);
 
         return response()->json(['status' => 'success']);
