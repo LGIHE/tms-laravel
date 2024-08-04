@@ -36,7 +36,7 @@
                                                 <th class="text-secondary text-xxl font-weight-bolder px-4">Name</th>
                                                 <th class="text-secondary text-xxl font-weight-bolder">Description</th>
                                                 <th class="text-secondary text-xxl font-weight-bolder">Facilitator</th>
-                                                <th class="text-secondary text-xxl font-weight-bolder">Training Center</th>
+                                                <th class="text-secondary text-xxl font-weight-bolder">Training Venue</th>
                                                 <th class="text-secondary text-xxl font-weight-bolder">Project</th>
                                                 <th class="text-secondary text-xxl font-weight-bolder">From</th>
                                                 <th class="text-secondary text-xxl font-weight-bolder">To</th>
@@ -68,8 +68,8 @@
                                                 <td>
                                                     <div class="d-flex flex-column justify-content-center">
                                                         <span class="text-dark text-m font-weight-bold">
-                                                            @foreach ($centers as $center)
-                                                                @if($center->id == $training->training_center) {{ $center->name }} @endif
+                                                            @foreach ($venues as $venue)
+                                                                @if($venue->id == $training->training_venue) {{ $venue->name }} @endif
                                                             @endforeach
                                                         </span>
                                                     </div>

@@ -50,9 +50,9 @@
                                             <th class="text-secondary text-xxl font-weight-bolder">Age</th>
                                             <th class="text-secondary text-xxl font-weight-bolder">Contact</th>
                                             <th class="text-secondary text-xxl font-weight-bolder">Address</th>
-                                            <th class="text-secondary text-xxl font-weight-bolder">Email</th>
+                                            {{-- <th class="text-secondary text-xxl font-weight-bolder">Email</th> --}}
                                             <th class="text-secondary text-xxl font-weight-bolder">Training</th>
-                                            <th class="text-secondary"></th>
+                                            <th class="text-secondary text-xxl font-weight-bolder">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -81,14 +81,14 @@
                                             </td>
                                             <td>
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <span class="text-dark text-m font-weight-bold">{{ $trainee->address }}</span>
+                                                    <span class="text-dark text-m font-weight-bold">{{ $trainee->village }}, {{ $trainee->district }}</span>
                                                 </div>
                                             </td>
-                                            <td>
+                                            {{-- <td>
                                                 <div class="d-flex flex-column justify-content-center">
                                                     <p class="text-m text-dark font-weight-bold mb-0">{{ $trainee->email }}</p>
                                                 </div>
-                                            </td>
+                                            </td> --}}
                                             <td>
                                                 <div class="d-flex flex-column justify-content-center">
                                                     <p class="text-m text-dark font-weight-bold mb-0">
@@ -280,5 +280,5 @@
 </script>
 
 @include('trainee.create', [
-    'training' => $trainee->training
+    'training' => $training->id,
 ])

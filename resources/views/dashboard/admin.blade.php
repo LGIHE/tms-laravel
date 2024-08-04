@@ -20,8 +20,8 @@
                                 <i class="material-icons opacity-10" style="top:10%;font-size:48px;">school</i>
                             </div>
                             <div class="text-end pt-1">
-                                <h5 class="mb-0">Trainees</h5>
-                                <h4 class="mb-0">{{ count($trainees) }}</h4>
+                                <h5 class="mb-0">Participants</h5>
+                                <h4 class="mb-0">{{ count($participants) }}</h4>
                             </div>
                         </div>
                         <div class="card-footer p-2"></div>
@@ -60,7 +60,7 @@
                     </div>
                 </div>
                 <div class="col-xl-3 col-sm-6 dash-block"
-                    onclick="window.location.href='{{ route('training.centers') }}'">
+                    onclick="window.location.href='{{ route('training.venues') }}'">
                     <div class="card">
                         <div class="card-header p-3 pt-2">
                             <div
@@ -68,8 +68,8 @@
                                 <i class="material-icons opacity-10" style="top:10%;font-size:48px;">groups</i>
                             </div>
                             <div class="text-end pt-1">
-                                <h5 class="mb-0">Centers</h5>
-                                <h4 class="mb-0">{{ count($centers) }}</h4>
+                                <h5 class="mb-0">Venuess</h5>
+                                <h4 class="mb-0">{{ count($venues) }}</h4>
                             </div>
                         </div>
                         <div class="card-footer p-2"></div>
@@ -100,11 +100,11 @@
                                         <th class="text-secondary text-xxl font-weight-bolder px-4">Name</th>
                                         <th class="text-secondary text-xxl font-weight-bolder">Description</th>
                                         <th class="text-secondary text-xxl font-weight-bolder">Facilitator</th>
-                                        <th class="text-secondary text-xxl font-weight-bolder">Training Center</th>
+                                        <th class="text-secondary text-xxl font-weight-bolder">Training Venue</th>
                                         <th class="text-secondary text-xxl font-weight-bolder">Project</th>
                                         <th class="text-secondary text-xxl font-weight-bolder">From</th>
                                         <th class="text-secondary text-xxl font-weight-bolder">To</th>
-                                        <th class="text-secondary text-xxl font-weight-bolder">Trainees</th>
+                                        <th class="text-secondary text-xxl font-weight-bolder">Participantss</th>
                                         <th class="text-uppercase text-secondary text-s font-weight-bolder">Attendence</th>
                                         <th class="text-secondary"></th>
                                     </tr>
@@ -136,8 +136,8 @@
                                         <td>
                                             <div class="d-flex flex-column justify-content-center">
                                                 <span class="text-dark text-m font-weight-bold">
-                                                    @foreach ($centers as $center)
-                                                    @if($center->id == $training->training_center) {{ $center->name }}
+                                                    @foreach ($venues as $venue)
+                                                    @if($venue->id == $training->training_venue) {{ $venue->name }}
                                                     @endif
                                                     @endforeach
                                                 </span>
@@ -165,7 +165,7 @@
                                         <td>
                                             <div class="d-flex flex-column justify-content-center">
                                                 <span class="text-dark text-m font-weight-bold">
-                                                    {{ DB::table('trainees')->where('training', $training->id)->count() }}
+                                                    {{ DB::table('participants')->where('trainings', $training->id)->count() }}
                                                 </span>
                                             </div>
                                         </td>

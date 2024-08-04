@@ -9,7 +9,7 @@
         background: transparent url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e") center/1em auto no-repeat;
     }
 
-    #updateTraineeModalLabel {
+    #updateParticipantModalLabel {
         font-family: var(--bs-body-font-family) !important;
     }
 
@@ -92,11 +92,26 @@
                                     <p class="text-dark">{{ $training->description }}</p>
                                 </div>
                                 <div class="col-md-4 d-flex">
-                                    <p class="text-dark font-weight-bold">Facilitator:</p>&nbsp;
+                                    <p class="text-dark font-weight-bold">Facilitator(s):</p>&nbsp;
                                     <p class="text-dark">
+                                        @php
+                                            $facilitatorIds = json_decode($training->facilitators, true);
+                                            $facilitatorNames = [];
+                                        @endphp
+
                                         @foreach ($facilitators as $facilitator)
-                                            @if($facilitator->id == $training->facilitator ) {{ $facilitator->name }} @endif
+                                            @if(in_array((string) $facilitator->id, $facilitatorIds))
+                                                @php
+                                                    $facilitatorNames[] = $facilitator->name;
+                                                @endphp
+                                            @endif
                                         @endforeach
+
+                                        @if (!empty($facilitatorNames))
+                                            {{ implode(', ', $facilitatorNames) }}
+                                        @else
+                                            <em>No facilitators found</em>
+                                        @endif
                                     </p>
                                 </div>
                                 <div class="col-md-4 d-flex">
@@ -113,11 +128,11 @@
 
                             <div class="row">
                                 <div class="col-md-4 d-flex">
-                                    <p class="text-dark font-weight-bold">Training Center:</p>&nbsp;
+                                    <p class="text-dark font-weight-bold">Training Venue:</p>&nbsp;
                                     <p class="text-dark">
-                                        @foreach ( $centers as $center )
-                                            @if ($center->id == $training->training_center)
-                                                {{ $center->name }}
+                                        @foreach ( $venues as $venue )
+                                            @if ($venue->id == $training->training_center)
+                                                {{ $venue->name }}
                                             @endif
                                         @endforeach
                                     </p>
@@ -136,10 +151,10 @@
                                 <div class="col-md-4 d-flex">
                                     <p class="text-dark font-weight-bold">Country:</p>&nbsp;
                                     <p class="text-dark">
-                                        @foreach ($centers as $center)
-                                            @if ($center->id == $training->training_center)
+                                        @foreach ($venues as $venue)
+                                            @if ($venue->id == $training->training_center)
                                                 @foreach ($countries as $country)
-                                                    @if ($country->code == $center->country)
+                                                    @if ($country->code == $venue->country)
                                                         {{ $country->name }}
                                                     @endif
                                                 @endforeach
@@ -153,25 +168,25 @@
 
                         <div class="row">
                             <div class="me-3 my-3 text-end">
-                                <a class="btn bg-gradient-success mb-0 end" data-bs-toggle="modal" data-bs-target="#newTraineeModal">
-                                    <i class="material-icons text-sm">add</i>&nbsp;&nbsp;Add Trainee
+                                <a class="btn bg-gradient-success mb-0 end" data-bs-toggle="modal" data-bs-target="#newParticipantModal">
+                                    <i class="material-icons text-sm">add</i>&nbsp;&nbsp;Add Participant
                                 </a>
                                 <a class="btn bg-gradient-primary mb-0 end" id="upload-btn" data-value="{{ route('get.upload.trainees', $training->id) }}">
-                                    <i class="material-icons text-sm">upload</i>&nbsp;&nbsp;Upload Trainees
+                                    <i class="material-icons text-sm">upload</i>&nbsp;&nbsp;Upload Participants
                                 </a>
                             </div>
                         </div>
 
                         <ul class="nav nav-tabs">
                             <li class="nav-item">
-                                <a class="nav-link active" data-bs-toggle="tab" href="#steps-tab">Trainees</a>
+                                <a class="nav-link active" data-bs-toggle="tab" href="#steps-tab">Participants</a>
                             </li>
                         </ul>
 
                         <div class="tab-content mt-2">
                             <div class="tab-pane fade show active" id="steps-tab" role="tabpanel" aria-labelledby="steps-tab">
                                 <div class="card-body px-0 pb-2">
-                                    @if (count($trainees) > 0)
+                                    @if (count($participants) > 0)
                                     <div class="table-responsive p-0">
                                         <table class="table table-sm hover mb-0" id="table">
                                             <thead>
@@ -185,44 +200,44 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ( $trainees as $trainee )
+                                                @foreach ( $participants as $participant )
 
                                                 <tr>
                                                     <td>
                                                         <div class="d-flex flex-column justify-content-center px-2">
                                                             <p class="text-m text-dark font-weight-bold mb-0">{{
-                                                                $trainee->name }}</p>
+                                                                $participant->name }}</p>
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div class="d-flex flex-column justify-content-center">
                                                             <p class="text-m text-dark font-weight-bold mb-0">{{
-                                                                $trainee->gender }}</p>
+                                                                $participant->gender }}</p>
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div class="d-flex flex-column justify-content-center">
                                                             <span class="text-dark text-m font-weight-bold">{{
-                                                                $trainee->category }}</span>
+                                                                $participant->category }}</span>
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div class="d-flex flex-column justify-content-center">
                                                             <span class="text-dark text-m font-weight-bold">{{
-                                                                $trainee->institution }}</span>
+                                                                $participant->institution }}</span>
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div class="d-flex flex-column justify-content-center">
                                                             <span class="text-dark text-m font-weight-bold">{{
-                                                                $trainee->days_attended }}</span>
+                                                                $participant->days_attended }}</span>
                                                         </div>
                                                     </td>
                                                     {{-- <td>
                                                         <div class="d-flex flex-column justify-content-center">
                                                             <p class="text-m text-dark font-weight-bold mb-0">
-                                                                @if ($trainee->attendance != null)
-                                                                    {{ count(explode(",", $trainee->attendance )) }}
+                                                                @if ($participant->attendance != null)
+                                                                    {{ count(explode(",", $participant->attendance )) }}
                                                                 @else 0 @endif
                                                             </p>
                                                         </div>
@@ -230,15 +245,15 @@
                                                     <td class="not-export-col">
                                                         <a rel="tooltip" class="btn btn-link p-0 m-0" role="btn"
                                                             data-bs-toggle="modal"
-                                                            data-bs-target="#updateTraineeModal-{{$trainee->id}}">
+                                                            data-bs-target="#updateParticipantModal-{{$participant->id}}">
                                                             <i class="material-icons" style="font-size:1.4rem;">edit</i>
                                                             <div class="ripple-container"></div>
                                                         </a>
 
-                                                        @if ($trainee->role != 'Administrator')
+                                                        @if ($participant->role != 'Administrator')
                                                         <button type="button" class="btn btn-link p-0 m-0" role="btn"
                                                             data-bs-toggle="modal"
-                                                            data-bs-target="#deleteModal-{{$trainee->id}}"
+                                                            data-bs-target="#deleteModal-{{$participant->id}}"
                                                             title="Delete User">
                                                             <i class="material-icons"
                                                                 style="font-size:1.4rem;">delete</i>
@@ -248,21 +263,21 @@
                                                     </td>
                                                 </tr>
 
-                                                <!-- Trainee Update modal -->
-                                                <div class="modal fade" id="updateTraineeModal-{{ $trainee->id }}"
+                                                <!-- Participant Update modal -->
+                                                <div class="modal fade" id="updateParticipantModal-{{ $participant->id }}"
                                                     data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-                                                    aria-labelledby="updateTraineeModal" aria-hidden="true">
+                                                    aria-labelledby="updateParticipantModal" aria-hidden="true">
                                                     <div class="modal-dialog modal-lg">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
                                                                 <h1 class="modal-title fs-5"
-                                                                    id="updateTraineeModalLabel">Update Trainee</h1>
+                                                                    id="updateParticipantModalLabel">Update Participant</h1>
                                                                 <button type="button" class="btn-close"
                                                                     data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
 
                                                             <div class="modal-body">
-                                                                <form method='POST' action='#' id="updateTraineeForm-{{ $trainee->id }}">
+                                                                <form method='POST' action='#' id="updateParticipantForm-{{ $participant->id }}">
                                                                     @csrf
                                                                     <input type="hidden" name="training" value="{{ $training->id }}">
                                                                     <div class="row">
@@ -271,7 +286,7 @@
                                                                             <label class="form-label">Name</label>
                                                                             <input type="text" name="name"
                                                                                 class="form-control border border-2 p-2"
-                                                                                value="{{ $trainee->name }}">
+                                                                                value="{{ $participant->name }}">
                                                                             <p class='text-danger font-weight-bold inputerror'
                                                                                 id="nameError"></p>
                                                                         </div>
@@ -281,7 +296,7 @@
                                                                                 address</label>
                                                                             <input type="email" name="email"
                                                                                 class="form-control border border-2 p-2"
-                                                                                value="{{ $trainee->email }}">
+                                                                                value="{{ $participant->email }}">
                                                                             <p class='text-danger font-weight-bold inputerror'
                                                                                 id="emailError"></p>
                                                                         </div>
@@ -292,10 +307,10 @@
                                                                                 aria-label="">
                                                                                 <option value="" selected>Select Gender
                                                                                 </option>
-                                                                                <option value="Male" {{ $trainee->gender
+                                                                                <option value="Male" {{ $participant->gender
                                                                                     == "Male" ? "selected" : '' }}>Male
                                                                                 </option>
-                                                                                <option value="Female" {{ $trainee->
+                                                                                <option value="Female" {{ $participant->
                                                                                     gender == "Female" ? "selected" : ''
                                                                                     }}>Female</option>
                                                                             </select>
@@ -307,7 +322,7 @@
                                                                             <label class="form-label">Age</label>
                                                                             <input type="number" name="age"
                                                                                 class="form-control border border-2 p-2"
-                                                                                value="{{ $trainee->age }}">
+                                                                                value="{{ $participant->age }}">
                                                                             <p class='text-danger font-weight-bold inputerror'
                                                                                 id="ageError"></p>
                                                                         </div>
@@ -316,10 +331,10 @@
                                                                             <label class="form-label">Category</label>
                                                                             <select class="form-select" name="category" aria-label="">
                                                                                 <option value="" selected>Select Category</option>
-                                                                                <option value="Teacher" {{ $trainee->category == "Teacher" ? "selected" : '' }}>Teacher</option>
-                                                                                <option value="Youth" {{ $trainee->category == "Youth" ? "selected" : '' }}>Youth</option>
-                                                                                <option value="School Leader" {{ $trainee->category == "School Leader" ? "selected" : '' }}>School Leader</option>
-                                                                                <option value="Community Leader" {{ $trainee->category == "Community Leader" ? "selected" : '' }}>Community Leader</option>
+                                                                                <option value="Teacher" {{ $participant->category == "Teacher" ? "selected" : '' }}>Teacher</option>
+                                                                                <option value="Youth" {{ $participant->category == "Youth" ? "selected" : '' }}>Youth</option>
+                                                                                <option value="School Leader" {{ $participant->category == "School Leader" ? "selected" : '' }}>School Leader</option>
+                                                                                <option value="Community Leader" {{ $participant->category == "Community Leader" ? "selected" : '' }}>Community Leader</option>
                                                                             </select>
                                                                             <p class='text-danger font-weight-bold inputerror' id="categoryError"></p>
                                                                         </div>
@@ -329,7 +344,7 @@
                                                                             <select class="form-select" name="nationality" aria-label="">
                                                                                 <option value="" selected>Select Nationality</option>
                                                                                 @foreach ($countries as $country)
-                                                                                    <option value="{{ $country->nationality }}" {{ $trainee->nationality == $country->nationality ? "selected" : '' }}>{{ $country->nationality }}</option>
+                                                                                    <option value="{{ $country->nationality }}" {{ $participant->nationality == $country->nationality ? "selected" : '' }}>{{ $country->nationality }}</option>
                                                                                 @endforeach
                                                                             </select>
                                                                             <p class='text-danger font-weight-bold inputerror' id="nationalityError"></p>
@@ -339,7 +354,7 @@
                                                                             <label class="form-label">Phone</label>
                                                                             <input type="text" name="phone"
                                                                                 class="form-control border border-2 p-2"
-                                                                                value="{{ $trainee->phone }}">
+                                                                                value="{{ $participant->phone }}">
                                                                             <p class='text-danger font-weight-bold inputerror'
                                                                                 id="phoneError"></p>
                                                                         </div>
@@ -347,25 +362,25 @@
                                                                         {{-- <div class="mb-3 col-md-6">
                                                                             <label class="form-label">Address</label>
                                                                             <textarea name="address"
-                                                                                class="form-control border border-2 p-2">{{ $trainee->address }}</textarea>
+                                                                                class="form-control border border-2 p-2">{{ $participant->address }}</textarea>
                                                                             <p class='text-danger font-weight-bold inputerror'
                                                                                 id="addressError"></p>
                                                                         </div> --}}
 
                                                                         <div class="mb-3 col-md-6">
                                                                             <label class="form-label">Institution/Organization</label>
-                                                                            <input type="text" name="institution" value="{{ $trainee->institution }}" class="form-control border border-2 p-2">
+                                                                            <input type="text" name="institution" value="{{ $participant->institution }}" class="form-control border border-2 p-2">
                                                                             <p class='text-danger font-weight-bold inputerror' id="institutionError"></p>
                                                                         </div>
 
                                                                         <div class="mb-3 col-md-6">
                                                                             <label class="form-label">Days Attended</label>
-                                                                            <input type="number" name="days_attended" value="{{ $trainee->days_attended }}" class="form-control border border-2 p-2">
+                                                                            <input type="number" name="days_attended" value="{{ $participant->days_attended }}" class="form-control border border-2 p-2">
                                                                             <p class='text-danger font-weight-bold inputerror' id="days_attendedError"></p>
                                                                         </div>
 
                                                                         {{-- <p class='text-danger font-weight-bold inputerror' id="attendanceError"></p>
-                                                                        <input type="text" class="datepicker-update" name="attendance" value="{{ $trainee->attendance }}" readonly> --}}
+                                                                        <input type="text" class="datepicker-update" name="attendance" value="{{ $participant->attendance }}" readonly> --}}
 
                                                                     </div>
                                                                 </form>
@@ -376,15 +391,15 @@
                                                                     data-bs-dismiss="modal">Cancel</button>
                                                                 <button type="submit"
                                                                     class="btn btn-success btn-update-trainee"
-                                                                    data-id="{{ $trainee->id }}">Update Trainee <span
+                                                                    data-id="{{ $participant->id }}">Update Participant <span
                                                                         id="loader"></span></button>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                <!-- Confirm Trainee Delete modal -->
-                                                <div class="modal fade" id="deleteModal-{{ $trainee->id }}"
+                                                <!-- Confirm Participant Delete modal -->
+                                                <div class="modal fade" id="deleteModal-{{ $participant->id }}"
                                                     tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
                                                     aria-hidden="true">
                                                     <div class="modal-dialog modal-sm" role="document">
@@ -397,13 +412,13 @@
                                                             <div class="modal-body" id="smallBody">
                                                                 <div class="text-center">
                                                                     <span class="">Are you sure you want to Delete this
-                                                                        Trainee?</span>
+                                                                        Participant?</span>
                                                                 </div>
                                                             </div>
                                                             <div class="modal-footer align-items-center">
                                                                 <button type="button" class="btn btn-success"
                                                                     id="del-btn"
-                                                                    data-value="{{ route('delete.trainee', $trainee->id) }}">Confirm</button>
+                                                                    data-value="{{ route('delete.trainee', $participant->id) }}">Confirm</button>
                                                                 <button type="button" class="btn btn-danger"
                                                                     data-bs-dismiss="modal">Cancel</button>
                                                             </div>
@@ -416,11 +431,11 @@
                                     </div>
                                     @else
                                     <div class="container text-center m-2 p-5">
-                                        <span class="display-6 font-weight-bold">No Trainee Added Yet.</span>
+                                        <span class="display-6 font-weight-bold">No Participant Added Yet.</span>
                                     </div>
                                     @endif
 
-                                    {{-- <a class="btn bg-gradient-info btn-floating" id="addBtn" data-bs-toggle="modal" data-bs-target="#newTraineeModal">
+                                    {{-- <a class="btn bg-gradient-info btn-floating" id="addBtn" data-bs-toggle="modal" data-bs-target="#newParticipantModal">
                                         <i class="fas fa-plus"></i>
                                     </a> --}}
                                 </div>
@@ -472,7 +487,7 @@
         let route = '{{route("update.trainee",":id")}}';
         route = route.replace(':id', id);
 
-        const formId = '#updateTraineeForm-'+id;
+        const formId = '#updateParticipantForm-'+id;
         let formData = $(formId).serialize();
 
         console.log(formData);

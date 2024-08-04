@@ -13,18 +13,18 @@
 </style>
 <x-layout bodyClass="g-sidenav-show  bg-gray-200">
 
-    <x-navbars.sidebar activePage="training-centers"></x-navbars.sidebar>
+    <x-navbars.sidebar activePage="training-venues"></x-navbars.sidebar>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <!-- Navbar -->
-        <x-navbars.topbar titlePage="Training Centers"></x-navbars.topbar>
+        <x-navbars.topbar titlePage="Training Venues"></x-navbars.topbar>
         <!-- End Navbar -->
         <div class="container-fluid py-4">
             <div class="row">
                 <div class="col-12">
                     <div class="card my-4">
                         <div class=" me-3 my-3 text-end">
-                            <a class="btn bg-gradient-dark mb-0 end" data-bs-toggle="modal" data-bs-target="#newTrainingCenterModal">
-                                <i class="material-icons text-sm">add</i>&nbsp;&nbsp;Add New Training Center
+                            <a class="btn bg-gradient-dark mb-0 end" data-bs-toggle="modal" data-bs-target="#newTrainingVenueModal">
+                                <i class="material-icons text-sm">add</i>&nbsp;&nbsp;Add New Training Venue
                             </a>
                         </div>
                         @if (session('status'))
@@ -53,7 +53,7 @@
                         </div>
                         @endif
                         <div class="card-body px-0 pb-2">
-                            @if (count($centers) > 0)
+                            @if (count($venues) > 0)
                             <div class="table-responsive p-0">
                                 <table class="table table-sm hover mb-0" id="table">
                                     <thead>
@@ -70,44 +70,44 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ( $centers as $center )
+                                        @foreach ( $venues as $venues )
 
                                         <tr>
                                             <td>
                                                 <div class="d-flex flex-column justify-content-center px-2">
-                                                    <p class="text-m text-dark font-weight-bold mb-0">{{ $center->name }}</p>
+                                                    <p class="text-m text-dark font-weight-bold mb-0">{{ $venues->name }}</p>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="d-flex flex-column justify-content-center px-0">
-                                                    <p class="text-m text-dark font-weight-bold mb-0">{{ $center->type }}</p>
+                                                    <p class="text-m text-dark font-weight-bold mb-0">{{ $venues->type }}</p>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <span class="text-dark text-m font-weight-bold">{{ $center->capacity }}</span>
+                                                    <span class="text-dark text-m font-weight-bold">{{ $venues->capacity }}</span>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <span class="text-dark text-m font-weight-bold">{{ $center->contact_person }}</span>
+                                                    <span class="text-dark text-m font-weight-bold">{{ $venues->contact_person }}</span>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <span class="text-dark text-m font-weight-bold">{{ $center->contact_phone }}</span>
+                                                    <span class="text-dark text-m font-weight-bold">{{ $venues->contact_phone }}</span>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <p class="text-m text-dark font-weight-bold mb-0">{{ $center->email }}</p>
+                                                    <p class="text-m text-dark font-weight-bold mb-0">{{ $venues->email }}</p>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="d-flex flex-column justify-content-center">
                                                     <p class="text-m text-dark font-weight-bold mb-0">
                                                         @foreach ($countries as $country)
-                                                            @if ($country->code == $center->country)
+                                                            @if ($country->code == $venues->country)
                                                                 {{ $country->name }}
                                                             @endif
                                                         @endforeach
@@ -116,17 +116,17 @@
                                             </td>
                                             <td>
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <p class="text-m text-dark font-weight-bold mb-0">{{ $center->district }}, {{ $center->city }}</p>
+                                                    <p class="text-m text-dark font-weight-bold mb-0">{{ $venues->district }}, {{ $venues->city }}</p>
                                                 </div>
                                             </td>
                                             <td class="not-export-col">
-                                                <a rel="tooltip" class="btn btn-link p-0 m-0" role="btn" data-bs-toggle="modal" data-bs-target="#updateTrainingCenterFormModal-{{$center->id}}">
+                                                <a rel="tooltip" class="btn btn-link p-0 m-0" role="btn" data-bs-toggle="modal" data-bs-target="#updateTrainingVenueFormModal-{{$venues->id}}">
                                                     <i class="material-icons" style="font-size:1.4rem;">edit</i>
                                                     <div class="ripple-container"></div>
                                                 </a>
 
-                                                @if ($center->role != 'Administrator')
-                                                    <button type="button" class="btn btn-link p-0 m-0" role="btn" data-bs-toggle="modal" data-bs-target="#deleteModal-{{$center->id}}" title="Delete User">
+                                                @if ($venues->role != 'Administrator')
+                                                    <button type="button" class="btn btn-link p-0 m-0" role="btn" data-bs-toggle="modal" data-bs-target="#deleteModal-{{$venues->id}}" title="Delete User">
                                                         <i class="material-icons" style="font-size:1.4rem;">delete</i>
                                                         <div class="ripple-container"></div>
                                                     </button>
@@ -134,22 +134,22 @@
                                             </td>
                                         </tr>
 
-                                        <div class="modal fade" id="updateTrainingCenterFormModal-{{ $center->id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="updateTraineeModal" aria-hidden="true">
+                                        <div class="modal fade" id="updateTrainingVenueFormModal-{{ $venues->id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="updateTraineeModal" aria-hidden="true">
                                             <div class="modal-dialog modal-lg">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h1 class="modal-title fs-5" id="updateTrainingCenterFormModalLabel">Update Training Center</h1>
+                                                        <h1 class="modal-title fs-5" id="updateTrainingVenueFormModalLabel">Update Training Venue</h1>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
 
                                                     <div class="modal-body">
-                                                        <form method='POST' action='#' id="updateTrainingCenterForm">
+                                                        <form method='POST' action='#' id="updateTrainingVenueForm">
                                                             @csrf
                                                             <div class="row">
 
                                                                 <div class="mb-3 col-md-4">
                                                                     <label class="form-label">Name</label>
-                                                                    <input type="text" name="name" value="{{ $center->name }}" class="form-control border border-2 p-2">
+                                                                    <input type="text" name="name" value="{{ $venues->name }}" class="form-control border border-2 p-2">
                                                                     <p class='text-danger font-weight-bold inputerror' id="nameError"></p>
                                                                 </div>
 
@@ -157,35 +157,35 @@
                                                                     <label class="form-label">Type</label>
                                                                     <select class="form-select" name="type" aria-label="">
                                                                         <option value="" selected>Select Type</option>
-                                                                        <option value="School" {{ $center->type == "School" ? "selected" : '' }}>School</option>
-                                                                        <option value="Institute" {{ $center->type == "Institute" ? "selected" : '' }}>Institute</option>
-                                                                        <option value="Farm" {{ $center->type == "Farm" ? "selected" : '' }}>Farm</option>
-                                                                        <option value="Conference Hall" {{ $center->type == "Conference Hall" ? "selected" : '' }}>Conference Hall</option>
+                                                                        <option value="School" {{ $venues->type == "School" ? "selected" : '' }}>School</option>
+                                                                        <option value="Institute" {{ $venues->type == "Institute" ? "selected" : '' }}>Institute</option>
+                                                                        <option value="Farm" {{ $venues->type == "Farm" ? "selected" : '' }}>Farm</option>
+                                                                        <option value="Conference Hall" {{ $venues->type == "Conference Hall" ? "selected" : '' }}>Conference Hall</option>
                                                                     </select>
                                                                     <p class='text-danger font-weight-bold inputerror' id="typeError"></p>
                                                                 </div>
 
                                                                 <div class="mb-3 col-md-4">
                                                                     <label class="form-label">Capacity</label>
-                                                                    <input type="text" name="capacity" value="{{ $center->capacity }}" class="form-control border border-2 p-2">
+                                                                    <input type="text" name="capacity" value="{{ $venues->capacity }}" class="form-control border border-2 p-2">
                                                                     <p class='text-danger font-weight-bold inputerror' id="capacityError"></p>
                                                                 </div>
 
                                                                 <div class="mb-3 col-md-4">
                                                                     <label class="form-label">Email address</label>
-                                                                    <input type="email" name="email" value="{{ $center->email }}" class="form-control border border-2 p-2">
+                                                                    <input type="email" name="email" value="{{ $venues->email }}" class="form-control border border-2 p-2">
                                                                     <p class='text-danger font-weight-bold inputerror' id="emailError"></p>
                                                                 </div>
 
                                                                 <div class="mb-3 col-md-4">
                                                                     <label class="form-label">Contact Person</label>
-                                                                    <input type="text" name="contact_person" value="{{ $center->contact_person }}" class="form-control border border-2 p-2">
+                                                                    <input type="text" name="contact_person" value="{{ $venues->contact_person }}" class="form-control border border-2 p-2">
                                                                     <p class='text-danger font-weight-bold inputerror' id="contact_personError"></p>
                                                                 </div>
 
                                                                 <div class="mb-3 col-md-4">
                                                                     <label class="form-label">Contact Person Phone</label>
-                                                                    <input type="text" name="contact_phone" value="{{ $center->contact_phone }}" class="form-control border border-2 p-2">
+                                                                    <input type="text" name="contact_phone" value="{{ $venues->contact_phone }}" class="form-control border border-2 p-2">
                                                                     <p class='text-danger font-weight-bold inputerror' id="contact_phoneError"></p>
                                                                 </div>
 
@@ -194,7 +194,7 @@
                                                                     <select class="form-select" name="country" aria-label="">
                                                                         <option value="" selected>Select Country</option>
                                                                         @foreach ($countries as $country)
-                                                                            <option value="{{ $country->code }}" @if ($center->country == $country->code) {{ 'selected' }} @endif>{{ $country->name }}</option>
+                                                                            <option value="{{ $country->code }}" @if ($venues->country == $country->code) {{ 'selected' }} @endif>{{ $country->name }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                     <p class='text-danger font-weight-bold inputerror' id="countryError"></p>
@@ -202,13 +202,13 @@
 
                                                                 <div class="mb-3 col-md-4">
                                                                     <label class="form-label">District</label>
-                                                                    <input type="text" name="district" value="{{ $center->district }}" class="form-control border border-2 p-2">
+                                                                    <input type="text" name="district" value="{{ $venues->district }}" class="form-control border border-2 p-2">
                                                                     <p class='text-danger font-weight-bold inputerror' id="districtError"></p>
                                                                 </div>
 
                                                                 <div class="mb-3 col-md-4">
                                                                     <label class="form-label">City</label>
-                                                                    <input type="text" name="city" value="{{ $center->city }}" class="form-control border border-2 p-2">
+                                                                    <input type="text" name="city" value="{{ $venues->city }}" class="form-control border border-2 p-2">
                                                                     <p class='text-danger font-weight-bold inputerror' id="cityError"></p>
                                                                 </div>
 
@@ -218,14 +218,14 @@
 
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                                        <button type="submit" class="btn btn-success btn-submit-update" data-id="{{ $center->id }}">Update Training Center <span id="loader"></span></button>
+                                                        <button type="submit" class="btn btn-success btn-submit-update" data-id="{{ $venues->id }}">Update Training Venue <span id="loader"></span></button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <!-- Confirm School Delete modal -->
-                                        <div class="modal fade" id="deleteModal-{{ $center->id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="deleteModal-{{ $venues->id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
                                             <div class="modal-dialog modal-sm" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
@@ -234,11 +234,11 @@
                                                     </div>
                                                     <div class="modal-body" id="smallBody">
                                                         <div class="text-center">
-                                                            <span class="">Are you sure you want to Delete this Traineing Center?</span>
+                                                            <span class="">Are you sure you want to Delete this Training Venue?</span>
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer align-items-center">
-                                                        <button type="button" class="btn btn-success" id="del-btn" data-value="{{ route('delete.training.center', $center->id) }}">Confirm</button>
+                                                        <button type="button" class="btn btn-success" id="del-btn" data-value="{{ route('delete.training.venue', $venues->id) }}">Confirm</button>
                                                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
                                                     </div>
                                                 </div>
@@ -251,7 +251,7 @@
                             </div>
                             @else
                             <div class="container text-center m-2 p-5">
-                                <span class="display-6 font-weight-bold">No Training Center Added Yet.</span>
+                                <span class="display-6 font-weight-bold">No Training Venue Added Yet.</span>
                             </div>
                             @endif
                         </div>
@@ -281,12 +281,12 @@
         e.preventDefault();
 
         let id = $(this).data('id');
-        let route = '{{route("update.training.center",":id")}}';
+        let route = '{{route("update.training.venue",":id")}}';
         route = route.replace(':id', id);
 
-        let formData = $('#updateTrainingCenterForm').serializeArray();
+        let formData = $('#updateTrainingVenueForm').serializeArray();
         $(".inputerror").text("");
-        $("#updateTrainingCenterForm input").removeClass("is-invalid");
+        $("#updateTrainingVenueForm input").removeClass("is-invalid");
 
         $("#loader").prepend('<i class="fa fa-spinner fa-spin"></i>');
         $(".btn-submit").attr("disabled", 'disabled');
@@ -301,7 +301,7 @@
             success: (response) => {
                 $(".fa-spinner").remove();
                 $(".btn-submit").prop("disabled", false);
-                let url = '{{route("update.training.center.success",":id")}}';
+                let url = '{{route("update.training.venue.success",":id")}}';
                 url = url.replace(':id', response.id);
                 window.location.assign(url);
             },
@@ -323,4 +323,4 @@
     });
 </script>
 
-@include('training-center.create')
+@include('training-venue.create')

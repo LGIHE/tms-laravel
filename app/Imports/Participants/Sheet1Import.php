@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Imports;
+namespace App\Imports\Participants;
 
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Illuminate\Support\Facades\Validator;
-use App\Rules\requiredInUpload;
-use App\Models\Trainee;
+use App\Rules\requiredInParticipantUpload;
+use App\Models\Participants;
 
 class Sheet1Import implements ToCollection, WithHeadingRow
 {
@@ -19,34 +19,36 @@ class Sheet1Import implements ToCollection, WithHeadingRow
     public function collection(Collection $rows)
     {
         Validator::make($rows->toArray(), [
-            '*.name' => new requiredInUpload('name'),
-            '*.gender' => new requiredInUpload('gender'),
-            '*.category' => new requiredInUpload('category'),
+            '*.id_no' => new requiredInParticipantUpload('id_no'),
+            '*.name' => new requiredInParticipantUpload('name'),
+            '*.gender' => new requiredInParticipantUpload('gender'),
+            '*.age' => new requiredInParticipantUpload('age'),
+            '*.category' => new requiredInParticipantUpload('category'),
+            '*.phone' => new requiredInParticipantUpload('phone'),
+            '*.address' => new requiredInParticipantUpload('address'),
         ])->validate();
 
-        $trainees = [];
+        $participants = [];
 
         foreach ($rows as $row) {
-            $trainee = Trainee::create([
-                'training' => request()->training,
+            $participant = Participants::create([
+                'id_no' => $row['id_no'],
                 'name' => $row['name'],
                 'gender' => $row['gender'],
                 'age' => $row['age'],
                 'category' => $row['category'],
                 'nationality' => $row['nationality'],
-                'district' => $row['district'],
-                'village' => $row['village'],
-                'days_attended' => $row['days_attended'],
                 'institution' => $row['institution'],
                 'email' => $row['email'],
                 'phone' => $row['phone'],
+                'address' => $row['address'],
                 'created_by' => auth()->user()->id,
             ]);
 
-            $trainees[] = $trainee;
+            $participants[] = $participant;
         }
 
-        return $trainees;
+        return $participants;
     }
 
 

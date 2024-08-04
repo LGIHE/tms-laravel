@@ -5,28 +5,28 @@ namespace App\Http\Controllers;
 use App\Models\Countries;
 use App\Models\Project;
 use App\Models\User;
-use App\Models\Trainee;
+use App\Models\Participants;
 use App\Models\Training;
-use App\Models\TrainingCenter;
+use App\Models\TrainingVenue;
 
 class TrainingController extends Controller
 {
     public function getAll(){
         $trainings = Training::all();
         $facilitators = User::all();
-        $centers = TrainingCenter::all();
+        $venues = TrainingVenue::all();
         $projects = Project::all();
 
-        return view('training.index', compact('trainings', 'facilitators', 'centers', 'projects'));
+        return view('training.index', compact('trainings', 'facilitators', 'venues', 'projects'));
     }
 
     public function getCreate(){
         $facilitators = User::all();
-        $centers = TrainingCenter::all();
+        $venues = TrainingVenue::all();
         $projects = Project::all();
         $countries = Countries::all();
 
-        return view('training.create', compact('facilitators', 'centers', 'projects', 'countries'));
+        return view('training.create', compact('facilitators', 'venues', 'projects', 'countries'));
     }
 
     public function createTraining(){
@@ -36,7 +36,7 @@ class TrainingController extends Controller
             'description' => 'nullable',
             'facilitators' => 'required|array',
             'facilitators.*' => 'exists:users,id',
-            'training_center' => 'required|exists:training_centers,id',
+            'training_venue' => 'required|exists:training_venues,id',
             'project' => 'required|exists:projects,id',
             'start_date' => 'required|date',
             'start_time' => 'required|date_format:H:i',
@@ -58,28 +58,28 @@ class TrainingController extends Controller
 
     public function getTraining(){
         $training = Training::find(request()->id);
-        $centers = TrainingCenter::all();
+        $venues = TrainingVenue::all();
         $projects = Project::all();
         $facilitators = User::all();
-        $trainees = Trainee::all()->where('training', request()->id);
+        $participants = Participants::all()->where('training', request()->id);
         $countries = Countries::all();
 
         $selectedFacilitators = json_decode($training->facilitators, true);
 
-        return view('training.view', compact('training', 'centers', 'projects', 'trainees', 'facilitators', 'countries', 'selectedFacilitators'));
+        return view('training.view', compact('training', 'venues', 'projects', 'participants', 'facilitators', 'countries', 'selectedFacilitators'));
     }
 
     public function getUpdateTraining(){
         $training = Training::find(request()->id);
-        $centers = TrainingCenter::all();
+        $venues = TrainingVenue::all();
         $projects = Project::all();
         $facilitators = User::all();
-        $trainees = Trainee::all()->where('training', request()->id);
+        $participants = Participants::all()->where('training', request()->id);
         $countries = Countries::all();
 
         $selectedFacilitators = json_decode($training->facilitators, true);
 
-        return view('training.update', compact('training', 'centers', 'projects', 'trainees', 'facilitators', 'countries', 'selectedFacilitators'));
+        return view('training.update', compact('training', 'venues', 'projects', 'participants', 'facilitators', 'countries', 'selectedFacilitators'));
     }
 
     public function updateTraining(){
@@ -89,7 +89,7 @@ class TrainingController extends Controller
             'description' => 'nullable',
             'facilitators' => 'required|array',
             'facilitators.*' => 'exists:users,id',
-            'training_center' => 'required|exists:training_centers,id',
+            'training_venue' => 'required|exists:training_venues,id',
             'project' => 'required|exists:projects,id',
             'start_date' => 'required|date',
             'start_time' => 'required|date_format:H:i',
@@ -111,7 +111,7 @@ class TrainingController extends Controller
 
     public function deleteTraining(){
         Training::find(request()->id)->delete();
-        Trainee::all()->where('training', request()->id)->delete();
+        Participants::all()->where('training', request()->id)->delete();
 
         return redirect()->route('training')->with('status', 'The training has been deleted successfully.');
     }

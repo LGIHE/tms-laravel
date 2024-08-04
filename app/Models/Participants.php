@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TrainingCenter extends Model
+class Participants extends Model
 {
     use HasFactory;
 
@@ -15,17 +15,19 @@ class TrainingCenter extends Model
      * @var string[]
      */
     protected $fillable = [
+        'id_no',
         'name',
+        'gender',
+        'age',
+        'category',
+        'institution',
         'email',
-        'type',
-        'capacity',
-        'city',
-        'district',
-        'country',
-        'contact_person',
-        'contact_phone',
+        'phone',
+        'address',
+        'nationality',
+        'trainings',
         'created_by',
-        'updated_by'
+        'updated_by',
     ];
 
     /**

@@ -83,15 +83,15 @@
                                         </div>
 
                                         <div class="mb-3 col-md-3">
-                                            <label class="form-label">Training Center</label>
+                                            <label class="form-label">Training Venue</label>
                                             <div class="d-flex">
                                                 <select id="center-records" class="form-select border-2 p-2" name="training_center" aria-label="">
-                                                    <option value="" selected>Select Training Center</option>
-                                                    @foreach($centers as $center)
-                                                    <option value="{!! $center->id !!}" {{ $center->id == $training->training_center ? "selected" : '' }}>{!! $center->name !!}</option>
+                                                    <option value="" selected>Select Training Venue</option>
+                                                    @foreach($venues as $venue)
+                                                    <option value="{!! $venue->id !!}" {{ $venue->id == $training->training_center ? "selected" : '' }}>{!! $venue->name !!}</option>
                                                     @endforeach
                                                 </select>
-                                                <button type="button" class="ms-2 circular-btn" data-bs-toggle="modal" data-bs-target="#addTrainingCenterModal">
+                                                <button type="button" class="ms-2 circular-btn" data-bs-toggle="modal" data-bs-target="#addTrainingVenueModal">
                                                     <i class="bi bi-plus"></i>
                                                 </button>
                                             </div>
@@ -216,4 +216,4 @@ $(function () {
 
 
 @include('training.addFacilitator')
-@include('training.addCenter')
+@include('training.addVenue')

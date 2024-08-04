@@ -7,33 +7,34 @@ use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\TrainingCenter;
+use App\Models\TrainingVenue;
 use App\Models\Training;
-use App\Models\Trainee;
+use App\Models\Participants;
 
 class DashboardController extends Controller
 {
     public function index()
     {
         $facilitators = User::all()->where('role', 'Facilitator');
-        $centers = TrainingCenter::all();
+        $venues = TrainingVenue::all();
         $trainings = Training::all();
-        $trainees = Trainee::all();
+        $participants = Participants::all();
         $projects = Project::all();
 
         // an admin
-        return view('dashboard.admin', compact('facilitators', 'centers', 'trainings', 'trainees', 'projects'));
+        return view('dashboard.admin', compact('facilitators', 'venues', 'trainings', 'participants', 'projects'));
     }
 
     public static function getAttendanceForTraining($training, $startDate, $endDate)
     {
         $total_days = Training::find($training)->number_of_days;
 
-        $attendees = Trainee::all()->where('training', $training);
+        $attendees = Participants::all()->where('training', $training);
         $total_attendees = $attendees->count();
-        $actualAttendance = DB::table('trainees')
-                            ->where('training', $training)
-                            ->sum('days_attended');
+        // $actualAttendance = DB::table('participants')
+        //                     ->where('training', $training)
+        //                     ->sum('days_attended');
+        $actualAttendance = 0;
 
         // $start = Carbon::parse($startDate);
         // $end = Carbon::parse($endDate);

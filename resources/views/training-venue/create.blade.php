@@ -10,16 +10,16 @@
 </style>
 
 <!-- Modal -->
-<div class="modal fade" id="addTrainingCenterModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="newTrainingCenterLabel" aria-hidden="true">
+<div class="modal fade" id="newTrainingVenueModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="newTrainingVenueLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="addTrainingCenterLabel">Add New Training Center</h1>
+                <h1 class="modal-title fs-5" id="newTrainingVenueLabel">Add New Training Venue</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <div class="modal-body">
-                <form method='POST' action='#' id="addTrainingCenterForm">
+                <form method='POST' action='#' id="addTrainingVenueForm">
                     @csrf
                     <div class="row">
 
@@ -37,7 +37,6 @@
                                 <option value="Institute">Institute</option>
                                 <option value="Farm">Farm</option>
                                 <option value="Conference Hall">Conference Hall</option>
-                                <option value="Other">Other</option>
                             </select>
                             <p class='text-danger font-weight-bold inputerror' id="typeError"></p>
                         </div>
@@ -95,7 +94,7 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" id="submit-center-btn" class="btn btn-success btn-submit">Add Training Center <span id="loader"></span></button>
+                <button type="submit" class="btn btn-success btn-submit">Add Training Venue <span id="loader"></span></button>
             </div>
         </div>
     </div>
@@ -105,32 +104,31 @@
 
 $(function () {
 
-    $('#submit-center-btn').on('click', function (e) {
+    $('.btn-submit').on('click', function (e) {
         e.preventDefault();
 
-        let formData = $('#addTrainingCenterForm').serializeArray();
+        let formData = $('#addTrainingVenueForm').serializeArray();
         $(".inputerror").text("");
-        $("#addTrainingCenterForm input").removeClass("is-invalid");
+        $("#addTrainingVenueForm input").removeClass("is-invalid");
 
         $("#loader").prepend('<i class="fa fa-spinner fa-spin"></i>');
-        $("#submit-center-btn").attr("disabled", 'disabled');
+        $(".btn-submit").attr("disabled", 'disabled');
 
         $.ajax({
             method: "POST",
             headers: {
                 Accept: "application/json"
             },
-            url: "{{ route('add.training.center') }}",
+            url: "{{ route('create.training.venue') }}",
             data: formData,
-            success: (response) => {
+            success: () => {
                 $(".fa-spinner").remove();
-                $("#submit-center-btn").prop("disabled", false);
-                $('#addTrainingCenterModal').modal('hide');
-                $('#center-records').append(new Option(response.name, response.id, true, true)).trigger('change');
+                $(".btn-submit").prop("disabled", false);
+                window.location.assign("{{ route('create.training.venue.success') }}");
             },
             error: (response) => {
                 $(".fa-spinner").remove();
-                $("#submit-center-btn").prop("disabled", false);
+                $(".btn-submit").prop("disabled", false);
 
                 if(response.status === 422) {
                     let errors = response.responseJSON.errors;

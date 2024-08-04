@@ -17,18 +17,18 @@
 </style>
 <x-layout bodyClass="g-sidenav-show bg-gray-200">
 
-    <x-navbars.sidebar activePage="trainings"></x-navbars.sidebar>
+    <x-navbars.sidebar activePage="particpants"></x-navbars.sidebar>
     <div class="main-content position-relative bg-gray-100 max-height-vh-100 h-100 pb-5">
         <!-- Navbar -->
-        <x-navbars.topbar titlePage='Upload Trainees'></x-navbars.topbar>
+        <x-navbars.topbar titlePage='Upload Participants'></x-navbars.topbar>
         <!-- End Navbar -->
         <div class="container-fluid px-2 px-md-4 mt-2">
             <div class="card card-body mx-3 mx-md-4 ">
                 <div class="card card-plain h-100">
                     <div class="card-body p-3">
                         <div class=" me-3 my-3 text-end">
-                            <a class="btn bg-gradient-info mb-0" href="{{ asset('assets') }}/download/trainees_template.xlsx">
-                                <i class="material-icons text-sm">download</i>&nbsp;&nbsp;Download Example
+                            <a class="btn bg-gradient-info mb-0" href="{{ asset('assets') }}/download/participants_template.xlsx">
+                                <i class="material-icons text-sm">download</i>&nbsp;&nbsp;Download Example Template
                             </a>
                         </div>
                         @if (count($errors) > 0)
@@ -51,7 +51,7 @@
                                 <div class="card-header pb-0 p-3">
                                     <div class="row">
                                         <div class="col-md-8 d-flex align-items-center">
-                                            <h4 class="mb-3">Upload Trainees</h4>
+                                            <h4 class="mb-3">Upload Participants</h4>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -66,9 +66,13 @@
                                                 <li>Edit the file on your computer /tablet /phone and save it.</li>
                                                 <li>The following columns must be filled
                                                     <ul>
+                                                        <li>id_no</li>
                                                         <li>name</li>
                                                         <li>gender</li>
+                                                        <li>age</li>
                                                         <li>category (teacher, student, business man etc)</li>
+                                                        <li>phone</li>
+                                                        <li>address</li>
                                                     </ul>
                                                 </li>
                                                 {{-- <li>The class cell<strong>MUST</strong> be in the form of <strong>S1, S2, S3, S4, S5, S6</strong>. For example S1 is Senior 1</li>
@@ -85,14 +89,13 @@
                                         </div>
                                         <div class="card ">
                                             <div class="card-header"><h5>Upload Section</h5></div>
-                                                <form action="{{ route('upload.trainees') }}" method="post" enctype="multipart/form-data">
+                                                <form action="{{ route('upload.participants') }}" method="post" enctype="multipart/form-data">
                                                     @csrf
                                                     <input type="hidden" name="user" value="{{ auth()->user()->id }}">
-                                                    <input type="hidden" name="training" value="{{ $training->id }}">
 
                                                     <p class="card-text mt-3 mb-2"><strong>Select File to Upload</strong> - <small class="text-muted">{{__('Please upload only Microsoft Excel (.xlsx or .xls) files')}}</small></p>
-                                                    <input type="file" name="trainees_upload" accept=".xls,.xlsx">
-                                                    <button type="submit" class="btn btn-success mt-4">Upload Trainees</button>
+                                                    <input type="file" name="participants_upload" accept=".xls,.xlsx">
+                                                    <button type="submit" class="btn btn-success mt-4">Upload Participants</button>
                                                 </form>
                                         </div>
                                     </div>

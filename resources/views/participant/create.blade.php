@@ -4,26 +4,31 @@
         background: transparent url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e") center/1em auto no-repeat;
     }
 
-    #newTraineeModalLabel {
+    #newParticipantModalLabel {
         font-family: var(--bs-body-font-family) !important;
     }
 </style>
 
 <!-- Modal -->
-<div class="modal fade" id="newTraineeModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="newTraineeModalLabel" aria-hidden="true">
+<div class="modal fade" id="newParticipantModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="newParticipantModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="newTraineeModalLabel">Add New Trainee</h1>
+                <h1 class="modal-title fs-5" id="newParticipantModalLabel">Add New Participant</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <div class="modal-body">
-                <form method='POST' action='#' id="addTraineeForm">
+                <form method='POST' action='#' id="addParticipantForm">
                     @csrf
-                    <input type="hidden" name="training" value="{{ $training }}">
                     <div class="row">
+
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">ID No.</label>
+                            <input type="text" name="id_no" class="form-control border border-2 p-2">
+                            <p class='text-danger font-weight-bold inputerror' id="id_noError"></p>
+                        </div>
 
                         <div class="mb-3 col-md-6">
                             <label class="form-label">Name</label>
@@ -58,6 +63,7 @@
                             <select class="form-select border border-2 p-2" name="category" aria-label="">
                                 <option value="" selected>Select Category</option>
                                 <option value="Teacher">Teacher</option>
+                                <option value="Teacher">Student</option>
                                 <option value="Youth">Youth</option>
                                 <option value="School Leader">School Leader</option>
                                 <option value="Community Leader">Community Leader</option>
@@ -82,11 +88,11 @@
                             <p class='text-danger font-weight-bold inputerror' id="phoneError"></p>
                         </div>
 
-                        {{-- <div class="mb-3 col-md-6">
+                        <div class="mb-3 col-md-6">
                             <label class="form-label">Address</label>
                             <textarea name="address" class="form-control border border-2 p-2"></textarea>
                             <p class='text-danger font-weight-bold inputerror' id="addressError"></p>
-                        </div> --}}
+                        </div>
 
                         <div class="mb-3 col-md-6">
                             <label class="form-label">Institution/Organization</label>
@@ -94,25 +100,13 @@
                             <p class='text-danger font-weight-bold inputerror' id="institutionError"></p>
                         </div>
 
-                        <div class="mb-3 col-md-6">
-                            <label class="form-label">Days Attended</label>
-                            <input type="number" name="days_attended" class="form-control border border-2 p-2">
-                            <p class='text-danger font-weight-bold inputerror' id="days_attendedError"></p>
-                        </div>
-
-                        {{-- <div class="mb-3 col-md-9">
-                            <label class="form-label">Days Attended</label>
-                            <input type="text" id="datepicker" name="attendance" class="form-control border border-2 p-2" readonly>
-                            <p class='text-danger font-weight-bold inputerror' id="attendanceError"></p>
-                        </div> --}}
-
                     </div>
                 </form>
             </div>
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-success btn-submit">Add Trainee <span
+                <button type="submit" class="btn btn-success btn-submit">Add Participant <span
                         id="loader"></span></button>
             </div>
         </div>
@@ -123,16 +117,12 @@
 
     $(function() {
 
-        $('#datepicker').multiDatesPicker({
-            dateFormat: 'dd/mm/yy',
-        });
-
         $('.btn-submit').on('click', function(e) {
             e.preventDefault();
 
-            let formData = $('#addTraineeForm').serializeArray();
+            let formData = $('#addParticipantForm').serializeArray();
             $(".inputerror").text("");
-            $("#addTraineeForm input").removeClass("is-invalid");
+            $("#addParticipantForm input").removeClass("is-invalid");
 
             $("#loader").prepend('<i class="fa fa-spinner fa-spin"></i>');
             $(".btn-submit").attr("disabled", 'disabled');
@@ -142,12 +132,12 @@
                 headers: {
                     Accept: "application/json"
                 },
-                url: "{{ route('create.trainee') }}",
+                url: "{{ route('create.participant') }}",
                 data: formData,
                 success: (response) => {
                     $(".fa-spinner").remove();
                     $(".btn-submit").prop("disabled", false);
-                    let url = '{{ route('create.trainee.success', ':id') }}';
+                    let url = '{{ route('create.participant.success', ':id') }}';
                     url = url.replace(':id', response.id);
                     window.location.assign(url);
                 },

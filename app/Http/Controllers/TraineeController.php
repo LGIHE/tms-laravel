@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Countries;
 use App\Models\Trainee;
 use App\Models\Training;
 use App\Imports\GetTraineeSheet;
@@ -12,8 +13,9 @@ class TraineeController extends Controller
     public function getTrainees(){
         $trainees = Trainee::all();
         $trainings = Training::all();
+        $countries = Countries::all();
 
-        return view('trainee.index', compact('trainees', 'trainings'));
+        return view('trainee.index', compact('trainees', 'trainings', 'countries'));
     }
 
     public function getTrainee(){

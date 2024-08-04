@@ -7,7 +7,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\TraineeController;
-use App\Http\Controllers\TrainingCenterController;
+use App\Http\Controllers\TrainingVenueController;
+use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\GoogleSheetsController; // Add this line
@@ -77,6 +78,20 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('upload-trainees/{id}', [TraineeController::class, 'getUploadTrainees'])->name('get.upload.trainees');
     Route::post('upload-trainees', [TraineeController::class, 'uploadTrainees'])->name('upload.trainees');
 
+    //PARTICIPANTS ROUTES
+    Route::get('participants', [ParticipantController::class, 'getParticipants'])->middleware('admin')->name('participants');
+    Route::get('participant/{id}', [ParticipantController::class, 'getParticipant'])->middleware('admin')->name('get.participant');
+    Route::post('create-participant', [ParticipantController::class, 'createParticipant'])->middleware('admin')->name('create.participant');
+    Route::get('create-participant-success/{id}', [ParticipantController::class, 'createParticipantSuccess'])->middleware('admin')->name('create.participant.success');
+    Route::get('delete-participant/{id}', [ParticipantController::class, 'deleteParticipant'])->middleware('admin')->name('delete.participant');
+	Route::post('update-participant/{id}', [ParticipantController::class, 'updateParticipant'])->name('update.participant');
+	Route::get('update-participant-success/{id}', [ParticipantController::class, 'updateParticipantSuccess'])->name('update.participant.success');
+    Route::get('get-upload-participants}', [ParticipantController::class, 'getUploadParticipants'])->name('get.upload.participants');
+    Route::post('upload-participants', [ParticipantController::class, 'uploadParticipants'])->name('upload.participants');
+
+    // ATTENDANCE ROUTES
+	Route::post('update-participant-attendance', [ParticipantController::class, 'updateParticipantAttendance'])->name('update.participant.attendance');
+
     //TRAINING ROUTES
 	Route::get('trainings', [TrainingController::class, 'getAll'])->name('trainings');
 	Route::get('training/{id}', [TrainingController::class, 'getTraining'])->name('training');
@@ -88,14 +103,14 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('update-training-success/{id}', [TrainingController::class, 'updateTrainingSuccess'])->name('update.training.success');
 	Route::post('delete-training/{id}', [TrainingController::class, 'deleteTraining'])->name('delete.training');
 
-    //TRAINING CENTER ROUTES
-	Route::get('training-centers', [TrainingCenterController::class, 'getAll'])->name('training.centers');
-    Route::post('create-training-center', [TrainingCenterController::class, 'createTrainingCenter'])->name('create.training.center');
-	Route::get('create-training-center-success', [TrainingCenterController::class, 'createTrainingCenterSuccess'])->name('create.training.center.success');
-    Route::post('update-training-center/{id}', [TrainingCenterController::class, 'updateTrainingCenter'])->name('update.training.center');
-	Route::get('update-training-center-success', [TrainingCenterController::class, 'updateTrainingCenterSuccess'])->name('update.training.center.success');
-	Route::get('delete-training-center/{id}', [TrainingCenterController::class, 'deleteTrainingCenter'])->name('delete.training.center');
-    Route::post('add-training-center', [TrainingCenterController::class, 'addTrainingCenter'])->name('add.training.center');
+    //TRAINING VENUES ROUTES
+	Route::get('training-venues', [TrainingVenueController::class, 'getAll'])->name('training.venues');
+    Route::post('create-training-venue', [TrainingVenueController::class, 'createTrainingVenue'])->name('create.training.venue');
+	Route::get('create-training-venue-success', [TrainingVenueController::class, 'createTrainingVenueSuccess'])->name('create.training.venue.success');
+    Route::post('update-training-venue/{id}', [TrainingVenueController::class, 'updateTrainingVenue'])->name('update.training.venue');
+	Route::get('update-training-venue-success', [TrainingVenueController::class, 'updateTrainingVenueSuccess'])->name('update.training.venue.success');
+	Route::get('delete-training-venue/{id}', [TrainingVenueController::class, 'deleteTrainingVenue'])->name('delete.training.venue');
+    Route::post('add-training-venue', [TrainingVenueController::class, 'addTrainingVenue'])->name('add.training.venue');
 
     //PROJECTS ROUTES
 	Route::get('projects', [ProjectController::class, 'getAll'])->name('projects');

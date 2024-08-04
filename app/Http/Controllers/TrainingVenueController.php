@@ -3,18 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Countries;
-use App\Models\TrainingCenter;
+use App\Models\TrainingVenue;
 
-class TrainingCenterController extends Controller
+class TrainingVenueController extends Controller
 {
     public function getAll(){
-        $centers = TrainingCenter::all();
+        $venues = TrainingVenue::all();
         $countries = Countries::all();
 
-        return view('training-center.index', compact('centers', 'countries'));
+        return view('training-venue.index', compact('venues', 'countries'));
     }
 
-    public function createTrainingCenter()
+    public function createTrainingVenue()
     {
         $attributes = request()->validate([
             'name' => 'required|max:255',
@@ -30,16 +30,16 @@ class TrainingCenterController extends Controller
 
         $attributes['created_by'] = auth()->user()->id;
 
-        $center = TrainingCenter::create($attributes);
+        $venue = TrainingVenue::create($attributes);
 
-        return response()->json(['id' => $center->id]);
+        return response()->json(['id' => $venue->id]);
     }
 
-    public function createTrainingCenterSuccess(){
-        return redirect()->route('training.centers')->with('status', 'The training center has been added successfully.');
+    public function createTrainingVenueSuccess(){
+        return redirect()->route('training.venues')->with('status', 'The training venue has been added successfully.');
     }
 
-    public function updateTrainingCenter()
+    public function updateTrainingVenue()
     {
         $attributes = request()->validate([
             'name' => 'required|max:255',
@@ -55,23 +55,23 @@ class TrainingCenterController extends Controller
 
         $attributes['updated_by'] = auth()->user()->id;
 
-        $center = TrainingCenter::find(request()->id)->update($attributes);
+        TrainingVenue::find(request()->id)->update($attributes);
 
         return response()->json(['id', request()->id]);
     }
 
-    public function updateTrainingCenterSuccess(){
-        return redirect()->route('training.centers')->with('status', 'The training center has been updated successfully.');
+    public function updateTrainingVenueSuccess(){
+        return redirect()->route('training.venues')->with('status', 'The training venue has been updated successfully.');
     }
 
 
-    public function deleteTrainingCenter(){
-        TrainingCenter::find(request()->id)->delete();
+    public function deleteTrainingVenue(){
+        TrainingVenue::find(request()->id)->delete();
 
-        return redirect()->route('training.centers')->with('status', 'The training center has been deleted successfully.');
+        return redirect()->route('training.venues')->with('status', 'The training venue has been deleted successfully.');
     }
 
-    public function addTrainingCenter()
+    public function addTrainingVenue()
     {
         $attributes = request()->validate([
             'name' => 'required|max:255',
@@ -87,8 +87,8 @@ class TrainingCenterController extends Controller
 
         $attributes['created_by'] = auth()->user()->id;
 
-        $trainingCenter = TrainingCenter::create($attributes);
+        $trainingVenue = TrainingVenue::create($attributes);
 
-        return response()->json($trainingCenter);
+        return response()->json($trainingVenue);
     }
 }
