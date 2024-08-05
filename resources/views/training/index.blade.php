@@ -35,7 +35,7 @@
                                             <tr>
                                                 <th class="text-secondary text-xxl font-weight-bolder px-4">Name</th>
                                                 <th class="text-secondary text-xxl font-weight-bolder">Description</th>
-                                                <th class="text-secondary text-xxl font-weight-bolder">Facilitator</th>
+                                                <th class="text-secondary text-xxl font-weight-bolder">Facilitator(s)</th>
                                                 <th class="text-secondary text-xxl font-weight-bolder">Training Venue</th>
                                                 <th class="text-secondary text-xxl font-weight-bolder">Project</th>
                                                 <th class="text-secondary text-xxl font-weight-bolder">From</th>
@@ -59,9 +59,24 @@
                                                 <td>
                                                     <div class="d-flex flex-column justify-content-center">
                                                         <span class="text-dark text-m font-weight-bold">
+                                                            @php
+                                                                $facilitatorIds = json_decode($training->facilitators, true);
+                                                                $facilitatorNames = [];
+                                                            @endphp
+
                                                             @foreach ($facilitators as $facilitator)
-                                                                @if($facilitator->id == $training->facilitator) {{ $facilitator->name }} @endif
+                                                                @if(in_array((string) $facilitator->id, $facilitatorIds))
+                                                                    @php
+                                                                        $facilitatorNames[] = $facilitator->name;
+                                                                    @endphp
+                                                                @endif
                                                             @endforeach
+
+                                                            @if (!empty($facilitatorNames))
+                                                                {{ implode(', ', $facilitatorNames) }}
+                                                            @else
+                                                                <em>No facilitators found</em>
+                                                            @endif
                                                         </span>
                                                     </div>
                                                 </td>
