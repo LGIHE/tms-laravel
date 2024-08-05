@@ -131,7 +131,7 @@
                                     <p class="text-dark font-weight-bold">Training Venue:</p>&nbsp;
                                     <p class="text-dark">
                                         @foreach ( $venues as $venue )
-                                            @if ($venue->id == $training->training_center)
+                                            @if ($venue->id == $training->training_venue)
                                                 {{ $venue->name }}
                                             @endif
                                         @endforeach
@@ -149,16 +149,17 @@
 
                             <div class="row">
                                 <div class="col-md-4 d-flex">
-                                    <p class="text-dark font-weight-bold">Country:</p>&nbsp;
+                                    <p class="text-dark font-weight-bold">District/Country:</p>&nbsp;
                                     <p class="text-dark">
                                         @foreach ($venues as $venue)
-                                            @if ($venue->id == $training->training_center)
+                                            @if ($venue->id == $training->training_venue)
                                                 @foreach ($countries as $country)
                                                     @if ($country->code == $venue->country)
-                                                        {{ $country->name }}
+                                                       {{ $venue->district }}, {{ $country->name }}
                                                     @endif
                                                 @endforeach
                                             @endif
+
                                         @endforeach
                                     </p>
                                 </div>
