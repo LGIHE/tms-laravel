@@ -23,7 +23,7 @@ class Participants extends Model
         'institution',
         'email',
         'phone',
-        'address',
+        'district',
         'nationality',
         'trainings',
         'created_by',

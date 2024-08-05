@@ -74,7 +74,7 @@
                                             <th rowspan="2" class="text-dark text-xxl font-weight-bolder"
                                                 scope="col">Phone</th>
                                             <th rowspan="2" class="text-dark text-xxl font-weight-bolder"
-                                                scope="col">Address</th>
+                                                scope="col">District</th>
                                             @if (count($projects) > 0)
                                                 @foreach ($projects as $project)
                                                     @php
@@ -150,7 +150,7 @@
                                                 <td>
                                                     <div class="d-flex flex-column justify-content-center">
                                                         <span
-                                                            class="text-secondary text-m font-weight-bold">{{ $participant->address }}</span>
+                                                            class="text-secondary text-m font-weight-bold">{{ $participant->district }}</span>
                                                     </div>
                                                 </td>
 
@@ -292,12 +292,12 @@
                                                                             id="phoneError"></p>
                                                                     </div>
                                                                     <div class="mb-3 col-md-6">
-                                                                        <label class="form-label">Address</label>
-                                                                        <input type="text" name="address"
+                                                                        <label class="form-label">District</label>
+                                                                        <input type="text" name="district"
                                                                             class="form-control border border-2 p-2"
-                                                                            value="{{ $participant->address }}">
+                                                                            value="{{ $participant->district }}">
                                                                         <p class='text-danger font-weight-bold inputerror'
-                                                                            id="addressError"></p>
+                                                                            id="districtError"></p>
                                                                     </div>
                                                                     @foreach ($projects as $project)
                                                                         <div class="col-12">

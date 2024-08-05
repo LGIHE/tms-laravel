@@ -116,27 +116,9 @@
                                         </div>
 
                                         <div class="mb-3 col-md-3">
-                                            <label class="form-label">Start Time</label>
-                                            <input type="time" name="start_time" value="{{ $training->start_time }}" class="form-control border border-2 p-2">
-                                            <p class='text-danger font-weight-bold inputerror' id="start_timeError"></p>
-                                        </div>
-
-                                        <div class="mb-3 col-md-3">
                                             <label class="form-label">End Date</label>
                                             <input type="date" name="end_date" value="{{ $training->end_date }}" class="form-control border border-2 p-2">
                                             <p class='text-danger font-weight-bold inputerror' id="end_dateError"></p>
-                                        </div>
-
-                                        <div class="mb-3 col-md-3">
-                                            <label class="form-label">End Time</label>
-                                            <input type="time" name="end_time" value="{{ $training->end_time }}" class="form-control border border-2 p-2">
-                                            <p class='text-danger font-weight-bold inputerror' id="end_timeError"></p>
-                                        </div>
-
-                                        <div class="mb-3 col-md-4">
-                                            <label class="form-label">Number of Days (Actual)</label>
-                                            <input type="number" name="number_of_days" value="{{ $training->number_of_days }}" class="form-control border border-2 p-2">
-                                            <p class='text-danger font-weight-bold inputerror' id="number_of_daysError"></p>
                                         </div>
 
                                         <div class="mb-3 col-md-4">

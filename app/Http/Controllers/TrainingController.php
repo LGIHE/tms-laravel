@@ -39,10 +39,7 @@ class TrainingController extends Controller
             'training_venue' => 'required|exists:training_venues,id',
             'project' => 'required|exists:projects,id',
             'start_date' => 'required|date',
-            'start_time' => 'required|date_format:H:i',
-            'end_date' => 'required|date',
-            'end_time' => 'required|date_format:H:i',
-            'number_of_days' => 'required|integer',
+            'end_date' => 'required|date'
         ]);
 
         $attributes['created_by'] = auth()->user()->id;
@@ -92,10 +89,7 @@ class TrainingController extends Controller
             'training_venue' => 'required|exists:training_venues,id',
             'project' => 'required|exists:projects,id',
             'start_date' => 'required|date',
-            'start_time' => 'required|date_format:H:i',
-            'end_date' => 'required|date',
-            'end_time' => 'required|date_format:H:i',
-            'number_of_days' => 'required|integer',
+            'end_date' => 'required|date'
         ]);
 
         $attributes['updated_by'] = auth()->user()->id;

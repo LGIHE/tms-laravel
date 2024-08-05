@@ -89,9 +89,9 @@
                         </div>
 
                         <div class="mb-3 col-md-6">
-                            <label class="form-label">Address</label>
-                            <textarea name="address" class="form-control border border-2 p-2"></textarea>
-                            <p class='text-danger font-weight-bold inputerror' id="addressError"></p>
+                            <label class="form-label">District</label>
+                            <textarea name="district" class="form-control border border-2 p-2"></textarea>
+                            <p class='text-danger font-weight-bold inputerror' id="districtError"></p>
                         </div>
 
                         <div class="mb-3 col-md-6">

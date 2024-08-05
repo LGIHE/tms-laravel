@@ -21,10 +21,7 @@ class Training extends Model
         'training_venue',
         'project',
         'start_date',
-        'start_time',
         'end_date',
-        'end_time',
-        'number_of_days',
         'created_by',
         'updated_by'
     ];

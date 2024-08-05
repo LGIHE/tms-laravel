@@ -35,7 +35,7 @@ class ParticipantController extends Controller
             'age' => 'required',
             'category' => 'required',
             'phone' => 'required',
-            'address' => 'required'
+            'district' => 'required'
         ]);
 
         $attributes['email'] = request()->email;
@@ -60,7 +60,7 @@ class ParticipantController extends Controller
             'age' => 'required',
             'category' => 'required',
             'phone' => 'required',
-            'address' => 'required'
+            'district' => 'required'
         ]);
 
         $attributes['email'] = request()->email;

@@ -72,11 +72,9 @@
                                                         <li>age</li>
                                                         <li>category (teacher, student, business man etc)</li>
                                                         <li>phone</li>
-                                                        <li>address</li>
+                                                        <li>district</li>
                                                     </ul>
                                                 </li>
-                                                {{-- <li>The class cell<strong>MUST</strong> be in the form of <strong>S1, S2, S3, S4, S5, S6</strong>. For example S1 is Senior 1</li>
-                                                <li>The term cell <strong>MUST</strong> be in the form of <strong>1, 2, 3</strong>. For example 1 is Term 1</li> --}}
                                                 <li>Demo data has been added and it sould be follwed the way it is input.</li>
                                                 <li>You can add another row for a new step on the Steps table, and you can add as many they are available for your lesson.</li>
                                                 <li>Upload the saved file in the upload section below:
