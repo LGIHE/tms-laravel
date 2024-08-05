@@ -334,7 +334,7 @@
                                                                     </div>
                                                                     <div class="mb-3 col-md-6">
                                                                         <label class="form-label">Institution/Organization</label>
-                                                                        <input type="text" name="district"
+                                                                        <input type="text" name="institution"
                                                                             class="form-control border border-2 p-2"
                                                                             value="{{ $participant->institution }}">
                                                                         <p class='text-danger font-weight-bold inputerror'
