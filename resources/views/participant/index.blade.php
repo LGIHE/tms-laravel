@@ -240,7 +240,7 @@
 
                                                         <div class="modal-body">
                                                             <form method='POST' action='#'
-                                                                id="updateParticipantForm">
+                                                                id="updateParticipantForm-{{ $participant->id }}">
                                                                 @csrf
                                                                 <div class="row">
                                                                     <div class="mb-3 col-md-6">
@@ -334,7 +334,7 @@ $trainings_data = json_decode($participant->trainings, true);
                                                                         class="btn bg-gradient-secondary"
                                                                         data-bs-dismiss="modal">Cancel</button>
                                                                     <button type="submit"
-                                                                        class="btn bg-gradient-primary">Update</button>
+                                                                        class="btn bg-gradient-primary btn-submit-update" data-id="{{ $participant->id }}">Update</button>
                                                                 </div>
                                                             </form>
                                                         </div>
@@ -408,14 +408,19 @@ $trainings_data = json_decode($participant->trainings, true);
 
     $(document).on('click', '.btn-submit-update', function(e) {
         e.preventDefault();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('input[name="_token"]').attr('value')
+            }
+        });
 
         let id = $(this).data('id');
         let route = '{{ route('update.participant', ':id') }}';
         route = route.replace(':id', id);
 
-        let formData = $('#updateParticipantForm').serializeArray();
+        let formData = $("#updateParticipantForm-" + id).serializeArray();
         $(".inputerror").text("");
-        $("#updateParticipantForm input").removeClass("is-invalid");
+        $("#updateParticipantForm-" + id + " input").removeClass("is-invalid");
 
         $("#loader").prepend('<i class="fa fa-spinner fa-spin"></i>');
         $(".btn-submit").attr("disabled", 'disabled');
