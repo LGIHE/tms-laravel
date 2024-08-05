@@ -284,6 +284,14 @@
                                                                             id="categoryError"></p>
                                                                     </div>
                                                                     <div class="mb-3 col-md-6">
+                                                                        <label class="form-label">Education Level</label>
+                                                                        <input type="text" name="education_level"
+                                                                            class="form-control border border-2 p-2"
+                                                                            value="{{ $participant->education_level }}">
+                                                                        <p class='text-danger font-weight-bold inputerror'
+                                                                            id="education_levelError"></p>
+                                                                    </div>
+                                                                    <div class="mb-3 col-md-6">
                                                                         <label class="form-label">Phone</label>
                                                                         <input type="text" name="phone"
                                                                             class="form-control border border-2 p-2"

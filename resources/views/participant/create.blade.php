@@ -72,6 +72,12 @@
                         </div>
 
                         <div class="mb-3 col-md-6">
+                            <label class="form-label">Education Level</label>
+                            <input type="number" name="education_level" class="form-control border border-2 p-2">
+                            <p class='text-danger font-weight-bold inputerror' id="education_levelError"></p>
+                        </div>
+
+                        <div class="mb-3 col-md-6">
                             <label class="form-label">Nationality</label>
                             <select class="form-select border border-2 p-2" name="nationality" aria-label="">
                                 <option value="" selected>Select Nationality</option>

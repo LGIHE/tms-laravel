@@ -19,6 +19,7 @@ class Participants extends Model
         'name',
         'gender',
         'age',
+        'education_level',
         'category',
         'institution',
         'email',

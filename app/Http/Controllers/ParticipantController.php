@@ -39,6 +39,7 @@ class ParticipantController extends Controller
         ]);
 
         $attributes['email'] = request()->email;
+        $attributes['education_level'] = request()->education_level;
         $attributes['nationality'] = request()->nationality;
         $attributes['created_by'] = auth()->user()->id;
 
@@ -64,6 +65,7 @@ class ParticipantController extends Controller
         ]);
 
         $attributes['email'] = request()->email;
+        $attributes['education_level'] = request()->education_level;
         $attributes['nationality'] = request()->nationality;
         $attributes['updated_by'] = auth()->user()->id;
 
