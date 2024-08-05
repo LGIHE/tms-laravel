@@ -260,16 +260,25 @@
                                                                             id="nameError"></p>
                                                                     </div>
                                                                     <div class="mb-3 col-md-6">
-                                                                        <label class="form-label">Gender</label>
-                                                                        <input type="text" name="gender"
+                                                                        <label class="form-label">Email Address</label>
+                                                                        <input type="text" name="email"
                                                                             class="form-control border border-2 p-2"
-                                                                            value="{{ $participant->gender }}">
+                                                                            value="{{ $participant->email }}">
                                                                         <p class='text-danger font-weight-bold inputerror'
-                                                                            id="genderError"></p>
+                                                                            id="emailError"></p>
+                                                                    </div>
+                                                                    <div class="mb-3 col-md-6">
+                                                                        <label class="form-label">Gender</label>
+                                                                        <select class="form-select border border-2 p-2" name="gender" aria-label="">
+                                                                            <option value="" selected>Select Gender</option>
+                                                                            <option value="Male" {{ $participant->gender == "Male" ? "selected" : '' }}>Male</option>
+                                                                            <option value="Female" {{ $participant->gender == "Female" ? "selected" : '' }}>Female</option>
+                                                                        </select>
+                                                                        <p class='text-danger font-weight-bold inputerror' id="genderError"></p>
                                                                     </div>
                                                                     <div class="mb-3 col-md-6">
                                                                         <label class="form-label">Age</label>
-                                                                        <input type="text" name="age"
+                                                                        <input type="number" name="age"
                                                                             class="form-control border border-2 p-2"
                                                                             value="{{ $participant->age }}">
                                                                         <p class='text-danger font-weight-bold inputerror'
@@ -277,9 +286,14 @@
                                                                     </div>
                                                                     <div class="mb-3 col-md-6">
                                                                         <label class="form-label">Category</label>
-                                                                        <input type="text" name="category"
-                                                                            class="form-control border border-2 p-2"
-                                                                            value="{{ $participant->category }}">
+                                                                        <select class="form-select border border-2 p-2" name="category" aria-label="">
+                                                                            <option value="" selected>Select Category</option>
+                                                                            <option value="Teacher" {{ $participant->category == "Teacher" ? "selected" : '' }}>Teacher</option>
+                                                                            <option value="Student" {{ $participant->category == "Student" ? "selected" : '' }}>Student</option>
+                                                                            <option value="Youth" {{ $participant->category == "Youth" ? "selected" : '' }}>Youth</option>
+                                                                            <option value="School Leader" {{ $participant->category == "School Leader" ? "selected" : '' }}>School Leader</option>
+                                                                            <option value="Community Leader" {{ $participant->category == "Community Leader" ? "selected" : '' }}>Community Leader</option>
+                                                                        </select>
                                                                         <p class='text-danger font-weight-bold inputerror'
                                                                             id="categoryError"></p>
                                                                     </div>
@@ -292,8 +306,19 @@
                                                                             id="education_levelError"></p>
                                                                     </div>
                                                                     <div class="mb-3 col-md-6">
+                                                                        <label class="form-label">Nationality</label>
+                                                                        <select class="form-select border border-2 p-2" name="nationality" aria-label="">
+                                                                            <option value="" selected>Select Nationality</option>
+                                                                            @foreach ($countries as $country)
+                                                                                <option value="{{ $country->nationality }}" {{ $participant->nationality == $country->nationality ? "selected" : '' }}>{{ $country->nationality }}</option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                        <p class='text-danger font-weight-bold inputerror'
+                                                                            id="nationalityError"></p>
+                                                                    </div>
+                                                                    <div class="mb-3 col-md-6">
                                                                         <label class="form-label">Phone</label>
-                                                                        <input type="text" name="phone"
+                                                                        <input type="number" name="phone"
                                                                             class="form-control border border-2 p-2"
                                                                             value="{{ $participant->phone }}">
                                                                         <p class='text-danger font-weight-bold inputerror'
@@ -306,6 +331,14 @@
                                                                             value="{{ $participant->district }}">
                                                                         <p class='text-danger font-weight-bold inputerror'
                                                                             id="districtError"></p>
+                                                                    </div>
+                                                                    <div class="mb-3 col-md-6">
+                                                                        <label class="form-label">Institution/Organization</label>
+                                                                        <input type="text" name="district"
+                                                                            class="form-control border border-2 p-2"
+                                                                            value="{{ $participant->institution }}">
+                                                                        <p class='text-danger font-weight-bold inputerror'
+                                                                            id="institutionError"></p>
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-footer">

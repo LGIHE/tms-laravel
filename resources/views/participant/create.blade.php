@@ -63,7 +63,7 @@
                             <select class="form-select border border-2 p-2" name="category" aria-label="">
                                 <option value="" selected>Select Category</option>
                                 <option value="Teacher">Teacher</option>
-                                <option value="Teacher">Student</option>
+                                <option value="Student">Student</option>
                                 <option value="Youth">Youth</option>
                                 <option value="School Leader">School Leader</option>
                                 <option value="Community Leader">Community Leader</option>
