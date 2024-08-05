@@ -22,6 +22,18 @@
                     <span class="nav-link-text text-m text-bold ms-1" style="font-size:1rem;">Dashboard</span>
                 </a>
             </li>
+
+            @if(auth()->user()->isAdmin())
+            <li class="nav-item mt-3">
+                <a class="nav-link text-dark {{ $activePage == 'training-venues' ? ' active bg-gradient-secondary' : '' }} "
+                    href="{{ route('training.venues') }}">
+                    <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">home</i>
+                    </div>
+                    <span class="nav-link-text text-m text-bold ms-1" style="font-size:1rem;">Venues</span>
+                </a>
+            </li>
+
             <li class="nav-item mt-3">
                 <a class="nav-link text-dark {{ $activePage == 'trainings' ? ' active bg-gradient-secondary' : '' }} "
                     href="{{ route('trainings') }}">
@@ -31,7 +43,7 @@
                     <span class="nav-link-text text-m text-bold ms-1" style="font-size:1rem;">Trainings</span>
                 </a>
             </li>
-            @if(auth()->user()->isAdmin())
+
             <li class="nav-item mt-3">
                 <a class="nav-link text-dark {{ $activePage == 'participants' ? ' active bg-gradient-secondary' : '' }} "
                     href="{{ route('participants') }}">
@@ -39,16 +51,6 @@
                         <i class="material-icons opacity-10">people</i>
                     </div>
                     <span class="nav-link-text text-m text-bold ms-1" style="font-size:1rem;">Paricipants</span>
-                </a>
-            </li>
-
-            <li class="nav-item mt-3">
-                <a class="nav-link text-dark {{ $activePage == 'training-venues' ? ' active bg-gradient-secondary' : '' }} "
-                    href="{{ route('training.venues') }}">
-                    <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">home</i>
-                    </div>
-                    <span class="nav-link-text text-m text-bold ms-1" style="font-size:1rem;">Venues</span>
                 </a>
             </li>
             @endif
