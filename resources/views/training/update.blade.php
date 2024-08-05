@@ -85,10 +85,10 @@
                                         <div class="mb-3 col-md-3">
                                             <label class="form-label">Training Venue</label>
                                             <div class="d-flex">
-                                                <select id="center-records" class="form-select border-2 p-2" name="training_center" aria-label="">
+                                                <select id="center-records" class="form-select border-2 p-2" name="training_venue" aria-label="">
                                                     <option value="" selected>Select Training Venue</option>
                                                     @foreach($venues as $venue)
-                                                    <option value="{!! $venue->id !!}" {{ $venue->id == $training->training_center ? "selected" : '' }}>{!! $venue->name !!}</option>
+                                                    <option value="{!! $venue->id !!}" {{ $venue->id == $training->training_venue ? "selected" : '' }}>{!! $venue->name !!}</option>
                                                     @endforeach
                                                 </select>
                                                 <button type="button" class="ms-2 circular-btn" data-bs-toggle="modal" data-bs-target="#addTrainingVenueModal">
