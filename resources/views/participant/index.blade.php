@@ -307,35 +307,6 @@
                                                                         <p class='text-danger font-weight-bold inputerror'
                                                                             id="districtError"></p>
                                                                     </div>
-                                                                    @foreach ($projects as $project)
-                                                                        <div class="col-12">
-                                                                            <h6 class="mb-3 text-center">
-                                                                                {{ $project->name }}</h6>
-                                                                        </div>
-                                                                        @foreach ($trainings as $training)
-                                                                            @if ($training->project == $project->id)
-                                                                                <div class="mb-3 col-md-6">
-                                                                                    <div class="form-check">
-                                                                                        <input type="checkbox"
-                                                                                            class="form-check-input"
-                                                                                            name="trainings[]"
-                                                                                            value="{{ $training->id }}"
-                                                                                            @php
-$trainings_data = json_decode($participant->trainings, true);
-                                                                                                    if ($trainings_data) {
-                                                                                                        foreach ($trainings_data as $training_data) {
-                                                                                                            if ($training_data['training_id'] == $training->id) {
-                                                                                                                echo 'checked';
-                                                                                                            }
-                                                                                                        }
-                                                                                                    } @endphp>
-                                                                                        <label
-                                                                                            class="form-check-label">{{ $training->name }}</label>
-                                                                                    </div>
-                                                                                </div>
-                                                                            @endif
-                                                                        @endforeach
-                                                                    @endforeach
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button"
