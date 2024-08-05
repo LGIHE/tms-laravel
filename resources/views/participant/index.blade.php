@@ -3,6 +3,25 @@
     .table-bordered td {
         border: 1px solid #dee2e6 !important;
     }
+
+    .select2-container--default .select2-selection--single {
+        padding: 5px;
+        border: 1px solid #d2d6da !important;
+    }
+
+    .select2-container .select2-selection--single {
+        height: 42px !important;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        color: #7b809a !important;
+        font-size: 0.875rem !important;
+        font-weight: 400 !important;
+    }
+
+    span.select2-container--default {
+        width: 100% !important;
+    }
 </style>
 
 <x-layout bodyClass="g-sidenav-show  bg-gray-200">
@@ -350,6 +369,26 @@
                                                                         <p class='text-danger font-weight-bold inputerror'
                                                                             id="institution_ownershipError"></p>
                                                                     </div>
+                                                                    <div class="mb-3 col-md-6">
+                                                                        <label class="form-label">Subjects</label>
+                                                                        <select id="subjects-update-record-{{ $participant->id }}" class="form-select p-2 subjects-select" name="subjects[]" multiple aria-label="">
+                                                                            @foreach($subjects as $subject)
+                                                                                @if ($participant->subjects)
+                                                                                    @php
+                                                                                        $participantSubjects = json_decode($participant->subjects, true);
+                                                                                    @endphp
+                                                                                    <option value="{{ $subject->name }}"
+                                                                                        {{ is_array($participantSubjects) && in_array($subject->name, $participantSubjects) ? 'selected' : '' }}>
+                                                                                        {{ $subject->name }}
+                                                                                    </option>
+                                                                                @else
+                                                                                    <option value="{{ $subject->name }}">{{ $subject->name }}</option>
+                                                                                @endif
+                                                                            @endforeach
+                                                                        </select>
+                                                                        <p class='text-danger font-weight-bold inputerror' id="subjectsError"></p>
+                                                                    </div>
+
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button"
@@ -409,6 +448,13 @@
 </x-layout>
 
 <script>
+    $(document).ready(function(){
+        // $('#subjects-update-records').select2();
+        $('.subjects-select').each(function() {
+            $(this).select2();
+        });
+    });
+
     $(document).on('click', '#del-btn', function(event) {
         event.preventDefault();
         let href = $(this).data('value');

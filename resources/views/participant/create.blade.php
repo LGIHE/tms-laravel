@@ -7,6 +7,25 @@
     #newParticipantModalLabel {
         font-family: var(--bs-body-font-family) !important;
     }
+
+    .select2-container--default .select2-selection--single {
+        padding: 5px;
+        border: 1px solid #d2d6da !important;
+    }
+
+    .select2-container .select2-selection--single {
+        height: 42px !important;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        color: #7b809a !important;
+        font-size: 0.875rem !important;
+        font-weight: 400 !important;
+    }
+
+    span.select2-container--default {
+        width: 100% !important;
+    }
 </style>
 
 <!-- Modal -->
@@ -96,7 +115,7 @@
 
                         <div class="mb-3 col-md-6">
                             <label class="form-label">District</label>
-                            <textarea name="district" class="form-control border border-2 p-2"></textarea>
+                            <input type="text" name="district" class="form-control border border-2 p-2">
                             <p class='text-danger font-weight-bold inputerror' id="districtError"></p>
                         </div>
 
@@ -116,6 +135,18 @@
                             <p class='text-danger font-weight-bold inputerror' id="institution_ownershipError"></p>
                         </div>
 
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">Subject(s)</label>
+                            <div class="d-flex">
+                                <select id="subjects-records" class="form-select border-2 p-2" name="subjects[]" multiple aria-label="">
+                                    @foreach($subjects as $subject)
+                                        <option value="{!! $subject->name !!}">{!! $subject->name !!}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <p class='text-danger font-weight-bold inputerror' id="subjectsError"></p>
+                        </div>
+
                     </div>
                 </form>
             </div>
@@ -130,6 +161,9 @@
 </div>
 
 <script>
+    $(document).ready(function(){
+        $('#subjects-records').select2();
+    });
 
     $(function() {
 

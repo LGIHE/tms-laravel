@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Countries;
 use App\Models\Participants;
 use App\Models\Project;
+use App\Models\Subject;
 use App\Models\Training;
 use App\Imports\Participants\GetParticipantSheet;
 use Maatwebsite\Excel\Facades\Excel;
@@ -16,8 +17,9 @@ class ParticipantController extends Controller
         $projects = Project::all();
         $trainings = Training::all();
         $countries = Countries::all();
+        $subjects = Subject::all();
 
-        return view('participant.index', compact('participants', 'projects',  'trainings','countries'));
+        return view('participant.index', compact('participants', 'projects',  'trainings', 'countries', 'subjects'));
     }
 
     public function getParticipant(){
@@ -43,6 +45,12 @@ class ParticipantController extends Controller
         $attributes['nationality'] = request()->nationality;
         $attributes['institution'] = request()->institution;
         $attributes['institution_ownership'] = request()->institution_ownership;
+        if (request()->has('subjects')) {
+            $subjects = is_array(request()->subjects) ? request()->subjects : explode(',', request()->subjects);
+            $attributes['subjects'] = $subjects;
+        } else {
+            $attributes['subjects'] = [];
+        }
         $attributes['created_by'] = auth()->user()->id;
 
         Participants::create($attributes);
@@ -71,6 +79,12 @@ class ParticipantController extends Controller
         $attributes['nationality'] = request()->nationality;
         $attributes['institution'] = request()->institution;
         $attributes['institution_ownership'] = request()->institution_ownership;
+        if (request()->has('subjects')) {
+            $subjects = is_array(request()->subjects) ? request()->subjects : explode(',', request()->subjects);
+            $attributes['subjects'] = $subjects;
+        } else {
+            $attributes['subjects'] = [];
+        }
         $attributes['updated_by'] = auth()->user()->id;
 
         Participants::find(request()->id)->update($attributes);

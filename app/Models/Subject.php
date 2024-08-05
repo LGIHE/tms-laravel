@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Participants extends Model
+class Subject extends Model
 {
     use HasFactory;
 
@@ -15,22 +15,11 @@ class Participants extends Model
      * @var string[]
      */
     protected $fillable = [
-        'id_no',
+        'code',
         'name',
-        'gender',
-        'age',
-        'education_level',
-        'category',
-        'institution',
-        'institution_ownership',
-        'subjects',
-        'email',
-        'phone',
-        'district',
-        'nationality',
-        'trainings',
-        'created_by',
-        'updated_by',
+        'short',
+        'description',
+        'level',
     ];
 
     /**
