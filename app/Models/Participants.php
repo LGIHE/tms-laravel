@@ -22,6 +22,7 @@ class Participants extends Model
         'education_level',
         'category',
         'institution',
+        'institution_ownership',
         'email',
         'phone',
         'district',

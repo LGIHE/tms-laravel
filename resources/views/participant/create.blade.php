@@ -106,6 +106,16 @@
                             <p class='text-danger font-weight-bold inputerror' id="institutionError"></p>
                         </div>
 
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">Institution/Organization Ownership</label>
+                            <select class="form-select border border-2 p-2" name="institution_ownership" aria-label="">
+                                <option value="" selected>Select Ownership</option>
+                                <option value="Public">Public</option>
+                                <option value="Private">Private</option>
+                            </select>
+                            <p class='text-danger font-weight-bold inputerror' id="institution_ownershipError"></p>
+                        </div>
+
                     </div>
                 </form>
             </div>
