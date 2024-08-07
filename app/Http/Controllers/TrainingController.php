@@ -44,9 +44,9 @@ class TrainingController extends Controller
 
         $attributes['created_by'] = auth()->user()->id;
         $attributes['facilitators'] = json_encode($attributes['facilitators']);
-        Training::create($attributes);
+        $training = Training::create($attributes);
 
-        return response()->json(['status' => 'success']);
+        return response()->json(['status' => 'success', 'id' => $training->id]);
     }
 
     public function createTrainingSuccess(){
