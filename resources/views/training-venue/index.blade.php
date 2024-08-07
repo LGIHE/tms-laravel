@@ -143,7 +143,7 @@
                                                     </div>
 
                                                     <div class="modal-body">
-                                                        <form method='POST' action='#' id="updateTrainingVenueForm">
+                                                        <form method='POST' action='#' id="updateTrainingVenueForm-{{ $venues->id }}">
                                                             @csrf
                                                             <div class="row">
 
@@ -284,9 +284,9 @@
         let route = '{{route("update.training.venue",":id")}}';
         route = route.replace(':id', id);
 
-        let formData = $('#updateTrainingVenueForm').serializeArray();
+        let formData = $("#updateTrainingVenueForm-" + id).serializeArray();
         $(".inputerror").text("");
-        $("#updateTrainingVenueForm input").removeClass("is-invalid");
+        $("#updateTrainingVenueForm-" + id + " input").removeClass("is-invalid");
 
         $("#loader").prepend('<i class="fa fa-spinner fa-spin"></i>');
         $(".btn-submit").attr("disabled", 'disabled');
