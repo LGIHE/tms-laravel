@@ -22,15 +22,25 @@ class Sheet1Import implements ToCollection, WithHeadingRow
             '*.id_no' => new requiredInParticipantUpload('id_no'),
             '*.name' => new requiredInParticipantUpload('name'),
             '*.gender' => new requiredInParticipantUpload('gender'),
-            '*.age' => new requiredInParticipantUpload('age'),
+            '*.nationality' => new requiredInParticipantUpload('age'),
             '*.category' => new requiredInParticipantUpload('category'),
+            '*.age' => new requiredInParticipantUpload('nationality'),
             '*.phone' => new requiredInParticipantUpload('phone'),
-            '*.address' => new requiredInParticipantUpload('address'),
+            '*.district' => new requiredInParticipantUpload('district'),
         ])->validate();
 
         $participants = [];
 
         foreach ($rows as $row) {
+            if (isset($row['subjects']) && $row['subjects'] != null) {
+                // Split the subjects string by comma and trim any extra spaces
+                $subjects = explode(',', $row['subjects']);
+                $subjects = array_map('trim', $subjects); // Trim spaces around each subject
+                $row['subjects'] = $subjects;
+            } else {
+                $row['subjects'] = [];
+            }
+
             $participant = Participants::create([
                 'id_no' => $row['id_no'],
                 'name' => $row['name'],
@@ -39,9 +49,12 @@ class Sheet1Import implements ToCollection, WithHeadingRow
                 'category' => $row['category'],
                 'nationality' => $row['nationality'],
                 'institution' => $row['institution'],
+                'institution_ownership' => $row['institution_ownership'],
+                'education_level' => $row['education_level'],
+                'subjects' => json_encode($row['subjects']),
                 'email' => $row['email'],
                 'phone' => $row['phone'],
-                'address' => $row['address'],
+                'district' => $row['district'],
                 'created_by' => auth()->user()->id,
             ]);
 

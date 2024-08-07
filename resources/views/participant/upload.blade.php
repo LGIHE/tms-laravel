@@ -70,12 +70,13 @@
                                                         <li>name</li>
                                                         <li>gender</li>
                                                         <li>age</li>
-                                                        <li>category (teacher, student, business man etc)</li>
+                                                        <li>category (Teacher, Student, School Leader etc)</li>
                                                         <li>phone</li>
                                                         <li>district</li>
                                                     </ul>
                                                 </li>
-                                                <li>Demo data has been added and it sould be follwed the way it is input.</li>
+                                                <li>Subjects should be seperated with a comma (e.g Mathematics,English)</li>
+                                                {{-- <li>Demo data has been added and it sould be follwed the way it is input.</li> --}}
                                                 <li>You can add another row for a new step on the Steps table, and you can add as many they are available for your lesson.</li>
                                                 <li>Upload the saved file in the upload section below:
                                                     <ul>

@@ -421,7 +421,7 @@
                                                                 data-bs-dismiss="modal">Cancel</button>
                                                             <form
                                                                 action="{{ route('delete.participant', ['id' => $participant->id]) }}"
-                                                                method="POST">
+                                                                method="GET">
                                                                 @csrf
                                                                 <button type="submit"
                                                                     class="btn bg-gradient-primary">Delete</button>

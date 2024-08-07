@@ -143,7 +143,7 @@ class ParticipantController extends Controller
         // Check if the file is valid
         if (!$file->isValid()) {
             return redirect()
-                ->route('training', request()->training)
+                ->route('get.upload.participants')
                 ->withErrors(['participants_upload' => 'Invalid file upload.']);
         }
 
@@ -152,7 +152,7 @@ class ParticipantController extends Controller
             Excel::import(new GetParticipantSheet, $file);
         } catch (\Exception $e) {
             return redirect()
-                ->route('get.upload.participants', request()->training)
+                ->route('get.upload.participants')
                 ->withErrors(['participants_upload' => 'Failed to upload participants: ' . $e->getMessage()]);
         }
 
