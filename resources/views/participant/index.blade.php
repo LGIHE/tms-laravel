@@ -179,30 +179,16 @@
                                                             <td>
                                                                 <div class="d-flex flex-column justify-content-center">
                                                                     @php
-                                                                        $trainings_data = json_decode(
-                                                                            $participant->trainings,
-                                                                            true,
-                                                                        );
+                                                                        $trainings_data = json_decode($participant->trainings, true,);
                                                                         $status = 'Not Attended';
                                                                         $attendedFrom = '';
                                                                         $attendedTo = '';
                                                                         if ($trainings_data) {
-                                                                            foreach (
-                                                                                $trainings_data
-                                                                                as $training_data
-                                                                            ) {
-                                                                                if (
-                                                                                    $training_data['training_id'] ==
-                                                                                    $training->id
-                                                                                ) {
+                                                                            foreach ( $trainings_data as $training_data ) {
+                                                                                if ($training_data['training_id'] == $training->id) {
                                                                                     $status = 'Attended';
-                                                                                    $attendedFrom =
-                                                                                        $training_data[
-                                                                                            'attended_from'
-                                                                                        ] ?? '';
-                                                                                    $attendedTo =
-                                                                                        $training_data['attended_to'] ??
-                                                                                        '';
+                                                                                    $attendedFrom = $training_data['attended_from'] ?? '';
+                                                                                    $attendedTo = $training_data['attended_to'] ?? '';
                                                                                     break;
                                                                                 }
                                                                             }

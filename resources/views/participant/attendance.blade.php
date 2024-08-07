@@ -24,59 +24,59 @@
 
 <script>
     $(document).ready(function() {
-    $('#datepicker').multiDatesPicker({
-        dateFormat: 'dd/mm/yy',
-    });
+        $('#datepicker').multiDatesPicker({
+            dateFormat: 'dd/mm/yy',
+        });
 
-    // Handle the status-link click
-    $('.status-link').on('click', function(event) {
-        event.preventDefault();
-        var participantId = $(this).data('participant-id');
-        var trainingId = $(this).data('training-id');
-        $('#participantId').val(participantId);
-        $('#trainingId').val(trainingId);
-        $('#updateAttendanceModal').modal('show');
-    });
+        // Handle the status-link click
+        $(document).on('click', '.status-link', function(event) {
+            event.preventDefault();
+            var participantId = $(this).data('participant-id');
+            var trainingId = $(this).data('training-id');
+            $('#participantId').val(participantId);
+            $('#trainingId').val(trainingId);
+            $('#updateAttendanceModal').modal('show');
+        });
 
-    // Handle form submission
-    $('#updateAttendanceForm').on('submit', function(e) {
-        e.preventDefault();
+        // Handle form submission
+        $('#updateAttendanceForm').on('submit', function(e) {
+            e.preventDefault();
 
-        let formData = $(this).serializeArray();
-        $(".inputerror").text("");
-        $("input").removeClass("is-invalid");
+            let formData = $(this).serializeArray();
+            $(".inputerror").text("");
+            $("input").removeClass("is-invalid");
 
-        $("#loader").prepend('<i class="fa fa-spinner fa-spin"></i>');
-        $(".btn-submit-attendance").attr("disabled", 'disabled');
+            $("#loader").prepend('<i class="fa fa-spinner fa-spin"></i>');
+            $(".btn-submit-attendance").attr("disabled", 'disabled');
 
-        $.ajax({
-            method: "POST",
-            headers: {
-                Accept: "application/json"
-            },
-            url: "{{ route('update.participant.attendance') }}",
-            data: formData,
-            success: (response) => {
-                $(".fa-spinner").remove();
-                $(".btn-submit-attendance").prop("disabled", false);
-                let url = '{{ route('participants') }}';
-                window.location.assign(url);
-            },
-            error: (response) => {
-                $(".fa-spinner").remove();
-                $(".btn-submit-attendance").prop("disabled", false);
+            $.ajax({
+                method: "POST",
+                headers: {
+                    Accept: "application/json"
+                },
+                url: "{{ route('update.participant.attendance') }}",
+                data: formData,
+                success: (response) => {
+                    $(".fa-spinner").remove();
+                    $(".btn-submit-attendance").prop("disabled", false);
+                    let url = '{{ route('participants') }}';
+                    window.location.assign(url);
+                },
+                error: (response) => {
+                    $(".fa-spinner").remove();
+                    $(".btn-submit-attendance").prop("disabled", false);
 
-                if (response.status === 422) {
-                    let errors = response.responseJSON.errors;
-                    Object.keys(errors).forEach(function(key) {
-                        $("[name='" + key + "']").addClass("is-invalid");
-                        $("#" + key + "Error").text(errors[key][0]);
-                    });
-                } else {
-                    alert("An unexpected error occurred. Please try again.");
+                    if (response.status === 422) {
+                        let errors = response.responseJSON.errors;
+                        Object.keys(errors).forEach(function(key) {
+                            $("[name='" + key + "']").addClass("is-invalid");
+                            $("#" + key + "Error").text(errors[key][0]);
+                        });
+                    } else {
+                        alert("An unexpected error occurred. Please try again.");
+                    }
                 }
-            }
+            });
         });
     });
-});
 </script>

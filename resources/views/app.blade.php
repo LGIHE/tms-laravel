@@ -53,7 +53,7 @@
         $(document).ready(function() {
             $('#table').DataTable({
                 dom: 'Bflrtip',
-                pageLength: 5,
+                pageLength: 10,
                 buttons: [
                     // 'excel', 'pdf', 'print'
                     {
