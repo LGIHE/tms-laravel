@@ -41,6 +41,7 @@
             <div class="modal-body">
                 <form method='POST' action='#' id="addParticipantForm">
                     @csrf
+                    <input type="hidden" name="training_id" value="{{ $training->id }}">
                     <div class="row">
 
                         <div class="mb-3 col-md-6">
@@ -147,6 +148,12 @@
                             <p class='text-danger font-weight-bold inputerror' id="subjectsError"></p>
                         </div>
 
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">Days Attended</label>
+                            <input type="text" id="datepicker-add" name="attended_dates" class="form-control border border-2 p-2" readonly>
+                            <p class='text-danger font-weight-bold inputerror' id="attended_datesError"></p>
+                        </div>
+
                     </div>
                 </form>
             </div>
@@ -163,6 +170,10 @@
 <script>
     $(document).ready(function(){
         $('#subjects-records').select2();
+    });
+
+    $('#datepicker-add').multiDatesPicker({
+        dateFormat: 'dd/mm/yy',
     });
 
     $(function() {
@@ -187,7 +198,7 @@
                 success: (response) => {
                     $(".fa-spinner").remove();
                     $(".btn-submit").prop("disabled", false);
-                    let url = '{{ route('create.participant.success', ':id') }}';
+                    let url = '{{ route('training', ':id') }}';
                     url = url.replace(':id', response.id);
                     window.location.assign(url);
                 },

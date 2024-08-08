@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Participants;
 use App\Models\Training;
 use App\Models\TrainingVenue;
+use App\Models\Subject;
 
 class TrainingController extends Controller
 {
@@ -54,16 +55,18 @@ class TrainingController extends Controller
     }
 
     public function getTraining(){
-        $training = Training::find(request()->id);
+        $id = request()->id;
+        $training = Training::find($id);
         $venues = TrainingVenue::all();
         $projects = Project::all();
         $facilitators = User::all();
-        $participants = Participants::all()->where('training', request()->id);
+        $participants = Participants::whereRaw("JSON_CONTAINS(trainings, '{\"training_id\": \"$id\"}', '$')")->get();
         $countries = Countries::all();
+        $subjects = Subject:: all();
 
         $selectedFacilitators = json_decode($training->facilitators, true);
 
-        return view('training.view', compact('training', 'venues', 'projects', 'participants', 'facilitators', 'countries', 'selectedFacilitators'));
+        return view('training.view', compact('training', 'venues', 'projects', 'participants', 'facilitators', 'countries', 'selectedFacilitators', 'subjects'));
     }
 
     public function getUpdateTraining(){

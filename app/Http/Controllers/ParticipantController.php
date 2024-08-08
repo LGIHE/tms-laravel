@@ -31,13 +31,15 @@ class ParticipantController extends Controller
     public function createParticipant()
     {
         $attributes = request()->validate([
+            'training_id' => 'required',
             'id_no' => 'required',
             'name' => 'required',
             'gender' => 'required',
             'age' => 'required',
             'category' => 'required',
             'phone' => 'required',
-            'district' => 'required'
+            'district' => 'required',
+            'attended_dates' => 'required|string'
         ]);
 
         $attributes['email'] = request()->email;
@@ -45,17 +47,20 @@ class ParticipantController extends Controller
         $attributes['nationality'] = request()->nationality;
         $attributes['institution'] = request()->institution;
         $attributes['institution_ownership'] = request()->institution_ownership;
-        if (request()->has('subjects')) {
-            $subjects = is_array(request()->subjects) ? request()->subjects : explode(',', request()->subjects);
-            $attributes['subjects'] = $subjects;
-        } else {
-            $attributes['subjects'] = [];
-        }
+        $attributes['subjects'] = json_encode(request()->subjects);
+
+        $trainingData = [
+            'training_id' => request()->training_id,
+            'dates' => explode(',', request()->attended_dates),
+        ];
+
+        // Encode the trainings array to JSON
+        $attributes['trainings'] = json_encode([$trainingData]);
         $attributes['created_by'] = auth()->user()->id;
 
         Participants::create($attributes);
 
-        return response()->json(['id' => request()->training]);
+        return response()->json(['id' => request()->training_id]);
     }
 
     public function createParticipantSuccess(){
@@ -65,13 +70,15 @@ class ParticipantController extends Controller
     public function updateParticipant()
     {
         $attributes = request()->validate([
+            'training_id' => 'required',
             'id_no' => 'required',
             'name' => 'required',
             'gender' => 'required',
             'age' => 'required',
             'category' => 'required',
             'phone' => 'required',
-            'district' => 'required'
+            'district' => 'required',
+            'attended_dates' => 'required|string',
         ]);
 
         $attributes['email'] = request()->email;
@@ -79,17 +86,19 @@ class ParticipantController extends Controller
         $attributes['nationality'] = request()->nationality;
         $attributes['institution'] = request()->institution;
         $attributes['institution_ownership'] = request()->institution_ownership;
-        if (request()->has('subjects')) {
-            $subjects = is_array(request()->subjects) ? request()->subjects : explode(',', request()->subjects);
-            $attributes['subjects'] = $subjects;
-        } else {
-            $attributes['subjects'] = [];
-        }
+        $attributes['subjects'] = json_encode(request()->subjects);
+
+        $trainingData = [
+            'training_id' => request()->training_id,
+            'dates' => explode(',', request()->attended_dates),
+        ];
+
+        $attributes['trainings'] = json_encode([$trainingData]);
         $attributes['updated_by'] = auth()->user()->id;
 
         Participants::find(request()->id)->update($attributes);
 
-        return response()->json(['id' => request()->id]);
+        return response()->json(['id' => request()->training_id]);
     }
 
     public function updateParticipantSuccess(){
@@ -123,7 +132,7 @@ class ParticipantController extends Controller
         $participant->trainings = json_encode($trainings);
         $participant->save();
 
-        return response()->json(['message' => 'Attendance updated successfully.']);
+        return response()->json(['id' => request()->training_id]);
     }
 
     public function getUploadParticipants(){

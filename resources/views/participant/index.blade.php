@@ -374,7 +374,6 @@
                                                                         </select>
                                                                         <p class='text-danger font-weight-bold inputerror' id="subjectsError"></p>
                                                                     </div>
-
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button"
