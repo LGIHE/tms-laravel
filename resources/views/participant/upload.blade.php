@@ -51,7 +51,7 @@
                                 <div class="card-header pb-0 p-3">
                                     <div class="row">
                                         <div class="col-md-8 d-flex align-items-center">
-                                            <h4 class="mb-3">Upload Participants for the {{ $training->name }} training.</h4>
+                                            <h4 class="mb-3">Upload Participants for the {{ $training->name }}</h4>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -73,9 +73,11 @@
                                                         <li>category (Teacher, Student, School Leader etc)</li>
                                                         <li>phone</li>
                                                         <li>district</li>
+                                                        <li>dates_attended</li>
                                                     </ul>
                                                 </li>
                                                 <li>Subjects should be seperated with a comma (e.g Mathematics,English)</li>
+                                                <li>Dates Attended should be seperated with a comma (e.g 05/08/2024,06/08/2024,07/08/2024)</li>
                                                 {{-- <li>Demo data has been added and it sould be follwed the way it is input.</li> --}}
                                                 <li>You can add another row for a new step on the Steps table, and you can add as many they are available for your lesson.</li>
                                                 <li>Upload the saved file in the upload section below:

@@ -20,7 +20,6 @@ class Sheet1Import implements ToCollection, WithHeadingRow
     {
         Validator::make($rows->toArray(), [
             '*.id_no' => [
-                'required',
                 new RequiredInParticipantUpload('id_no'),
                 new UniqueParticipantIdForTraining(request()->training_id, 'id_no'),
             ],
@@ -31,6 +30,7 @@ class Sheet1Import implements ToCollection, WithHeadingRow
             '*.age' => new requiredInParticipantUpload('nationality'),
             '*.phone' => new requiredInParticipantUpload('phone'),
             '*.district' => new requiredInParticipantUpload('district'),
+            '*.dates_attended' => new requiredInParticipantUpload('dates_attended'),
         ])->validate();
 
         $participants = [];
@@ -43,6 +43,18 @@ class Sheet1Import implements ToCollection, WithHeadingRow
                 $row['subjects'] = $subjects;
             } else {
                 $row['subjects'] = [];
+            }
+
+            if (isset($row['dates_attended']) && $row['dates_attended'] != null) {
+                // Split the dates string by comma and trim any extra spaces
+                $dates_attended = explode(',', $row['dates_attended']);
+                $dates_attended = array_map('trim', $dates_attended); // Trim spaces around each date
+                $row['trainings'] = [
+                    'training_id' => request()->training_id,
+                    'dates' => $dates_attended,
+                ];
+            } else {
+                $row['trainings'] = [];
             }
 
             $participant = Participants::create([
@@ -59,6 +71,7 @@ class Sheet1Import implements ToCollection, WithHeadingRow
                 'email' => $row['email'],
                 'phone' => $row['phone'],
                 'district' => $row['district'],
+                'trainings' => json_encode([$row['trainings']]),
                 'created_by' => auth()->user()->id,
             ]);
 
