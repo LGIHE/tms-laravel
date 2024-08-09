@@ -8,6 +8,7 @@ use App\Models\Project;
 use App\Models\Subject;
 use App\Models\Training;
 use App\Imports\Participants\GetParticipantSheet;
+use App\Rules\UniqueParticipantIdForTraining;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ParticipantController extends Controller
@@ -32,7 +33,10 @@ class ParticipantController extends Controller
     {
         $attributes = request()->validate([
             'training_id' => 'required',
-            'id_no' => 'required',
+            'id_no' => [
+                'required',
+                new UniqueParticipantIdForTraining(request()->training_id, 'id_no'),
+            ],
             'name' => 'required',
             'gender' => 'required',
             'age' => 'required',
@@ -71,7 +75,10 @@ class ParticipantController extends Controller
     {
         $attributes = request()->validate([
             'training_id' => 'required',
-            'id_no' => 'required',
+            'id_no' => [
+                'required',
+                new UniqueParticipantIdForTraining(request()->training_id, 'id_no'),
+            ],
             'name' => 'required',
             'gender' => 'required',
             'age' => 'required',
@@ -136,7 +143,8 @@ class ParticipantController extends Controller
     }
 
     public function getUploadParticipants(){
-        return view('participant.upload');
+        $training = Training::find(request()->id);
+        return view('participant.upload', compact('training'));
     }
 
     public function uploadParticipants()
@@ -152,22 +160,29 @@ class ParticipantController extends Controller
         // Check if the file is valid
         if (!$file->isValid()) {
             return redirect()
-                ->route('get.upload.participants')
+                ->route('get.upload.participants', request()->id)
                 ->withErrors(['participants_upload' => 'Invalid file upload.']);
         }
 
         // Import the file using the specified import class
         try {
             Excel::import(new GetParticipantSheet, $file);
-        } catch (\Exception $e) {
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+
+            $errors = [];
+            foreach ($failures as $failure) {
+                $errors[] = 'Row ' . $failure->row() . ': ' . implode(', ', $failure->errors());
+            }
+
             return redirect()
-                ->route('get.upload.participants')
-                ->withErrors(['participants_upload' => 'Failed to upload participants: ' . $e->getMessage()]);
+                ->route('get.upload.participants', request()->id)
+                ->withErrors($errors);
         }
 
         // Redirect back to the training route with a success message
         return redirect()
-            ->route('participants')
+            ->route('training', request()->id)
             ->with('status', 'The bulk participant upload is successful.');
     }
 

@@ -34,7 +34,7 @@
             <div class="row">
             <div class="col-12">
                 <div class="card my-4">
-                    <div class="me-3 my-3 text-end">
+                    {{-- <div class="me-3 my-3 text-end">
                         <a class="btn bg-success mb-0 end text-white" data-bs-toggle="modal"
                             data-bs-target="#newParticipantModal">
                             <i class="material-icons text-sm">person</i>
@@ -46,7 +46,7 @@
                             <i class="material-icons text-sm">upload</i>&nbsp;&nbsp;
                             Upload Participants
                         </a>
-                    </div>
+                    </div> --}}
                     @if (session('status'))
                         <div class="row">
                             <div class="col-md-9">
@@ -457,56 +457,6 @@
         event.preventDefault();
         let href = $(this).data('value');
         window.location.assign(href);
-    });
-
-    $(document).on('click', '.btn-submit-update', function(e) {
-        e.preventDefault();
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('input[name="_token"]').attr('value')
-            }
-        });
-
-        let id = $(this).data('id');
-        let route = '{{ route('update.participant', ':id') }}';
-        route = route.replace(':id', id);
-
-        let formData = $("#updateParticipantForm-" + id).serializeArray();
-        $(".inputerror").text("");
-        $("#updateParticipantForm-" + id + " input").removeClass("is-invalid");
-
-        $("#loader").prepend('<i class="fa fa-spinner fa-spin"></i>');
-        $(".btn-submit").attr("disabled", 'disabled');
-
-        $.ajax({
-            method: "POST",
-            headers: {
-                Accept: "application/json"
-            },
-            url: route,
-            data: formData,
-            success: (response) => {
-                $(".fa-spinner").remove();
-                $(".btn-submit").prop("disabled", false);
-                let url = '{{ route('update.participant.success', ':id') }}';
-                url = url.replace(':id', response.id);
-                window.location.assign(url);
-            },
-            error: (response) => {
-                $(".fa-spinner").remove();
-                $(".btn-submit").prop("disabled", false);
-
-                if (response.status === 422) {
-                    let errors = response.responseJSON.errors;
-                    Object.keys(errors).forEach(function(key) {
-                        $("[name='" + key + "']").addClass("is-invalid");
-                        $("#" + key + "Error").text(errors[key][0]);
-                    });
-                } else {
-                    // window.location.reload();
-                }
-            }
-        })
     });
 </script>
 

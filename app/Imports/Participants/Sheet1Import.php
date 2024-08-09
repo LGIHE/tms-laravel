@@ -7,11 +7,11 @@ use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Illuminate\Support\Facades\Validator;
 use App\Rules\requiredInParticipantUpload;
+use App\Rules\UniqueParticipantIdForTraining;
 use App\Models\Participants;
 
 class Sheet1Import implements ToCollection, WithHeadingRow
 {
-
     /**
     * @param array $row
     *
@@ -19,7 +19,11 @@ class Sheet1Import implements ToCollection, WithHeadingRow
     public function collection(Collection $rows)
     {
         Validator::make($rows->toArray(), [
-            '*.id_no' => new requiredInParticipantUpload('id_no'),
+            '*.id_no' => [
+                'required',
+                new RequiredInParticipantUpload('id_no'),
+                new UniqueParticipantIdForTraining(request()->training_id, 'id_no'),
+            ],
             '*.name' => new requiredInParticipantUpload('name'),
             '*.gender' => new requiredInParticipantUpload('gender'),
             '*.nationality' => new requiredInParticipantUpload('age'),

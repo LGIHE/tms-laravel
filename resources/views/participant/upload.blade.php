@@ -51,7 +51,7 @@
                                 <div class="card-header pb-0 p-3">
                                     <div class="row">
                                         <div class="col-md-8 d-flex align-items-center">
-                                            <h4 class="mb-3">Upload Participants</h4>
+                                            <h4 class="mb-3">Upload Participants for the {{ $training->name }} training.</h4>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -88,10 +88,10 @@
                                         </div>
                                         <div class="card ">
                                             <div class="card-header"><h5>Upload Section</h5></div>
-                                                <form action="{{ route('upload.participants') }}" method="post" enctype="multipart/form-data">
+                                                <form action="{{ route('upload.participants', ['id' => $training->id]) }}" method="post" enctype="multipart/form-data">
                                                     @csrf
                                                     <input type="hidden" name="user" value="{{ auth()->user()->id }}">
-
+                                                    <input type="hidden" name="training_id" value="{{ $training->id }}">
                                                     <p class="card-text mt-3 mb-2"><strong>Select File to Upload</strong> - <small class="text-muted">{{__('Please upload only Microsoft Excel (.xlsx or .xls) files')}}</small></p>
                                                     <input type="file" name="participants_upload" accept=".xls,.xlsx">
                                                     <button type="submit" class="btn btn-success mt-4">Upload Participants</button>
