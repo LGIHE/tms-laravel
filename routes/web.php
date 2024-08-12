@@ -88,6 +88,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('update-participant-success/{id}', [ParticipantController::class, 'updateParticipantSuccess'])->name('update.participant.success');
     Route::get('get-upload-participants/{id}', [ParticipantController::class, 'getUploadParticipants'])->name('get.upload.participants');
     Route::post('upload-participants/{id}', [ParticipantController::class, 'uploadParticipants'])->name('upload.participants');
+    Route::get('remove-participant/{id}/{training_id}', [ParticipantController::class, 'removeParticipant'])->middleware('admin')->name('remove.participant');
 
     // ATTENDANCE ROUTES
 	Route::post('update-participant-attendance', [ParticipantController::class, 'updateParticipantAttendance'])->name('update.participant.attendance');

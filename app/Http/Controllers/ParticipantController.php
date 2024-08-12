@@ -116,6 +116,30 @@ class ParticipantController extends Controller
         return redirect()->route('participants')->with('status', 'The participant has been deleted successfully.');
     }
 
+    public function removeParticipant(){
+        $trainingId = request()->training_id;
+        $participant = Participants::find(request()->id);
+
+        // Decode the trainings JSON column
+        $trainings = json_decode($participant->trainings, true);
+
+        // Filter out the training with the specific training_id
+        $updatedTrainings = array_filter($trainings, function ($training) use ($trainingId) {
+            return $training['training_id'] !== $trainingId;
+        });
+
+        // Reindex array to prevent gaps in the index keys
+        $updatedTrainings = array_values($updatedTrainings);
+
+        // Update the participant's trainings column
+        $participant->trainings = json_encode($updatedTrainings);
+
+        // Save the changes
+        $participant->save();
+
+        return redirect()->route('training', request()->training_id)->with('status', 'The participant has been removed from the training successfully.');
+    }
+
     public function updateParticipantAttendance(){
 
         request()->validate([

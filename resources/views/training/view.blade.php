@@ -300,7 +300,7 @@ span.select2-container--default {
                                                         @if ($participant->role != 'Administrator')
                                                         <button type="button" class="btn btn-link p-0 m-0" role="btn"
                                                             data-bs-toggle="modal"
-                                                            data-bs-target="#deleteModal-{{$participant->id}}"
+                                                            data-bs-target="#removeModal-{{$participant->id}}"
                                                             title="Delete User">
                                                             <i class="material-icons"
                                                                 style="font-size:1.4rem;">delete</i>
@@ -312,9 +312,9 @@ span.select2-container--default {
 
                                                 @include('participant.training.update')
 
-                                                <!-- Confirm Participant Delete modal -->
-                                                <div class="modal fade" id="deleteModal-{{ $participant->id }}"
-                                                    tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+                                                <!-- Confirm Participant Removal modal -->
+                                                <div class="modal fade" id="removeModal-{{ $participant->id }}"
+                                                    tabindex="-1" role="dialog" aria-labelledby="removeModalLabel"
                                                     aria-hidden="true">
                                                     <div class="modal-dialog modal-sm" role="document">
                                                         <div class="modal-content">
@@ -325,14 +325,14 @@ span.select2-container--default {
                                                             </div>
                                                             <div class="modal-body" id="smallBody">
                                                                 <div class="text-center">
-                                                                    <span class="">Are you sure you want to Delete this
-                                                                        Participant?</span>
+                                                                    <span class="">Are you sure you want to Remove this
+                                                                        Participant from the training?</span>
                                                                 </div>
                                                             </div>
                                                             <div class="modal-footer align-items-center">
                                                                 <button type="button" class="btn btn-success"
-                                                                    id="del-btn"
-                                                                    data-value="{{ route('delete.participant', $participant->id) }}">Confirm</button>
+                                                                    id="remove-btn"
+                                                                    data-value="{{ route('remove.participant', ['id' => $participant->id, 'training_id' => $training->id]) }}">Confirm</button>
                                                                 <button type="button" class="btn btn-danger"
                                                                     data-bs-dismiss="modal">Cancel</button>
                                                             </div>
@@ -384,7 +384,7 @@ span.select2-container--default {
         dateFormat: 'dd/mm/yy',
     });
 
-    $(document).on('click', '#del-btn', function(event) {
+    $(document).on('click', '#remove-btn', function(event) {
         event.preventDefault();
         let href = $(this).data('value');
         window.location.assign(href);
