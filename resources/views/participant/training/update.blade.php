@@ -35,7 +35,7 @@
                     <div class="row">
                         <div class="mb-3 col-md-6">
                             <label class="form-label">ID No.</label>
-                            <input type="text" name="id_no" class="form-control border border-2 p-2" value="{{ $participant->id_no }}">
+                            <input type="text" name="id_no" class="form-control border border-2 p-2" value="{{ $participant->id_no }}" readonly>
                             <p class='text-danger font-weight-bold inputerror' id="id_noError"></p>
                         </div>
                         <div class="mb-3 col-md-6">
@@ -157,24 +157,54 @@
 </div>
 @endforeach
 
+@php
+    // Convert the start and end dates to DateTime objects
+    $startDate = new \DateTime($training->start_date);
+    $endDate = new \DateTime($training->end_date);
+
+    // Create an array to hold all dates between start and end date
+    $trainingDates = [];
+
+    // Loop through each day between start and end date
+    while ($startDate <= $endDate) {
+        $trainingDates[] = $startDate->format('Y-m-d');
+        $startDate->modify('+1 day');
+    }
+@endphp
+
 <script>
     $(document).ready(function(){
-        // Initialize Select2 for all elements with class 'subjects-select'
+        // Initialize Select2 for the subjects
         $('.subjects-select').select2();
 
-        // Initialize datepicker for all elements with class 'datepicker-update'
-        $('.datepicker-update').multiDatesPicker({
-            dateFormat: 'dd/mm/yy',
+        // Convert PHP array to a JavaScript array
+        let trainingDates = @json($trainingDates);
+
+        // Initialize the datepicker with pre-filled attended dates
+        initializeDatepickers(trainingDates);
+
+        $(document).on('shown.bs.modal', '.modal', function () {
+            initializeDatepickers(trainingDates);
         });
     });
 
-    $(document).on('shown.bs.modal', '.modal', function () {
-        // Reinitialize Select2 and datepicker for dynamically shown modals
-        $('.subjects-select').select2();
-        $('.datepicker-update').multiDatesPicker({
-            dateFormat: 'dd/mm/yy',
+    function initializeDatepickers(trainingDates) {
+        // Iterate over each datepicker-update field to set the dates
+        $('.datepicker-update').each(function() {
+            let $this = $(this);
+            let attendedDates = $this.val().split(', ').map(date => date.trim());
+
+            // Initialize the datepicker with the correct settings
+            $this.multiDatesPicker({
+                dateFormat: 'yy-mm-dd',
+                addDates: attendedDates,
+                beforeShowDay: function(date) {
+                    let dmy = $.datepicker.formatDate('yy-mm-dd', date);
+                    return [trainingDates.includes(dmy)];
+                }
+            });
         });
-    });
+    }
 
     $(document).on('click', '.btn-submit-update', function (e) {
         e.preventDefault();
@@ -228,7 +258,6 @@
                     window.location.reload();
                 }
             }
-        })
+        });
     });
 </script>
-

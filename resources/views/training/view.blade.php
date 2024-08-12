@@ -310,182 +310,6 @@ span.select2-container--default {
                                                     </td>
                                                 </tr>
 
-                                                <!-- Participant Update modal -->
-                                                {{-- <div class="modal fade"
-                                                id="updateParticipantModal-{{ $participant->id }}"
-                                                data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-                                                aria-labelledby="updateParticipantModal" aria-hidden="true">
-                                                    <div class="modal-dialog modal-lg">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h1 class="modal-title fs-5"
-                                                                    id="updateParticipantModalLabel">Update Participant
-                                                                </h1>
-                                                                <button type="button" class="btn-close"
-                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-
-                                                            <div class="modal-body">
-                                                                <form method='POST' action='#'
-                                                                    id="updateParticipantForm-{{ $participant->id }}">
-                                                                    @csrf
-                                                                    <input type="hidden" name="training_id" value="{{ $training->id }}">
-                                                                    <div class="row">
-                                                                        <div class="mb-3 col-md-6">
-                                                                            <label class="form-label">ID No.</label>
-                                                                            <input type="text" name="id_no"
-                                                                                class="form-control border border-2 p-2"
-                                                                                value="{{ $participant->id_no }}">
-                                                                            <p class='text-danger font-weight-bold inputerror'
-                                                                                id="id_noError"></p>
-                                                                        </div>
-                                                                        <div class="mb-3 col-md-6">
-                                                                            <label class="form-label">Name</label>
-                                                                            <input type="text" name="name"
-                                                                                class="form-control border border-2 p-2"
-                                                                                value="{{ $participant->name }}">
-                                                                            <p class='text-danger font-weight-bold inputerror'
-                                                                                id="nameError"></p>
-                                                                        </div>
-                                                                        <div class="mb-3 col-md-6">
-                                                                            <label class="form-label">Email Address</label>
-                                                                            <input type="text" name="email"
-                                                                                class="form-control border border-2 p-2"
-                                                                                value="{{ $participant->email }}">
-                                                                            <p class='text-danger font-weight-bold inputerror'
-                                                                                id="emailError"></p>
-                                                                        </div>
-                                                                        <div class="mb-3 col-md-6">
-                                                                            <label class="form-label">Gender</label>
-                                                                            <select class="form-select border border-2 p-2" name="gender" aria-label="">
-                                                                                <option value="" selected>Select Gender</option>
-                                                                                <option value="Male" {{ $participant->gender == "Male" ? "selected" : '' }}>Male</option>
-                                                                                <option value="Female" {{ $participant->gender == "Female" ? "selected" : '' }}>Female</option>
-                                                                            </select>
-                                                                            <p class='text-danger font-weight-bold inputerror' id="genderError"></p>
-                                                                        </div>
-                                                                        <div class="mb-3 col-md-6">
-                                                                            <label class="form-label">Age</label>
-                                                                            <input type="number" name="age"
-                                                                                class="form-control border border-2 p-2"
-                                                                                value="{{ $participant->age }}">
-                                                                            <p class='text-danger font-weight-bold inputerror'
-                                                                                id="ageError"></p>
-                                                                        </div>
-                                                                        <div class="mb-3 col-md-6">
-                                                                            <label class="form-label">Category</label>
-                                                                            <select class="form-select border border-2 p-2" name="category" aria-label="">
-                                                                                <option value="" selected>Select Category</option>
-                                                                                <option value="Teacher" {{ $participant->category == "Teacher" ? "selected" : '' }}>Teacher</option>
-                                                                                <option value="Student" {{ $participant->category == "Student" ? "selected" : '' }}>Student</option>
-                                                                                <option value="Youth" {{ $participant->category == "Youth" ? "selected" : '' }}>Youth</option>
-                                                                                <option value="School Leader" {{ $participant->category == "School Leader" ? "selected" : '' }}>School Leader</option>
-                                                                                <option value="Community Leader" {{ $participant->category == "Community Leader" ? "selected" : '' }}>Community Leader</option>
-                                                                            </select>
-                                                                            <p class='text-danger font-weight-bold inputerror'
-                                                                                id="categoryError"></p>
-                                                                        </div>
-                                                                        <div class="mb-3 col-md-6">
-                                                                            <label class="form-label">Education Level</label>
-                                                                            <input type="text" name="education_level"
-                                                                                class="form-control border border-2 p-2"
-                                                                                value="{{ $participant->education_level }}">
-                                                                            <p class='text-danger font-weight-bold inputerror'
-                                                                                id="education_levelError"></p>
-                                                                        </div>
-                                                                        <div class="mb-3 col-md-6">
-                                                                            <label class="form-label">Nationality</label>
-                                                                            <select class="form-select border border-2 p-2" name="nationality" aria-label="">
-                                                                                <option value="" selected>Select Nationality</option>
-                                                                                @foreach ($countries as $country)
-                                                                                    <option value="{{ $country->nationality }}" {{ $participant->nationality == $country->nationality ? "selected" : '' }}>{{ $country->nationality }}</option>
-                                                                                @endforeach
-                                                                            </select>
-                                                                            <p class='text-danger font-weight-bold inputerror'
-                                                                                id="nationalityError"></p>
-                                                                        </div>
-                                                                        <div class="mb-3 col-md-6">
-                                                                            <label class="form-label">Phone</label>
-                                                                            <input type="number" name="phone"
-                                                                                class="form-control border border-2 p-2"
-                                                                                value="{{ $participant->phone }}">
-                                                                            <p class='text-danger font-weight-bold inputerror'
-                                                                                id="phoneError"></p>
-                                                                        </div>
-                                                                        <div class="mb-3 col-md-6">
-                                                                            <label class="form-label">District</label>
-                                                                            <input type="text" name="district"
-                                                                                class="form-control border border-2 p-2"
-                                                                                value="{{ $participant->district }}">
-                                                                            <p class='text-danger font-weight-bold inputerror'
-                                                                                id="districtError"></p>
-                                                                        </div>
-                                                                        <div class="mb-3 col-md-6">
-                                                                            <label class="form-label">Institution/Organization</label>
-                                                                            <input type="text" name="institution"
-                                                                                class="form-control border border-2 p-2"
-                                                                                value="{{ $participant->institution }}">
-                                                                            <p class='text-danger font-weight-bold inputerror'
-                                                                                id="institutionError"></p>
-                                                                        </div>
-                                                                        <div class="mb-3 col-md-6">
-                                                                            <label class="form-label">Institution/Organization Ownership</label>
-                                                                            <select class="form-select border border-2 p-2" name="institution_ownership" aria-label="">
-                                                                                <option value="" selected>Select Ownership</option>
-                                                                                <option value="Public" {{ $participant->institution_ownership == "Public" ? "selected" : '' }}>Public</option>
-                                                                                <option value="Private" {{ $participant->institution_ownership  == "Private" ? "selected" : '' }}>Private</option>
-                                                                            </select>
-                                                                            <p class='text-danger font-weight-bold inputerror'
-                                                                                id="institution_ownershipError"></p>
-                                                                        </div>
-                                                                        <div class="mb-3 col-md-6">
-                                                                            <label class="form-label">Subjects</label>
-                                                                            <select id="subjects-update-record-{{ $participant->id }}" class="form-select p-2 subjects-select" name="subjects[]" multiple aria-label="">
-                                                                                @foreach($subjects as $subject)
-                                                                                    @if ($participant->subjects)
-                                                                                        @php
-                                                                                            $participantSubjects = json_decode($participant->subjects, true);
-                                                                                        @endphp
-                                                                                        <option value="{{ $subject->name }}"
-                                                                                            {{ is_array($participantSubjects) && in_array($subject->name, $participantSubjects) ? 'selected' : '' }}>
-                                                                                            {{ $subject->name }}
-                                                                                        </option>
-                                                                                    @else
-                                                                                        <option value="{{ $subject->name }}">{{ $subject->name }}</option>
-                                                                                    @endif
-                                                                                @endforeach
-                                                                            </select>
-                                                                            <p class='text-danger font-weight-bold inputerror' id="subjectsError"></p>
-                                                                        </div>
-
-                                                                        @php
-                                                                            $attended_dates = [];
-                                                                            foreach(json_decode($participant->trainings, true) as $training_attended) {
-                                                                                if($training_attended['training_id'] == $training->id) {
-                                                                                    $attended_dates = array_merge($attended_dates, $training_attended['dates']);
-                                                                                }
-                                                                            }
-                                                                            $attended_dates_str = implode(', ', $attended_dates);
-                                                                        @endphp
-
-                                                                        <div class="mb-3 col-md-6">
-                                                                            <label class="form-label">Days Attended</label>
-                                                                            <input type="text" id="datepicker-update" name="attended_dates" value="{{ $attended_dates_str }}" class="form-control border border-2 p-2" readonly>
-                                                                            <p class='text-danger font-weight-bold inputerror' id="attended_datesError"></p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button"
-                                                                            class="btn bg-gradient-secondary"
-                                                                            data-bs-dismiss="modal">Cancel</button>
-                                                                        <button type="submit"
-                                                                            class="btn bg-gradient-primary btn-submit-update" data-id="{{ $participant->id }}">Update</button>
-                                                                    </div>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div> --}}
                                                 @include('participant.training.update')
 
                                                 <!-- Confirm Participant Delete modal -->
@@ -533,6 +357,21 @@ span.select2-container--default {
         </div>
     </div>
 </x-layout>
+
+@php
+    // Convert the start and end dates to DateTime objects
+    $startDate = new \DateTime($training->start_date);
+    $endDate = new \DateTime($training->end_date);
+
+    // Create an array to hold all dates between start and end date
+    $trainingDates = [];
+
+    // Loop through each day between start and end date
+    while ($startDate <= $endDate) {
+        $trainingDates[] = $startDate->format('Y-m-d');
+        $startDate->modify('+1 day');
+    }
+@endphp
 
 <script>
     $(document).ready(function(){

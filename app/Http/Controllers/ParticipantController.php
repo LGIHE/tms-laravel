@@ -75,10 +75,7 @@ class ParticipantController extends Controller
     {
         $attributes = request()->validate([
             'training_id' => 'required',
-            'id_no' => [
-                'required',
-                new UniqueParticipantIdForTraining(request()->training_id, 'id_no'),
-            ],
+            'id_no' => 'required',
             'name' => 'required',
             'gender' => 'required',
             'age' => 'required',

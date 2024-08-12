@@ -170,10 +170,17 @@
 <script>
     $(document).ready(function(){
         $('#subjects-records').select2();
-    });
 
-    $('#datepicker-add').multiDatesPicker({
-        dateFormat: 'dd/mm/yy',
+        // Convert PHP array to a JavaScript array
+        let trainingDates = @json($trainingDates);
+
+        $('#datepicker-add').multiDatesPicker({
+            dateFormat: 'yy-mm-dd',
+            beforeShowDay: function(date) {
+                let dmy = $.datepicker.formatDate('yy-mm-dd', date);
+                return [trainingDates.includes(dmy)];
+            }
+        });
     });
 
     $(function() {
