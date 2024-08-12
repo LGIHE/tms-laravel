@@ -461,4 +461,4 @@
 </script>
 
 @include('participant.create')
-@include('participant.attendance')
+{{-- @include('participant.attendance') --}}
