@@ -55,7 +55,7 @@
                             <p class='text-danger font-weight-bold inputerror' id="roleError"></p>
                         </div>
 
-                        <div class="mb-3 col-md-6">
+                        <div class="mb-3 col-md-6" style="display: none;">
                             <label class="form-label">Password</label>
                             <input type="password" name="password" class="form-control border border-2 p-2">
                             <p class='text-danger font-weight-bold inputerror' id="passwordError"></p>
