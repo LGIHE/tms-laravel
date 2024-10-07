@@ -71,6 +71,7 @@
                                                         <li>gender</li>
                                                         <li>age</li>
                                                         <li>category (Teacher, Student, School Leader etc)</li>
+                                                        <li>nationality</li>
                                                         <li>phone</li>
                                                         <li>district</li>
                                                         <li>dates_attended</li>
