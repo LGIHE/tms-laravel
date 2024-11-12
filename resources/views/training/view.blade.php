@@ -149,11 +149,24 @@ span.select2-container--default {
                                 <div class="col-md-4 d-flex">
                                     <p class="text-dark font-weight-bold">Training Venue:</p>&nbsp;
                                     <p class="text-dark">
-                                        @foreach ( $venues as $venue )
-                                            @if ($venue->id == $training->training_venue)
-                                                {{ $venue->name }}
+                                        @php
+                                            $trainingVenueIds = json_decode($training->training_venue, true);
+                                            $trainingVenueNames = [];
+                                        @endphp
+
+                                        @foreach ($venues as $venue)
+                                            @if(in_array((string) $venue->id, $trainingVenueIds))
+                                                @php
+                                                    $trainingVenueNames[] = $venue->name;
+                                                @endphp
                                             @endif
                                         @endforeach
+
+                                        @if (!empty($trainingVenueNames))
+                                            {{ implode(', ', $trainingVenueNames) }}
+                                        @else
+                                            <em>No training venue found</em>
+                                        @endif
                                     </p>
                                 </div>
                                 <div class="col-md-4 d-flex">

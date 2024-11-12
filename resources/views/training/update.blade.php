@@ -66,13 +66,11 @@
                                             <label class="form-label">Facilitator</label>
                                             <div class="d-flex">
                                                 <select id="facilitator-records" class="form-select p-2" name="facilitators[]" multiple aria-label="">
-                                                    {{-- <option value="" selected>Select Facilitator</option> --}}
                                                     @foreach($facilitators as $facilitator)
-                                                    {{-- <option value="{!! $facilitator->id !!}">{!! $facilitator->name !!}</option> --}}
-                                                    <option value="{{ $facilitator->id }}"
-                                                        {{ in_array($facilitator->id, $selectedFacilitators) ? 'selected' : '' }}>
-                                                        {{ $facilitator->name }}
-                                                    </option>
+                                                        <option value="{{ $facilitator->id }}"
+                                                            {{ in_array($facilitator->id, $selectedFacilitators) ? 'selected' : '' }}>
+                                                            {{ $facilitator->name }}
+                                                        </option>
                                                     @endforeach
                                                 </select>
                                                 <button type="button" class="ms-2 circular-btn" data-bs-toggle="modal" data-bs-target="#addFacilitatorModal">
@@ -85,10 +83,12 @@
                                         <div class="mb-3 col-md-3">
                                             <label class="form-label">Training Venue</label>
                                             <div class="d-flex">
-                                                <select id="center-records" class="form-select border-2 p-2" name="training_venue" aria-label="">
-                                                    <option value="" selected>Select Training Venue</option>
+                                                <select id="training_venue-records" class="form-select border-2 p-2" name="training_venue[]" multiple aria-label="">
                                                     @foreach($venues as $venue)
-                                                    <option value="{!! $venue->id !!}" {{ $venue->id == $training->training_venue ? "selected" : '' }}>{!! $venue->name !!}</option>
+                                                        <option value="{{ $venue->id }}"
+                                                            {{ in_array($venue->id, $selectedTrainingVenues) ? 'selected' : '' }}>
+                                                            {{ $venue->name }}
+                                                        </option>
                                                     @endforeach
                                                 </select>
                                                 <button type="button" class="ms-2 circular-btn" data-bs-toggle="modal" data-bs-target="#addTrainingVenueModal">
@@ -145,7 +145,7 @@
 $(function () {
 
     $('#facilitator-records').select2();
-    $('#center-records').select2();
+    $('#training_venue-records').select2();
     $('#project-records').select2();
 
     $('#submit-update-btn').on('click', function (e) {
@@ -174,7 +174,9 @@ $(function () {
             success: (response) => {
                 $(".fa-spinner").remove();
                 $("#submit-update-btn").prop("disabled", false);
-                window.location.assign('{{route("create.training.success")}}');
+                let url = '{{route("training",":id")}}';
+                url = url.replace(':id', response.id);
+                window.location.assign(url);
             },
             error: (response) => {
                 $(".fa-spinner").remove();

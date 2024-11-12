@@ -37,7 +37,8 @@ class TrainingController extends Controller
             'description' => 'nullable',
             'facilitators' => 'required|array',
             'facilitators.*' => 'exists:users,id',
-            'training_venue' => 'required|exists:training_venues,id',
+            'training_venue' => 'required|array',
+            'training_venue.*' => 'exists:training_venues,id',
             'project' => 'required|exists:projects,id',
             'start_date' => 'required|date',
             'end_date' => 'required|date'
@@ -45,6 +46,7 @@ class TrainingController extends Controller
 
         $attributes['created_by'] = auth()->user()->id;
         $attributes['facilitators'] = json_encode($attributes['facilitators']);
+        $attributes['training_venue'] = json_encode($attributes['training_venue']);
         $training = Training::create($attributes);
 
         return response()->json(['status' => 'success', 'id' => $training->id]);
@@ -64,9 +66,7 @@ class TrainingController extends Controller
         $countries = Countries::all();
         $subjects = Subject:: all();
 
-        $selectedFacilitators = json_decode($training->facilitators, true);
-
-        return view('training.view', compact('training', 'venues', 'projects', 'participants', 'facilitators', 'countries', 'selectedFacilitators', 'subjects'));
+        return view('training.view', compact('training', 'venues', 'projects', 'participants', 'facilitators', 'countries', 'subjects'));
     }
 
     public function getUpdateTraining(){
@@ -78,8 +78,9 @@ class TrainingController extends Controller
         $countries = Countries::all();
 
         $selectedFacilitators = json_decode($training->facilitators, true);
+        $selectedTrainingVenues = json_decode($training->training_venue, true);
 
-        return view('training.update', compact('training', 'venues', 'projects', 'participants', 'facilitators', 'countries', 'selectedFacilitators'));
+        return view('training.update', compact('training', 'venues', 'projects', 'participants', 'facilitators', 'countries', 'selectedFacilitators', 'selectedTrainingVenues'));
     }
 
     public function updateTraining(){
@@ -89,7 +90,8 @@ class TrainingController extends Controller
             'description' => 'nullable',
             'facilitators' => 'required|array',
             'facilitators.*' => 'exists:users,id',
-            'training_venue' => 'required|exists:training_venues,id',
+            'training_venue' => 'required|array',
+            'training_venue.*' => 'exists:training_venues,id',
             'project' => 'required|exists:projects,id',
             'start_date' => 'required|date',
             'end_date' => 'required|date'
@@ -97,6 +99,7 @@ class TrainingController extends Controller
 
         $attributes['updated_by'] = auth()->user()->id;
         $attributes['facilitators'] = json_encode($attributes['facilitators']);
+        $attributes['training_venue'] = json_encode($attributes['training_venue']);
         Training::find(request()->id)->update($attributes);
 
         return response()->json(['id' => request()->id]);

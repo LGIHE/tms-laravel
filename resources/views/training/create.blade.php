@@ -92,8 +92,8 @@
                                         <div class="mb-3 col-md-3">
                                             <label class="form-label">Training Venue</label>
                                             <div class="d-flex">
-                                                <select id="center-records" class="form-select border-2 p-2" name="training_venue" aria-label="">
-                                                    <option value="" selected>Select Training Venue</option>
+                                                <select id="training_venue-records" class="form-select border-2 p-2" name="training_venue[]" multiple aria-label="">
+                                                    {{-- <option value="" selected>Select Training Venue</option> --}}
                                                     @foreach($venues as $venue)
                                                     <option value="{!! $venue->id !!}">{!! $venue->name !!}</option>
                                                     @endforeach
@@ -151,7 +151,7 @@
 <script>
 $(document).ready(function() {
     $('#facilitator-records').select2();
-    $('#center-records').select2();
+    $('#training_venue-records').select2();
     $('#project-records').select2();
 
     $('#submit-training-btn').on('click', function (e) {
@@ -176,7 +176,9 @@ $(document).ready(function() {
             success: (response) => {
                 $(".fa-spinner").remove();
                 $("#submit-training-btn").prop("disabled", false);
-                window.location.assign('{{route("create.training.success")}}');
+                let url = '{{route("training",":id")}}';
+                url = url.replace(':id', response.id);
+                window.location.assign(url);
             },
             error: (response) => {
                 $(".fa-spinner").remove();

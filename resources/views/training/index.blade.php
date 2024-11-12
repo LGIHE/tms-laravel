@@ -83,9 +83,27 @@
                                                 <td>
                                                     <div class="d-flex flex-column justify-content-center">
                                                         <span class="text-dark text-m font-weight-bold">
-                                                            @foreach ($venues as $venue)
+                                                            {{-- @foreach ($venues as $venue)
                                                                 @if($venue->id == $training->training_venue) {{ $venue->name }} @endif
+                                                            @endforeach --}}
+                                                            @php
+                                                                $trainingVenueIds = json_decode($training->training_venue, true);
+                                                                $trainingVenueNames = [];
+                                                            @endphp
+
+                                                            @foreach ($venues as $venue)
+                                                                @if(in_array((string) $venue->id, $trainingVenueIds))
+                                                                    @php
+                                                                        $trainingVenueNames[] = $venue->name;
+                                                                    @endphp
+                                                                @endif
                                                             @endforeach
+
+                                                            @if (!empty($trainingVenueNames))
+                                                                {{ implode(', ', $trainingVenueNames) }}
+                                                            @else
+                                                                <em>No training venues found</em>
+                                                            @endif
                                                         </span>
                                                     </div>
                                                 </td>
