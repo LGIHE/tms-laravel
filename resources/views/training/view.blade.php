@@ -183,16 +183,28 @@ span.select2-container--default {
                                 <div class="col-md-4 d-flex">
                                     <p class="text-dark font-weight-bold">District/Country:</p>&nbsp;
                                     <p class="text-dark">
-                                        @foreach ($venues as $venue)
-                                            @if ($venue->id == $training->training_venue)
-                                                @foreach ($countries as $country)
-                                                    @if ($country->code == $venue->country)
-                                                       {{ $venue->district }}, {{ $country->name }}
-                                                    @endif
-                                                @endforeach
-                                            @endif
+                                        @php
+                                            $trainingVenueDistricts = [];
+                                        @endphp
 
+                                        @foreach ($venues as $venue)
+                                            @if(in_array((string) $venue->id, $trainingVenueIds))
+                                                @php
+                                                    // Combine district and country into one string
+                                                    $districtEntry = $venue->district . ',' . $venue->country;
+                                                    // Only add unique entries
+                                                    if (!in_array($districtEntry, $trainingVenueDistricts)) {
+                                                        $trainingVenueDistricts[] = $districtEntry;
+                                                    }
+                                                @endphp
+                                            @endif
                                         @endforeach
+
+                                        @if (!empty($trainingVenueDistricts))
+                                            {{ implode(' - ', $trainingVenueDistricts) }}
+                                        @else
+                                            <em>No training venue address found</em>
+                                        @endif
                                     </p>
                                 </div>
                             </div>
