@@ -1,3 +1,9 @@
+<style>
+    #trainingsTable_info {
+        padding-left: 25px;
+    }
+</style>
+
 <x-layout bodyClass="g-sidenav-show  bg-gray-200">
 
     <x-navbars.sidebar activePage="trainings"></x-navbars.sidebar>
@@ -29,135 +35,71 @@
                         @endif
                         <div class="card-body px-0 pb-2">
                             @if (count($trainings) > 0)
-                                <div class="table-responsive p-0">
-                                    <table class="table align-items-center mb-0" id="table">
-                                        <thead>
-                                            <tr>
-                                                <th class="text-secondary text-xxl font-weight-bolder px-4">Name</th>
-                                                <th class="text-secondary text-xxl font-weight-bolder">Description</th>
-                                                <th class="text-secondary text-xxl font-weight-bolder">Facilitator(s)</th>
-                                                <th class="text-secondary text-xxl font-weight-bolder">Training Venue</th>
-                                                <th class="text-secondary text-xxl font-weight-bolder">Project</th>
-                                                <th class="text-secondary text-xxl font-weight-bolder">From</th>
-                                                <th class="text-secondary text-xxl font-weight-bolder">To</th>
-                                                <th class="text-secondary"></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
+                            <div class="table-responsive p-0">
+                                <table id="trainingsTable" class="table align-items-center mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-secondary text-xxl font-weight-bolder px-4">Name</th>
+                                            <th class="text-secondary text-xxl font-weight-bolder">Description</th>
+                                            <th class="text-secondary text-xxl font-weight-bolder">Facilitator(s)</th>
+                                            <th class="text-secondary text-xxl font-weight-bolder">Training Venue</th>
+                                            <th class="text-secondary text-xxl font-weight-bolder">Project</th>
+                                            <th class="text-secondary text-xxl font-weight-bolder">From</th>
+                                            <th class="text-secondary text-xxl font-weight-bolder">To</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
                                         @foreach ($trainings as $training)
                                             <tr>
-                                                <td>
-                                                    <div class="d-flex flex-column justify-content-center px-2">
-                                                        <h6 class="mb-0 text-m">{{ $training->name }}</h6>
-                                                    </div>
+                                                <td class="ellipsis">
+                                                    <div class="d-flex flex-column justify-content-center px-3">{{ $training->name }}</div>
+                                                </td>
+                                                <td class="ellipsis">{{ $training->description }}</td>
+                                                <td class="ellipsis">
+                                                    @php
+                                                        $facilitatorIds = json_decode($training->facilitators, true);
+                                                        $facilitatorNames = [];
+                                                    @endphp
+                                                    @foreach ($facilitators as $facilitator)
+                                                        @if (in_array((string) $facilitator->id, $facilitatorIds))
+                                                            @php $facilitatorNames[] = $facilitator->name; @endphp
+                                                        @endif
+                                                    @endforeach
+                                                    {{ !empty($facilitatorNames) ? implode(', ', $facilitatorNames) : 'No facilitators found' }}
+                                                </td>
+                                                <td class="ellipsis">
+                                                    @php
+                                                        $venueIds = json_decode($training->training_venue, true);
+                                                        $venueNames = [];
+                                                    @endphp
+                                                    @foreach ($venues as $venue)
+                                                        @if (in_array((string) $venue->id, $venueIds))
+                                                            @php $venueNames[] = $venue->name; @endphp
+                                                        @endif
+                                                    @endforeach
+                                                    {{ !empty($venueNames) ? implode(', ', $venueNames) : 'No venues found' }}
                                                 </td>
                                                 <td>
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <p class="text-m text-dark font-weight-bold mb-0">{{ $training->description }}</p>
-                                                    </div>
+                                                    @foreach ($projects as $project)
+                                                        @if ($project->id == $training->project)
+                                                            {{ $project->name }}
+                                                        @endif
+                                                    @endforeach
                                                 </td>
+                                                <td>{{ $training->start_date }}</td>
+                                                <td>{{ $training->end_date }}</td>
                                                 <td>
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <span class="text-dark text-m font-weight-bold">
-                                                            @php
-                                                                $facilitatorIds = json_decode($training->facilitators, true);
-                                                                $facilitatorNames = [];
-                                                            @endphp
-
-                                                            @foreach ($facilitators as $facilitator)
-                                                                @if(in_array((string) $facilitator->id, $facilitatorIds))
-                                                                    @php
-                                                                        $facilitatorNames[] = $facilitator->name;
-                                                                    @endphp
-                                                                @endif
-                                                            @endforeach
-
-                                                            @if (!empty($facilitatorNames))
-                                                                {{ implode(', ', $facilitatorNames) }}
-                                                            @else
-                                                                <em>No facilitators found</em>
-                                                            @endif
-                                                        </span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <span class="text-dark text-m font-weight-bold">
-                                                            {{-- @foreach ($venues as $venue)
-                                                                @if($venue->id == $training->training_venue) {{ $venue->name }} @endif
-                                                            @endforeach --}}
-                                                            @php
-                                                                $trainingVenueIds = json_decode($training->training_venue, true);
-                                                                $trainingVenueNames = [];
-                                                            @endphp
-
-                                                            @foreach ($venues as $venue)
-                                                                @if(in_array((string) $venue->id, $trainingVenueIds))
-                                                                    @php
-                                                                        $trainingVenueNames[] = $venue->name;
-                                                                    @endphp
-                                                                @endif
-                                                            @endforeach
-
-                                                            @if (!empty($trainingVenueNames))
-                                                                {{ implode(', ', $trainingVenueNames) }}
-                                                            @else
-                                                                <em>No training venues found</em>
-                                                            @endif
-                                                        </span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <span class="text-dark text-m font-weight-bold">
-                                                            @foreach ($projects as $project)
-                                                                @if($project->id == $training->project) {{ $project->name }} @endif
-                                                            @endforeach
-                                                        </span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <span class="text-dark text-m font-weight-bold">{{ $training->start_date }}</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <span class="text-dark text-m font-weight-bold">{{ $training->end_date }}</span>
-                                                    </div>
-                                                </td>
-                                                <td class="align-middle not-export-col">
-                                                    <a rel="tooltip" class="" id="open-training" data-value="{{ $training->id }}" style="cursor:pointer;">
-                                                        <i class="material-icons" style="font-size:25px;margin-right:20px;">visibility</i>
-                                                        <div class="ripple-container"></div>
+                                                    <a rel="tooltip" class="btn btn-link p-0 m-0" id="open-training" data-value="{{ $training->id }}" style="cursor:pointer;">
+                                                        <i class="material-icons" style="font-size:25px;">visibility</i>
                                                     </a>
                                                 </td>
                                             </tr>
-
-                                            <!-- Confirm Training Delete modal -->
-                                            <div class="modal fade" id="deleteModal-{{ $training->id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog modal-sm" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title">Confirm</h5>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body" id="smallBody">
-                                                            <div class="text-center">
-                                                                <span class="">Are you sure you want to Delete this Training?</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer align-items-center">
-                                                            <button type="button" class="btn btn-success" id="del-btn" data-value="{{ route('delete.training', $training->id) }}">Confirm</button>
-                                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
+                                    </tbody>
+                                </table>
+                            </div>
+
                             @else
                                 <div class="container text-center m-2 p-5">
                                     <span class="display-6 font-weight-bold">No Trainings Added Yet.</span>
@@ -172,6 +114,33 @@
 </x-layout>
 
 <script>
+    $(document).ready(function() {
+        $('#trainingsTable').DataTable({
+            "processing": true,
+            "pageLength": 10,  // Default number of rows per page
+            "lengthMenu": [10, 25, 50, 100],  // Dropdown options for number of rows
+            "lengthChange": true,  // Enable the length menu dropdown
+            "dom": 'lBfrtip',  // Include length menu (l), buttons (B), filter (f), table (t), info (i), and pagination (p)
+            "buttons": [
+                'excelHtml5',
+                'csvHtml5',
+                'pdfHtml5',
+                'print'
+            ],
+            "language": {
+                "lengthMenu": "Show _MENU_ entries",
+                "paginate": {
+                    "first": "First",
+                    "last": "Last",
+                    "next": "Next",
+                    "previous": "Previous"
+                },
+                "loadingRecords": "Loading trainings...",
+                "zeroRecords": "No trainings found",
+                "emptyTable": "No trainings available"
+            }
+        });
+    });
 
     $(document).on('click','#open-training',function(){
         var training_id = $(this).data("value");

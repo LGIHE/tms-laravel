@@ -65,6 +65,12 @@
             background: transparent !important;
         }
 
+        .ellipsis {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 200px;
+        }
+
         @media only screen and (min-width: 720px) {
             .dataTables_length {
                 float: right !important;
