@@ -326,6 +326,10 @@
                 "loadingRecords": "Loading participants...",
                 "zeroRecords": "No participants found",
                 "emptyTable": "No participants available"
+            },
+            "createdRow": function(row, data, dataIndex) {
+                // Add the text-dark class to all <td> elements in the row
+                $('td', row).addClass('text-dark');
             }
         });
     });

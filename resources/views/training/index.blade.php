@@ -56,11 +56,11 @@
                                     <tbody>
                                         @foreach ($trainings as $training)
                                             <tr>
-                                                <td class="ellipsis">
+                                                <td class="ellipsis text-dark">
                                                     <div class="d-flex flex-column justify-content-center px-3">{{ $training->name }}</div>
                                                 </td>
-                                                <td class="ellipsis">{{ $training->description }}</td>
-                                                <td class="ellipsis">
+                                                <td class="ellipsis text-dark">{{ $training->description }}</td>
+                                                <td class="ellipsis text-dark">
                                                     @php
                                                         $facilitatorIds = json_decode($training->facilitators, true);
                                                         $facilitatorNames = [];
@@ -72,7 +72,7 @@
                                                     @endforeach
                                                     {{ !empty($facilitatorNames) ? implode(', ', $facilitatorNames) : 'No facilitators found' }}
                                                 </td>
-                                                <td class="ellipsis">
+                                                <td class="ellipsis text-dark">
                                                     @php
                                                         $venueIds = json_decode($training->training_venue, true);
                                                         $venueNames = [];
@@ -84,15 +84,15 @@
                                                     @endforeach
                                                     {{ !empty($venueNames) ? implode(', ', $venueNames) : 'No venues found' }}
                                                 </td>
-                                                <td>
+                                                <td class="text-dark">
                                                     @foreach ($projects as $project)
                                                         @if ($project->id == $training->project)
                                                             {{ $project->name }}
                                                         @endif
                                                     @endforeach
                                                 </td>
-                                                <td>{{ $training->start_date }}</td>
-                                                <td>{{ $training->end_date }}</td>
+                                                <td class="text-dark">{{ $training->start_date }}</td>
+                                                <td class="text-dark">{{ $training->end_date }}</td>
                                                 <td>
                                                     <a rel="tooltip" class="btn btn-link p-0 m-0" id="open-training" data-value="{{ $training->id }}" style="cursor:pointer;">
                                                         <i class="material-icons" style="font-size:25px;">visibility</i>
