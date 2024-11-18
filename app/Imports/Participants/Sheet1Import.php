@@ -6,7 +6,7 @@ use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Illuminate\Support\Facades\Validator;
-use App\Rules\requiredInParticipantUpload;
+use App\Rules\RequiredInParticipantUpload;
 use App\Rules\UniqueParticipantIdForTraining;
 use App\Models\Participants;
 
@@ -18,24 +18,27 @@ class Sheet1Import implements ToCollection, WithHeadingRow
     */
     public function collection(Collection $rows)
     {
-        Validator::make($rows->toArray(), [
-            '*.id_no' => [
-                new RequiredInParticipantUpload('id_no'),
-                new UniqueParticipantIdForTraining(request()->training_id, 'id_no'),
-            ],
-            '*.name' => new requiredInParticipantUpload('name'),
-            '*.gender' => new requiredInParticipantUpload('gender'),
-            '*.age' => new requiredInParticipantUpload('age'),
-            '*.category' => new requiredInParticipantUpload('category'),
-            '*.nationality' => new requiredInParticipantUpload('nationality'),
-            '*.phone' => new requiredInParticipantUpload('phone'),
-            '*.district' => new requiredInParticipantUpload('district'),
-            '*.dates_attended' => new requiredInParticipantUpload('dates_attended'),
-        ])->validate();
 
         $participants = [];
 
-        foreach ($rows as $row) {
+        foreach ($rows as $rowNumber => $row) {
+            $rowNumber++;
+
+            Validator::make($row->toArray(), [
+                'id_no' => [
+                    new RequiredInParticipantUpload('id_no', $rowNumber),
+                    new UniqueParticipantIdForTraining(request()->training_id, 'id_no'),
+                ],
+                'name' => new RequiredInParticipantUpload('name', $rowNumber),
+                'gender' => new RequiredInParticipantUpload('gender', $rowNumber),
+                'age' => new RequiredInParticipantUpload('age', $rowNumber),
+                'category' => new RequiredInParticipantUpload('category', $rowNumber),
+                'nationality' => new RequiredInParticipantUpload('nationality', $rowNumber),
+                'phone' => new RequiredInParticipantUpload('phone', $rowNumber),
+                'district' => new RequiredInParticipantUpload('district', $rowNumber),
+                'dates_attended' => new RequiredInParticipantUpload('dates_attended', $rowNumber),
+            ])->validate();
+
             if (isset($row['subjects']) && $row['subjects'] != null) {
                 // Split the subjects string by comma and trim any extra spaces
                 $subjects = explode(',', $row['subjects']);
