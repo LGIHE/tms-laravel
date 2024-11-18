@@ -126,7 +126,8 @@ $(function () {
                 $(".fa-spinner").remove();
                 $("#submit-center-btn").prop("disabled", false);
                 $('#addTrainingVenueModal').modal('hide');
-                $('#center-records').append(new Option(response.name, response.id, true, true)).trigger('change');
+                console.log(response);
+                $('#training_venue-records').append(new Option(response.name, response.id, true, true)).trigger('change');
             },
             error: (response) => {
                 $(".fa-spinner").remove();
