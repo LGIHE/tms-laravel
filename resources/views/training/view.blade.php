@@ -232,8 +232,8 @@ span.select2-container--default {
                             <div class="tab-pane fade show active" id="steps-tab" role="tabpanel" aria-labelledby="steps-tab">
                                 <div class="card-body px-0 pb-2">
                                     @if (!$participants->isEmpty())
-                                    <div class="table-responsive p-0">
-                                        <table class="table table-sm hover mb-0" id="table">
+                                    {{-- <div class="table-responsive p-0">
+                                        <table class="table table-sm hover mb-0" id="participantsTable">
                                             <thead>
                                                 <tr>
                                                     <th class="text-secondary text-xxl font-weight-bolder px-4">ID No.</th>
@@ -305,11 +305,6 @@ span.select2-container--default {
                                                             @foreach(json_decode($participant->trainings, true) as $training_attended)
                                                                 @if($training_attended['training_id'] == $training->id)
                                                                     <span class="text-dark text-m font-weight-bold">{{ count($training_attended['dates']) }}</span>
-                                                                    {{-- <span class="text-dark text-m font-weight-bold">
-                                                                        @foreach($training_attended['dates'] as $date)
-                                                                            {{ $date }}<br>
-                                                                        @endforeach
-                                                                    </span> --}}
                                                                 @endif
                                                             @endforeach
                                                         </div>
@@ -367,7 +362,27 @@ span.select2-container--default {
                                                 @endforeach
                                             </tbody>
                                         </table>
+                                    </div> --}}
+                                    <div class="table-responsive p-0">
+                                        <table id="participantsTable" class="table table-sm hover mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-secondary text-xxl font-weight-bolder px-4">ID No.</th>
+                                                    <th class="text-secondary text-xxl font-weight-bolder px-4">Name</th>
+                                                    <th class="text-secondary text-xxl font-weight-bolder">Gender</th>
+                                                    <th class="text-secondary text-xxl font-weight-bolder">Age</th>
+                                                    <th class="text-secondary text-xxl font-weight-bolder">Category</th>
+                                                    <th class="text-secondary text-xxl font-weight-bolder">Institution</th>
+                                                    <th class="text-secondary text-xxl font-weight-bolder">Phone</th>
+                                                    <th class="text-secondary text-xxl font-weight-bolder">District</th>
+                                                    <th class="text-secondary text-xxl font-weight-bolder">Days Attended</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
                                     </div>
+
                                     @else
                                     <div class="container text-center m-2 p-5">
                                         <span class="display-6 font-weight-bold">No Participant Added Yet.</span>
@@ -399,6 +414,47 @@ span.select2-container--default {
 @endphp
 
 <script>
+    $(document).ready(function() {
+        $('#participantsTable').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "ajax": "{{ route('training.participants.data', $training->id) }}",
+            "pageLength": 10,
+            "lengthMenu": [10, 25, 50, 100],
+            "dom": 'lBfrtip',
+            "buttons": [
+                'excelHtml5',
+                'csvHtml5',
+                'pdfHtml5',
+                'print'
+            ],
+            "columns": [
+                { "data": "id_no" },
+                { "data": "name" },
+                { "data": "gender" },
+                { "data": "age" },
+                { "data": "category" },
+                { "data": "institution" },
+                { "data": "phone" },
+                { "data": "district" },
+                { "data": "days_attended" },
+                { "data": "actions", "orderable": false, "searchable": false }
+            ],
+            "language": {
+                "paginate": {
+                    "first": "First",
+                    "last": "Last",
+                    "next": "Next",
+                    "previous": "Previous"
+                },
+                "lengthMenu": "Show _MENU_ entries",
+                "loadingRecords": "Loading participants...",
+                "zeroRecords": "No participants found",
+                "emptyTable": "No participants available"
+            }
+        });
+    });
+
     $(document).ready(function(){
         $('.subjects-select').each(function() {
             $(this).select2();
