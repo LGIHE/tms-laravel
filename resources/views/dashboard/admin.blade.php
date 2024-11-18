@@ -117,29 +117,41 @@
                                                 <h6 class="mb-0 text-m">{{ $training->name }}</h6>
                                             </div>
                                         </td>
-                                        <td>
+                                        <td class="ellipsis">
                                             <div class="d-flex flex-column justify-content-center">
                                                 <p class="text-m text-dark font-weight-bold mb-0">{{
                                                     $training->description }}</p>
                                             </div>
                                         </td>
-                                        <td>
+                                        <td class="ellipsis">
                                             <div class="d-flex flex-column justify-content-center">
                                                 <span class="text-dark text-m font-weight-bold">
+                                                    @php
+                                                        $facilitatorIds = json_decode($training->facilitators, true);
+                                                        $facilitatorNames = [];
+                                                    @endphp
                                                     @foreach ($facilitators as $facilitator)
-                                                    @if($facilitator->id == $training->facilitator) {{
-                                                    $facilitator->name }} @endif
+                                                        @if (in_array((string) $facilitator->id, $facilitatorIds))
+                                                            @php $facilitatorNames[] = $facilitator->name; @endphp
+                                                        @endif
                                                     @endforeach
+                                                    {{ !empty($facilitatorNames) ? implode(', ', $facilitatorNames) : 'No facilitators found' }}
                                                 </span>
                                             </div>
                                         </td>
-                                        <td>
+                                        <td class="ellipsis">
                                             <div class="d-flex flex-column justify-content-center">
                                                 <span class="text-dark text-m font-weight-bold">
+                                                    @php
+                                                        $venueIds = json_decode($training->training_venue, true);
+                                                        $venueNames = [];
+                                                    @endphp
                                                     @foreach ($venues as $venue)
-                                                    @if($venue->id == $training->training_venue) {{ $venue->name }}
-                                                    @endif
+                                                        @if (in_array((string) $venue->id, $venueIds))
+                                                            @php $venueNames[] = $venue->name; @endphp
+                                                        @endif
                                                     @endforeach
+                                                    {{ !empty($venueNames) ? implode(', ', $venueNames) : 'No venues found' }}
                                                 </span>
                                             </div>
                                         </td>
