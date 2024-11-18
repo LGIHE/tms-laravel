@@ -10,6 +10,7 @@ use App\Models\Training;
 use App\Imports\Participants\GetParticipantSheet;
 use App\Rules\UniqueParticipantIdForTraining;
 use Maatwebsite\Excel\Facades\Excel;
+use Yajra\DataTables\Facades\DataTables;
 
 class ParticipantController extends Controller
 {
@@ -205,6 +206,46 @@ class ParticipantController extends Controller
         return redirect()
             ->route('training', request()->id)
             ->with('status', 'The bulk participant upload is successful.');
+    }
+
+    public function getTrainingParticipants()
+    {
+        $id = request()->id;
+        $query = Participants::whereJsonContains('trainings', ['training_id' => $id]);
+
+        return DataTables::of($query)
+            ->addColumn('days_attended', function ($participant) use ($id) {
+                $daysAttended = 0;
+                foreach (json_decode($participant->trainings, true) as $training) {
+                    if ($training['training_id'] == $id) {
+                        $daysAttended = count($training['dates']);
+                    }
+                }
+                return $daysAttended;
+            })
+            ->addColumn('actions', function ($participant) {
+                $editButton = '<a rel="tooltip" class="btn btn-link p-0 m-0" role="btn"
+                                data-bs-toggle="modal"
+                                data-bs-target="#updateParticipantModal-' . $participant->id . '">
+                                <i class="material-icons" style="font-size:1.4rem;">edit</i>
+                                <div class="ripple-container"></div>
+                            </a>';
+
+                $deleteButton = '';
+                if ($participant->role != 'Administrator') {
+                    $deleteButton = '<button type="button" class="btn btn-link p-0 m-0" role="btn"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#removeModal-' . $participant->id . '"
+                                        title="Delete User">
+                                        <i class="material-icons" style="font-size:1.4rem;">delete</i>
+                                        <div class="ripple-container"></div>
+                                    </button>';
+                }
+
+                return $editButton . $deleteButton;
+            })
+            ->rawColumns(['actions'])
+            ->make(true);
     }
 
 }

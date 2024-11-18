@@ -62,9 +62,9 @@ class TrainingController extends Controller
         $venues = TrainingVenue::all();
         $projects = Project::all();
         $facilitators = User::all();
-        $participants = Participants::whereRaw("JSON_CONTAINS(trainings, '{\"training_id\": \"$id\"}', '$')")->get();
         $countries = Countries::all();
         $subjects = Subject:: all();
+        $participants = Participants::whereJsonContains('trainings', ['training_id' => $id])->paginate(1);
 
         return view('training.view', compact('training', 'venues', 'projects', 'participants', 'facilitators', 'countries', 'subjects'));
     }

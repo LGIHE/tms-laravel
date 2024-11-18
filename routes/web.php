@@ -104,6 +104,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('update-training-success/{id}', [TrainingController::class, 'updateTrainingSuccess'])->name('update.training.success');
 	Route::post('delete-training/{id}', [TrainingController::class, 'deleteTraining'])->name('delete.training');
 
+    Route::get('/training/{id}/participants', [ParticipantController::class, 'getTrainingParticipants'])->name('training.participants.data');
+
     //TRAINING VENUES ROUTES
 	Route::get('training-venues', [TrainingVenueController::class, 'getAll'])->name('training.venues');
     Route::post('create-training-venue', [TrainingVenueController::class, 'createTrainingVenue'])->name('create.training.venue');
