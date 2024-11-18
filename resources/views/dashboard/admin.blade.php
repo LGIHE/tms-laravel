@@ -82,8 +82,8 @@
             </div>
         </div>
 
-        <div class="row mb-4" style="margin-left:10px;">
-            <div class="col-md-11 mb-md-0 mb-4">
+        <div class="row mb-4 px-4">
+            <div class="col-md-12 mb-md-0 mb-4">
                 <div class="card">
                     <div class="card-header pb-0">
                         <div class="row">
