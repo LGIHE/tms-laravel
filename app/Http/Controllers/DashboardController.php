@@ -17,10 +17,12 @@ class DashboardController extends Controller
         $venues = TrainingVenue::all();
         $trainings = Training::all();
         $participants = Participants::all();
+        $female_participants = Participants::where('gender', 'F')->count();
+        $male_participants = Participants::where('gender', 'M')->count();
         $projects = Project::all();
 
         // an admin
-        return view('dashboard.admin', compact('facilitators', 'venues', 'trainings', 'participants', 'projects'));
+        return view('dashboard.admin', compact('facilitators', 'venues', 'trainings', 'participants', 'female_participants', 'male_participants', 'projects'));
     }
 
     public static function traineesForTraining($id)

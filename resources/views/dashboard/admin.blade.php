@@ -3,6 +3,10 @@
     .dash-block {
         cursor: pointer;
     }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+        background-color: #007bff49!important;
+    }
 </style>
 <x-layout bodyClass="g-sidenav-show  bg-gray-200">
     <x-navbars.sidebar activePage='dashboard'></x-navbars.sidebar>
@@ -12,21 +16,6 @@
         <!-- End Navbar -->
         <div class="container-fluid py-4">
             <div class="row">
-                <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4 dash-block">
-                    <div class="card">
-                        <div class="card-header p-3 pt-2">
-                            <div
-                                class="icon icon-lg icon-shape bg-gradient-secondary text-center border-radius-xl mt-n4 position-absolute">
-                                <i class="material-icons opacity-10" style="top:10%;font-size:48px;">school</i>
-                            </div>
-                            <div class="text-end pt-1">
-                                <h5 class="mb-0">Participants</h5>
-                                <h4 class="mb-0">{{ count($participants) }}</h4>
-                            </div>
-                        </div>
-                        <div class="card-footer p-2"></div>
-                    </div>
-                </div>
                 <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4 dash-block"
                     onclick="window.location.href='{{ route('trainings') }}'">
                     <div class="card">
@@ -43,6 +32,21 @@
                         <div class="card-footer p-2"></div>
                     </div>
                 </div>
+                <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4 dash-block">
+                    <div class="card">
+                        <div class="card-header p-3 pt-2">
+                            <div
+                                class="icon icon-lg icon-shape bg-gradient-secondary text-center border-radius-xl mt-n4 position-absolute">
+                                <i class="material-icons opacity-10" style="top:10%;font-size:48px;">school</i>
+                            </div>
+                            <div class="text-end pt-1">
+                                <h5 class="mb-0">Participants</h5>
+                                <h4 class="mb-0">{{ count($participants) }}</h4>
+                            </div>
+                        </div>
+                        <div class="card-footer p-2"></div>
+                    </div>
+                </div>
                 <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4 dash-block"
                     onclick="window.location.href='{{ route('users') }}'">
                     <div class="card">
@@ -52,8 +56,8 @@
                                 <i class="material-icons opacity-10" style="top:10%;font-size:48px;">people</i>
                             </div>
                             <div class="text-end pt-1">
-                                <h5 class="mb-0">Facilitators</h5>
-                                <h4 class="mb-0">{{ count($facilitators) }}</h4>
+                                <h5 class="mb-0">Female</h5>
+                                <h4 class="mb-0">{{ $female_participants }}</h4>
                             </div>
                         </div>
                         <div class="card-footer p-2"></div>
@@ -65,11 +69,11 @@
                         <div class="card-header p-3 pt-2">
                             <div
                                 class="icon icon-lg icon-shape bg-gradient-secondary text-center border-radius-xl mt-n4 position-absolute">
-                                <i class="material-icons opacity-10" style="top:10%;font-size:48px;">groups</i>
+                                <i class="material-icons opacity-10" style="top:10%;font-size:48px;">people</i>
                             </div>
                             <div class="text-end pt-1">
-                                <h5 class="mb-0">Venuess</h5>
-                                <h4 class="mb-0">{{ count($venues) }}</h4>
+                                <h5 class="mb-0">Male</h5>
+                                <h4 class="mb-0">{{ $male_participants }}</h4>
                             </div>
                         </div>
                         <div class="card-footer p-2"></div>
@@ -111,7 +115,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($trainings as $training)
-                                    <tr>
+                                    <tr data-value="{{ $training->id }}" style="cursor:pointer;">
                                         <td>
                                             <div class="d-flex flex-column justify-content-center px-2">
                                                 <h6 class="mb-0 text-m">{{ $training->name }}</h6>
@@ -467,6 +471,13 @@
 </x-layout>
 
 <script>
+    $(document).on('click','tr',function(){
+        var training_id = $(this).data("value");
+        var url = '{{route("training",":id")}}';
+        url = url.replace(':id', training_id);
+        window.location.assign(url);
+    });
+
     $(document).on('click','#view-training',function(){
         var training_id = $(this).data("value");
         var url = '{{route("training",":id")}}';
