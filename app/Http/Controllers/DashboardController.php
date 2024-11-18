@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use Carbon\Carbon;
-use DB;
-use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\TrainingVenue;
 use App\Models\Training;
@@ -25,63 +23,46 @@ class DashboardController extends Controller
         return view('dashboard.admin', compact('facilitators', 'venues', 'trainings', 'participants', 'projects'));
     }
 
+    public static function traineesForTraining($id)
+    {
+        return Participants::whereJsonContains('trainings', ['training_id' => strval($id)])->count();
+    }
+
     public static function getAttendanceForTraining($training, $startDate, $endDate)
     {
-        $total_days = Training::find($training)->number_of_days;
+        // Get the total number of days for the training
+        // $total_days = Training::find($training)->number_of_days;
+        $total_days = Carbon::parse($startDate)->diffInDays(Carbon::parse($endDate)) + 1;
 
-        $attendees = Participants::all()->where('training', $training);
+        // Get all participants for the specified training
+        $attendees = Participants::whereJsonContains('trainings', ['training_id' => strval($training)])->get();
         $total_attendees = $attendees->count();
-        // $actualAttendance = DB::table('participants')
-        //                     ->where('training', $training)
-        //                     ->sum('days_attended');
+
+        // Calculate the total number of attendance days
         $actualAttendance = 0;
+        foreach ($attendees as $participant) {
+            $trainings = json_decode($participant->trainings, true);
+            foreach ($trainings as $training_attended) {
+                if ($training_attended['training_id'] == $training) {
+                    $actualAttendance += count($training_attended['dates']);
+                }
+            }
+        }
 
-        // $start = Carbon::parse($startDate);
-        // $end = Carbon::parse($endDate);
-        // $total_days = $start->diffInDays($end);
-
-        // $actualAttendance = DB::table('trainees')
-        //                         ->select(DB::raw('SUM(LENGTH(attendance) - LENGTH(REPLACE(attendance, ",", "")) + 1) AS actual_attendance'))
-        //                         ->first()
-        //                         ->actual_attendance;
-
-        $attendance_percentage = $total_attendees != 0 ? (($actualAttendance) / ($total_attendees * $total_days)) * 100 : 0;
+        // Calculate the attendance percentage
+        $attendance_percentage = $total_attendees != 0 ? ($actualAttendance / ($total_attendees * $total_days)) * 100 : 0;
 
         return round($attendance_percentage, 0);
     }
+    public static function getValueRound($value)
+    {
+        if ($value <= 0) {
+            return 0; // Return 0 for values less than or equal to 0 (if needed)
+        } elseif ($value >= 100) {
+            return 100; // Return 100 for values greater than or equal to 100
+        }
 
-    public static function getValueRound($value){
-        if($value > 0 && $value < 10){
-            return 10;
-        }
-        else if($value > 10 && $value < 20){
-            return 20;
-        }
-        else if($value > 20 && $value < 30){
-            return 30;
-        }
-        else if($value > 30 && $value < 40){
-            return 40;
-        }
-        else if($value > 40 && $value < 50){
-            return 50;
-        }
-        else if($value > 50 && $value < 60){
-            return 60;
-        }
-        else if($value > 60 && $value < 70){
-            return 70;
-        }
-        else if($value > 70 && $value < 80){
-            return 80;
-        }
-        else if($value > 80 && $value < 90){
-            return 90;
-        }
-        else if($value > 90 && $value < 100){
-            return 90;
-        }else if($value >= 100){
-            return 100;
-        }
+        // Calculate the rounded value to the nearest 10
+        return ceil($value / 10) * 10;
     }
 }

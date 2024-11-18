@@ -104,7 +104,7 @@
                                         <th class="text-secondary text-xxl font-weight-bolder">Project</th>
                                         <th class="text-secondary text-xxl font-weight-bolder">From</th>
                                         <th class="text-secondary text-xxl font-weight-bolder">To</th>
-                                        <th class="text-secondary text-xxl font-weight-bolder">Participantss</th>
+                                        <th class="text-secondary text-xxl font-weight-bolder">Participants</th>
                                         <th class="text-uppercase text-secondary text-s font-weight-bolder">Attendence</th>
                                         <th class="text-secondary"></th>
                                     </tr>
@@ -165,7 +165,7 @@
                                         <td>
                                             <div class="d-flex flex-column justify-content-center">
                                                 <span class="text-dark text-m font-weight-bold">
-                                                    {{ DB::table('participants')->where('trainings', $training->id)->count() }}
+                                                    {{ App\Http\Controllers\DashboardController::traineesForTraining($training->id) }}
                                                 </span>
                                             </div>
                                         </td>
