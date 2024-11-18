@@ -55,7 +55,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($trainings as $training)
-                                            <tr>
+                                            <tr data-value="{{ $training->id }}" style="cursor:pointer;">
                                                 <td class="ellipsis text-dark">
                                                     <div class="d-flex flex-column justify-content-center px-3">{{ $training->name }}</div>
                                                 </td>
@@ -145,6 +145,13 @@
                 "emptyTable": "No trainings available"
             }
         });
+    });
+
+    $(document).on('click','tr',function(){
+        var training_id = $(this).data("value");
+        var url = '{{route("training",":id")}}';
+        url = url.replace(':id', training_id);
+        window.location.assign(url);
     });
 
     $(document).on('click','#open-training',function(){
