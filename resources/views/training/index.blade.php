@@ -2,6 +2,10 @@
     #trainingsTable_info {
         padding-left: 25px;
     }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+        background-color: #007bff49!important;
+    }
 </style>
 
 <x-layout bodyClass="g-sidenav-show  bg-gray-200">
@@ -120,6 +124,7 @@
             "pageLength": 10,  // Default number of rows per page
             "lengthMenu": [10, 25, 50, 100],  // Dropdown options for number of rows
             "lengthChange": true,  // Enable the length menu dropdown
+            "paging": true,  // Enable pagination
             "dom": 'lBfrtip',  // Include length menu (l), buttons (B), filter (f), table (t), info (i), and pagination (p)
             "buttons": [
                 'excelHtml5',

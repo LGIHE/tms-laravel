@@ -51,9 +51,14 @@
         font-weight: 400 !important;
     }
 
-span.select2-container--default {
-    width: 100% !important;
-}
+    span.select2-container--default {
+        width: 100% !important;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+        background-color: #007bff49!important;
+    }
+
 </style>
 
 <x-layout bodyClass="g-sidenav-show bg-gray-200">
@@ -290,6 +295,7 @@ span.select2-container--default {
             "ajax": "{{ route('training.participants.data', $training->id) }}",
             "pageLength": 10,
             "lengthMenu": [10, 25, 50, 100],
+            "paging": true,
             "dom": 'lBfrtip',
             "buttons": [
                 'excelHtml5',
