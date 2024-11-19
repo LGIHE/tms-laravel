@@ -47,8 +47,7 @@
                         <div class="card-footer p-2"></div>
                     </div>
                 </div>
-                <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4 dash-block"
-                    onclick="window.location.href='{{ route('users') }}'">
+                <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4 dash-block">
                     <div class="card">
                         <div class="card-header p-3 pt-2">
                             <div
@@ -63,8 +62,7 @@
                         <div class="card-footer p-2"></div>
                     </div>
                 </div>
-                <div class="col-xl-3 col-sm-6 dash-block"
-                    onclick="window.location.href='{{ route('training.venues') }}'">
+                <div class="col-xl-3 col-sm-6 dash-block">
                     <div class="card">
                         <div class="card-header p-3 pt-2">
                             <div
