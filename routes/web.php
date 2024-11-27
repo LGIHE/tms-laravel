@@ -125,6 +125,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     //REPORTS ROUTES
 	Route::get('reports', [ReportsController::class, 'index'])->name('reports');
+    Route::post('reports/participants', [ReportsController::class, 'getParticipantsData'])->name('participants.data');
 
     Route::post('sign-out', [AuthController::class, 'singOut'])->name('logout');
 
