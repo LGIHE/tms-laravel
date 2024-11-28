@@ -1,3 +1,5 @@
+<!-- resources/views/reports/participant.blade.php -->
+
 <div class="card">
     <div class="card-header pb-0">
         <h6>Participant Report</h6>
@@ -64,14 +66,12 @@
             </div>
         </form>
 
-        <!-- Placeholder for the participants table -->
-        {{-- <div id="participantsTable"></div> --}}
+        <!-- DataTable -->
         <div class="tab-content mt-2">
             <div class="tab-pane fade show active" id="steps-tab" role="tabpanel" aria-labelledby="steps-tab">
                 <div class="card-body px-0 pb-2">
-                    @if (!$participants->isEmpty())
                     <div class="table-responsive p-0">
-                        <table id="participantsTable" class="table table-sm hover mb-0">
+                        <table id="participantsTable" class="table table-sm hover mb-0" style="width:100%">
                             <thead>
                                 <tr>
                                     <th class="text-secondary text-xxl font-weight-bolder px-4">ID No.</th>
@@ -82,85 +82,89 @@
                                     <th class="text-secondary text-xxl font-weight-bolder">Institution</th>
                                     <th class="text-secondary text-xxl font-weight-bolder">Phone</th>
                                     <th class="text-secondary text-xxl font-weight-bolder">District</th>
+                                    <th class="text-secondary text-xxl font-weight-bolder">Project</th>
+                                    <th class="text-secondary text-xxl font-weight-bolder">Training</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
                         </table>
                     </div>
-
-                    @else
-                    <div class="container text-center m-2 p-5">
-                        <span class="display-6 font-weight-bold">No Participants Available</span>
-                    </div>
-                    @endif
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<script>
-    $(document).ready(function () {
-
-        // Handle form submission to reload DataTable with filters
-        $('.btn-submit').click(function(e) {
-                e.preventDefault();
-
-                $('#participantsTable').DataTable({
-                    "processing": true,
-                    "serverSide": true,
-                    "ajax": {
-                        "method": "POST",
-                        "url": "{{ route('participants.data') }}",
-                        headers: {
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        },
-                        "data": function (d) {
-                            // Add form filters to the AJAX request data
-                            d.project = $('#projectSelect').val();
-                            d.training = $('#trainingSelect').val();
-                            d.gender = $('#participantGender').val();
-                            d.age_range = $('#participantRange').val();
-                            d.category = $('#participantCategory').val();
-                        }
+    <script>
+        $(document).ready(function () {
+            // Initialize DataTable once on document ready
+            var table = $('#participantsTable').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    "method": "POST",
+                    "url": "{{ route('participants.data') }}",
+                    "headers": {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
                     },
-                    "pageLength": 10,
-                    "lengthMenu": [10, 25, 50, 100],
-                    "paging": true,
-                    "dom": 'lBfrtip',
-                    "buttons": [
-                        'excelHtml5',
-                        'csvHtml5',
-                        'pdfHtml5',
-                        'print'
-                    ],
-                    "columns": [
-                        { "data": "id_no" },
-                        { "data": "name" },
-                        { "data": "gender" },
-                        { "data": "age" },
-                        { "data": "category" },
-                        { "data": "institution" },
-                        { "data": "phone" },
-                        { "data": "district" },
-                    ],
-                    "language": {
-                        "paginate": {
-                            "first": "First",
-                            "last": "Last",
-                            "next": "Next",
-                            "previous": "Previous"
-                        },
-                        "lengthMenu": "Show _MENU_ entries",
-                        "loadingRecords": "Loading participants...",
-                        "zeroRecords": "No participants found",
-                        "emptyTable": "No participants available"
-                    },
-                    "createdRow": function(row, data, dataIndex) {
-                        // Add the text-dark class to all <td> elements in the row
-                        $('td', row).addClass('text-dark');
+                    "data": function (d) {
+                        // Add form filters to the AJAX request data
+                        d.project = $('#projectSelect').val();
+                        d.training = $('#trainingSelect').val();
+                        d.gender = $('#participantGender').val();
+                        d.age_range = $('#participantRange').val();
+                        d.category = $('#participantCategory').val();
                     }
-                });
+                },
+                "pageLength": 10,
+                "lengthMenu": [10, 25, 50, 100, 250, 500],
+                "paging": true,
+                "dom": 'lBfrtip',
+                "buttons": [
+                    'excelHtml5',
+                    'pdfHtml5',
+                    'print'
+                ],
+                "columns": [
+                    { "data": "id_no" },
+                    { "data": "name" },
+                    { "data": "gender" },
+                    { "data": "age" },
+                    { "data": "category" },
+                    { "data": "institution" },
+                    { "data": "phone" },
+                    { "data": "district" },
+                    { "data": "project_name" },
+                    { "data": "training_name" },
+                ],
+                "language": {
+                    "paginate": {
+                        "first": "First",
+                        "last": "Last",
+                        "next": "Next",
+                        "previous": "Previous"
+                    },
+                    "lengthMenu": "Show _MENU_ entries",
+                    "loadingRecords": "Loading participants...",
+                    "zeroRecords": "No participants found",
+                    "emptyTable": "No participants available"
+                },
+                "createdRow": function(row, data, dataIndex) {
+                    // Add the text-dark class to all <td> elements in the row
+                    $('td', row).addClass('text-dark');
+                }
+            });
+
+            // Detect change in any filter within the form
+            $('#getParticipantsForm select').on('change', function() {
+                // Trigger form submission
+                $('#getParticipantsForm').submit();
+            });
+
+            // Handle form submission to reload DataTable with filters
+            $('#getParticipantsForm').on('submit', function(e) {
+                e.preventDefault();
+                table.ajax.reload();
+            });
         });
-    });
-</script>
+    </script>
+</div>

@@ -58,7 +58,7 @@ class ReportsController extends Controller
         // Apply Age Range Filter if provided
         if ($request->filled('age_range')) {
             $ageUpper = (int)$request->input('age_range');
-            $ageLower = $ageUpper - 5; // Adjust based on your age range logic
+            $ageLower = $ageUpper < 21 ? 0 : $ageUpper - 5;
             $query->whereBetween('age', [$ageLower, $ageUpper]);
         }
 
@@ -68,34 +68,68 @@ class ReportsController extends Controller
             $query->where('category', $category);
         }
 
-        // Use Yajra DataTables to handle server-side processing
-        return DataTables::of($query)
-            ->addColumn('project_name', function ($participant) {
-                // Extract project names from the trainings JSON field
-                $trainings = json_decode($participant->trainings, true) ?? [];
-                $projectNames = [];
+        // Execute the query to get the filtered participants
+        $participants = $query->get();
 
-                foreach ($trainings as $training) {
-                    if (isset($training['training_id'])) {
-                        $trainingRecord = Training::find($training['training_id']);
-                        if ($trainingRecord) {
-                            $project = Project::find($trainingRecord->project);
-                            if ($project) {
-                                $projectNames[] = $project->name;
-                            }
+        // Collect all unique training_ids from participants
+        $trainingIds = [];
+        foreach ($participants as $participant) {
+            $trainings = json_decode($participant->trainings, true) ?? [];
+            foreach ($trainings as $training) {
+                if (isset($training['training_id'])) {
+                    $trainingIds[] = (int)$training['training_id'];
+                }
+            }
+        }
+        $trainingIds = array_unique($trainingIds);
+
+        // Fetch all relevant trainings in one query
+        $trainings = Training::whereIn('id', $trainingIds)->get()->keyBy('id');
+
+        // Collect all unique project_ids from the trainings
+        $projectIds = $trainings->pluck('project')->unique()->toArray();
+
+        // Fetch all relevant projects in one query
+        $projects = Project::whereIn('id', $projectIds)->get()->keyBy('id');
+
+        // Process participants data
+        $participantsData = $participants->map(function ($participant) use ($trainings, $projects) {
+            $trainingsData = json_decode($participant->trainings, true) ?? [];
+            $trainingNames = [];
+            $projectNames = [];
+
+            foreach ($trainingsData as $training) {
+                if (isset($training['training_id'])) {
+                    $trainingId = (int)$training['training_id'];
+                    if ($trainings->has($trainingId)) {
+                        $trainingRecord = $trainings->get($trainingId);
+                        $trainingNames[] = $trainingRecord->name;
+
+                        $projectId = $trainingRecord->project;
+                        if ($projects->has($projectId)) {
+                            $projectNames[] = $projects->get($projectId)->name;
                         }
                     }
                 }
+            }
 
-                return implode(', ', array_unique($projectNames));
-            })
-            ->editColumn('gender', function ($participant) {
-                return $participant->gender === 'M' ? 'Male' : 'Female';
-            })
-            ->addColumn('actions', function ($participant) {
-                // Optionally, add action buttons (e.g., View, Edit)
-                return '<a href="#" class="btn btn-sm btn-primary">View</a>';
-            })
+            return [
+                'id_no' => $participant->id_no,
+                'name' => $participant->name,
+                'gender' => $participant->gender === 'M' ? 'Male' : 'Female',
+                'age' => $participant->age,
+                'category' => $participant->category,
+                'institution' => $participant->institution,
+                'phone' => $participant->phone,
+                'district' => $participant->district,
+                'project_name' => implode(', ', array_unique($projectNames)),
+                'training_name' => implode(', ', array_unique($trainingNames)),
+                'actions' => '<a href="#" class="btn btn-sm btn-primary">View</a>',
+            ];
+        });
+
+        // Return the data in DataTables format
+        return DataTables::of($participantsData)
             ->rawColumns(['actions']) // Allow HTML in the actions column
             ->make(true);
     }
